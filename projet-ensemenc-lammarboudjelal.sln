@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ensemenc", "ensemenc\ensemenc.csproj", "{32B51123-096C-7CE2-E0CB-83F9EABC76DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{32B51123-096C-7CE2-E0CB-83F9EABC76DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32B51123-096C-7CE2-E0CB-83F9EABC76DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32B51123-096C-7CE2-E0CB-83F9EABC76DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32B51123-096C-7CE2-E0CB-83F9EABC76DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {45F83C38-0EC1-454F-87F2-D8EFB02752A2}
+	EndGlobalSection
+EndGlobal
