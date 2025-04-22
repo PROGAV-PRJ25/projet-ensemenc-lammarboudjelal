@@ -1,2 +1,2 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+Tomate t1 = new("Ma première tomate");
+Console.WriteLine($"{t1}");
