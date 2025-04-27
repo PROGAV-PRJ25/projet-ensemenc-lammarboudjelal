@@ -7,7 +7,6 @@ public class Simulation
     private Terrain? terrain1; // Premier terrain du joueur (5x5 cases).
     private Terrain? terrain2; // Deuxième terrain du joueur (5x5 cases).
     private Monde monde = new PlaineChampignon(); // Monde choisi par le joueur (par défaut Monde 1 - Plaine Champignon).
-    private Meteo meteoEnCours = new(0, 0, 0); // Météo actuelle dans le monde.
     private ModeDeJeu modeDeJeu = ModeDeJeu.Classique; // Mode de jeu sélectionné par le joueur.
     private Dictionary<TypePlante, int> recoltes = []; // Dictionnaire des récoltes du joueur (type de récolte, quantité).
     private Dictionary<TypePlante,int> graines = []; // Dictionnaire des semis disponibles pour le joueur (type de plante, quantité).
@@ -304,14 +303,9 @@ public class Simulation
     {
         Console.WriteLine("MÉTÉO");
 
-        if (this.monde.MeteosPossibles?.Count > 0)
-        {
-            Random rnd = new();
-            int indexMeteo = rnd.Next(this.monde.MeteosPossibles.Count);
-            meteoEnCours = this.monde.MeteosPossibles[indexMeteo];
-        }
+        this.monde.DefinirMeteoActuelle();
 
-        Console.WriteLine($"{meteoEnCours}");
+        Console.WriteLine($"{this.monde.MeteoEnCours}");
     }
 
     /*

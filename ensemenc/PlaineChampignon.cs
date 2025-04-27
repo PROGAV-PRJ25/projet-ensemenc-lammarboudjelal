@@ -22,11 +22,13 @@ public class PlaineChampignon : Monde
         this.typesPlanteDisponibles.Add(TypePlante.Marguerite);
 
         // Météos possibles
+        this.meteosPossibles.Add(new Meteo(18, 60, 20)); // Météo douce
         this.meteosPossibles.Add(new Meteo(20, 70, 10)); // Journée ensoleillée
         this.meteosPossibles.Add(new Meteo(15, 50, 40)); // Pluie légère
-        this.meteosPossibles.Add(new Meteo(18, 60, 20)); // Météo douce
         this.meteosPossibles.Add(new Meteo(22, 80, 5));  // Beau temps
         this.meteosPossibles.Add(new Meteo(12, 30, 60)); // Fortes pluies
+
+        this.meteoEnCours = this.meteosPossibles[0]; // Par défaut, la météo de départ du monde correspond à la météo la plus simple.
     }
 
     /*

@@ -4,6 +4,7 @@
 public abstract class Monde(string unNom)
 {
     protected string nom = unNom; // Nom du monde.
+    protected Meteo meteoEnCours = new(0, 0, 0); // Météo actuelle dans le monde.
     protected List<Meteo> meteosPossibles = []; // Liste des météos possibles dans ce monde.
     protected List<TypePlante> typesPlanteDisponibles = []; // Liste des types de plantes disponibles.
     protected List<TypeSol> typesSolsDisponibles = []; // Liste des types de sols disponibles.
@@ -38,6 +39,24 @@ public abstract class Monde(string unNom)
     public List<TypeSol> TypesSolsDisponibles 
     { 
         get { return typesSolsDisponibles; } 
+    }
+
+    /*
+        Accesseur en lecture uniquement de la météo en cours.
+    */
+    public Meteo MeteoEnCours
+    {
+         get { return meteoEnCours; } 
+    }
+
+    /*
+        Défini la météo actuelle en sélectionnant aléatoirement une des météos possibles du monde.
+    */
+    public void DefinirMeteoActuelle()
+    {
+        Random rnd = new();
+        int indexMeteo = rnd.Next(this.meteosPossibles.Count);
+        this.meteoEnCours = this.meteosPossibles[indexMeteo];
     }
 
     /*
