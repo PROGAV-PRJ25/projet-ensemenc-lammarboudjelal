@@ -1,5 +1,13 @@
+/*
+    Représente une plante spécifique : Tomate.
+    Hérite de la classe Plante et initialise ses caractéristiques propres.
+*/
 public class Tomate : Plante
 {
+    /*
+        Constructeur de la classe Tomate.
+        Initialise une plante Tomate avec des paramètres prédéfinis (nom, symbole, type, besoins...).
+    */
     public Tomate(
         string unNom, 
         string unSymbole = "🍅",

@@ -1,18 +1,23 @@
+/*
+    Gère la simulation complète du jeu.
+    Initialise le monde, les terrains, et permet au joueur d'interagir avec le potager.
+*/
 public class Simulation
 {
-    private Terrain? terrain1;
-    private Terrain? terrain2;
-    private Monde? monde;
-    private Meteo meteoEnCours = new(0, 0, 0);
-    // private ModeDeJeu modeDeJeu = ModeDeJeu.Classique;
-    private Dictionary<string, int> recoltes = new Dictionary<string, int>();
-    private Dictionary<TypePlante,int> graines = new Dictionary<TypePlante, int>();
-    // private int nbActionsRestantes = 8;
+    private Terrain? terrain1; // Premier terrain du joueur (5x5 cases).
+    private Terrain? terrain2; // Deuxième terrain du joueur (5x5 cases).
+    private Monde? monde; // Monde choisi par le joueur.
+    private Meteo meteoEnCours = new(0, 0, 0); // Météo actuelle dans le monde.
+    // private ModeDeJeu modeDeJeu = ModeDeJeu.Classique; // Mode de jeu sélectionné par le joueur.
+    private Dictionary<TypePlante, int> recoltes = new Dictionary<TypePlante, int>(); // Dictionnaire des récoltes du joueur (type de récolte, quantité).
+    private Dictionary<TypePlante,int> graines = new Dictionary<TypePlante, int>(); // Dictionnaire des semis disponibles pour le joueur (type de plante, quantité).
+    // private int nbActionsRestantes = 8; // Nombre d'actions que le joueur peut réaliser à chaque tour.
 
-    public Simulation()
-    {
-    }
+    /*
+        Demande au joueur de confirmer une action (O/N).
 
+        return : True si le joueur valide (O), False sinon.
+    */
     public static bool DemanderConfirmation()
     {
         Console.WriteLine();
@@ -29,21 +34,30 @@ public class Simulation
         }
     }
 
+    /*
+        Affiche un message pour demander à l'utilisateur d'appuyer sur une touche pour continuer.
+    */
     public static void AttendreUtilisateurPourContinuer()
     {
         Console.WriteLine("Appuyez sur une touche pour continuer...");
         Console.ReadKey();
     }
 
+    /*
+        Initialise les deux terrains du joueur selon les types de sol du monde choisi.
+    */
     public void InitialiserTerrains()
     {
-        if (this.monde is not null && this.monde.TypesSolDisponibles is not null)
+        if (this.monde is not null && this.monde.TypesSolsDisponibles is not null)
         {
-            this.terrain1 = new Terrain("Terrain 1", this.monde.TypesSolDisponibles.First());
-            this.terrain2 = new Terrain("Terrain 2", this.monde.TypesSolDisponibles.Last());
+            this.terrain1 = new Terrain("Terrain 1", this.monde.TypesSolsDisponibles.First());
+            this.terrain2 = new Terrain("Terrain 2", this.monde.TypesSolsDisponibles.Last());
         }
     }
 
+    /*
+        Permet au joueur de choisir un monde, valide son choix et initialise ses terrains.
+    */
     public void InitialiserMonde()
     {
         bool mondeValide = false;
@@ -91,6 +105,9 @@ public class Simulation
         }
     }
 
+    /*
+        Affiche l'introduction stylisée du jeu.
+    */
     public static void AfficherIntroduction()
     {
         Console.Clear();
@@ -113,10 +130,12 @@ public class Simulation
         AttendreUtilisateurPourContinuer();
     }
 
+    /*
+        Démarre une partie de jeu.
+    */
     public void Jouer()
     {
         AfficherIntroduction();
-
         InitialiserMonde();
     }
 }

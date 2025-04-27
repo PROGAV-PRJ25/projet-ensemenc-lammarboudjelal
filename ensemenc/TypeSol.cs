@@ -1,3 +1,4 @@
+// Types de sol.
 public enum TypeSol
 {
     Humifere,

@@ -1,21 +1,39 @@
+/*
+    Classe abstraite représentant une plante de jeu.
+*/
 public abstract class Plante
 {
-    protected string nom;
-    protected string symbole;
-    protected TypePlante type;
-    protected int taille;
-    protected int besoinsEau;
-    protected int besoinsLuminosite;
-    protected int temperatureMin;
-    protected int temperatureMax;
-    protected int vitesseCroissance;
-    protected int esperanceVie;
-    protected TypeSol solPrefere;
-    protected int tauxArrosage = 0;
-    protected Etat etat = Etat.BonneSante;
-    protected Croissance croissance = Croissance.Semi;
-    protected int productions = 0;
+    protected string nom; // Nom de la plante.
+    protected string symbole; // Symbole affiché pour représenter la plante.
+    protected TypePlante type; // Type de la plante.
+    protected int taille; // Taille de la plante sur la grille à l'âge adulte.
+    protected int besoinsEau; // Besoins en eau en pourcentage.
+    protected int besoinsLuminosite; // Besoins en lumière en pourcentage.
+    protected int temperatureMin; // Température minimale supportée par la plante.
+    protected int temperatureMax; // Température maximale supportée par la plante.
+    protected int vitesseCroissance; // Nombre de semaines nécessaires pour atteindre la maturité (l'âge adulte).
+    protected int esperanceVie; // Espérance de vie de la plante en nombre de semaines si elle n'est pas récoltée.
+    protected TypeSol solPrefere; // Type de sol préféré par la plante (conditions de pouce optimale).
+    protected int tauxArrosage = 0; // Niveau d'eau de la plante en pourcentage (par défaut 0%). 
+    protected Etat etat = Etat.BonneSante; // État de santé (par défaut "Bonne santé").
+    protected Croissance croissance = Croissance.Semi; // Niveau de croissance de la plante (par défaut "Semi").
+    protected int productions = 0; // Nombre de production de la plante (fruits, légumes...) (par défaut 0).
 
+    /* 
+        Constructeur de la classe Plante.
+
+        param unNom : Nom de la plante.
+        param unSymbole : Symbole affiché pour représenter la plante.
+        param unType : Type de la plante.
+        param uneTaille : Taille de la plante sur la grille à l'âge adulte.
+        param desBesoinsEau : Besoins en eau en pourcentage.
+        param desBesoinLuminosite : Besoins en lumière en pourcentage.
+        param uneTempMin : Température minimale supportée par la plante.
+        param uneTempMax : Température maximale supportée par la plante.
+        param uneVitesseCroissance : Nombre de semaines nécessaires pour atteindre la maturité (l'âge adulte).
+        param uneEsperanceVie : Espérance de vie de la plante en nombre de semaines si elle n'est pas récoltée.
+        param unSolPrefere : Type de sol préféré par la plante (conditions de pouce optimale).
+    */
     public Plante(
         string unNom,
         string unSymbole, 
@@ -42,6 +60,11 @@ public abstract class Plante
         this.solPrefere = unSolPrefere;
     }
 
+    /*
+        Retourne une description textuelle de la plante.
+
+        return : Chaîne de caractères décrivant la plante.
+    */
     public override string ToString()
     {
         string plante = $"{this.nom} {this.symbole} :\n";

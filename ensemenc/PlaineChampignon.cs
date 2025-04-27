@@ -1,9 +1,19 @@
+/*
+    Représente le monde de la Plaine Champignon, tempéré, adapté aux cultures classiques.
+    Hérite de la classe Monde et initialise ses caractéristiques propres.
+*/
 public class PlaineChampignon : Monde
 {
+    /*
+        Constructeur de Plaine Champignon.
+        Initialise le sol, les plantes et les météos typiques du monde.
+
+        param unNom : Nom du monde (par défaut "Plaine Champignon").
+    */
     public PlaineChampignon(string unNom = "Plaine Champignon") : base(unNom)
     {
         // Sol disponible
-        this.typesSolDisponibles.Add(TypeSol.Humifere);
+        this.typesSolsDisponibles.Add(TypeSol.Humifere);
 
         // Plantes disponibles
         this.typesPlanteDisponibles.Add(TypePlante.Tomate);
@@ -19,6 +29,10 @@ public class PlaineChampignon : Monde
         this.meteosPossibles.Add(new Meteo(12, 30, 60)); // Fortes pluies
     }
 
+    /*
+        Affiche une description détaillée du monde Plaine Champignon.
+        Liste les caractéristiques : température, météo et plantes disponibles.
+    */
     public override void AfficherDescription()
     {
         Console.WriteLine($"Monde 1 — {this.nom}\n");
@@ -31,6 +45,9 @@ public class PlaineChampignon : Monde
         Console.WriteLine("   - Plantes : Tomate, Fraise, Marguerite, Champignon\n");
     }
 
+    /*
+        Affiche une illustration ASCII représentant la Plaine Champignon.
+    */
     public override void AfficherIllustration()
     {
         Console.WriteLine("         ⠀⠀⠀⠀⠀⠀⠀⣀⣀⡤⠤⢤⣀⡀");
