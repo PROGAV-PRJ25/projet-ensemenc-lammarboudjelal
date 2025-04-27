@@ -19,6 +19,14 @@ public abstract class Plante
     protected Croissance croissance = Croissance.Semi; // Niveau de croissance de la plante (par défaut "Semi").
     protected int productions = 0; // Nombre de production de la plante (fruits, légumes...) (par défaut 0).
 
+    /*
+        Accesseur en lecture uniquement du symbole affiché pour représenter la plante.
+    */
+    public string Symbole 
+    { 
+        get { return symbole; }
+    } 
+
     /* 
         Constructeur de la classe Plante.
 

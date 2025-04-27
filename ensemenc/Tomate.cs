@@ -6,7 +6,6 @@ public class Tomate : Plante
 {
     /*
         Constructeur de la classe Tomate.
-        Initialise une plante Tomate avec des paramètres prédéfinis (nom, symbole, type, besoins...).
     */
     public Tomate(
         string unNom, 
