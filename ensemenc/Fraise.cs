@@ -1,21 +1,21 @@
 /*
-    Représente une plante spécifique : Tomate.
+    Représente une plante spécifique : Fraise.
     Hérite de la classe Plante et initialise ses caractéristiques propres.
 */
-public class Tomate : Plante
+public class Fraise : Plante
 {
     /*
-        Constructeur de la classe Tomate.
+        Constructeur de la classe Fraise.
     */
-    public Tomate(
+    public Fraise(
         string unNom, 
-        string unSymbole = "🍅",
-        TypePlante unType = TypePlante.Tomate, 
-        int uneTaille = 2, 
+        string unSymbole = "🍓",
+        TypePlante unType = TypePlante.Fraise, 
+        int uneTaille = 1, 
         int desBesoinsEau = 60, 
-        int desBesoinsLuminosite = 70, 
-        int uneTempMin = 10, 
-        int uneTempMax = 30, 
+        int desBesoinsLuminosite = 85, 
+        int uneTempMin = 8, 
+        int uneTempMax = 25, 
         int uneVitesseCroissance = 3, 
         int uneEsperanceVie = 1, 
         TypeSol unSolPrefere = TypeSol.Humifere) : base(unNom, unSymbole, unType, uneTaille, desBesoinsEau, desBesoinsLuminosite, uneTempMin, uneTempMax, uneVitesseCroissance, uneEsperanceVie, unSolPrefere)
