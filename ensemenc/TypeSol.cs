@@ -1,4 +1,6 @@
 public enum TypeSol
 {
-    Terre
+    Humifere,
+    Argileux,
+    Sableux
 }
