@@ -4,6 +4,7 @@ public abstract class Monde
     protected List<Meteo> meteosPossibles = [];
     protected List<TypePlante> typesPlanteDisponibles = [];
     protected List<TypeSol> typesSolDisponibles = [];
+    public List<TypeSol>? TypesSolDisponibles {get;}
 
     public Monde(string unNom)
     {

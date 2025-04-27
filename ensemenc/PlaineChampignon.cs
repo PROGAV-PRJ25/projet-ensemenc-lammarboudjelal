@@ -21,9 +21,9 @@ public class PlaineChampignon : Monde
 
     public override void AfficherDescription()
     {
-        Console.WriteLine("𓍊 Monde 1 — Plaine Champignon 𓍊\n");
+        Console.WriteLine($"Monde 1 — {this.nom}\n");
 
-        Console.WriteLine("Bienvenue dans la Plaine Champignon, un monde doux et paisible où tout pousse... sauf quand un Goombavers passe par là !\n");
+        Console.WriteLine($"Bienvenue dans {this.nom}, un monde doux et paisible où tout pousse... sauf quand un Goombavers passe par là !\n");
 
         Console.WriteLine("Caractéristiques :\n");
         Console.WriteLine("   - Température : 10°C à 25°C (tempéré)");
