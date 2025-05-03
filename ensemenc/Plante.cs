@@ -24,6 +24,7 @@ public abstract class Plante(
     protected int esperanceVie = uneEsperanceVie; // Espérance de vie de la plante en nombre de semaines si elle n'est pas récoltée.
     protected TypeSol solPrefere = unSolPrefere; // Type de sol préféré par la plante (conditions de pouce optimale).
     protected int tauxArrosage = 0; // Niveau d'eau de la plante en pourcentage (par défaut 0%). 
+    private const int QuantiteArrosage = 50; // Pourcentage d'eau ajouté à la plante suite à un arrosage.
     protected Etat etat = Etat.BonneSante; // État de santé (par défaut "Bonne santé").
     protected Croissance croissance = Croissance.Semi; // Niveau de croissance de la plante (par défaut "Semi").
     protected int productions = 0; // Nombre de production de la plante (fruits, légumes...) (par défaut 0).
@@ -66,6 +67,14 @@ public abstract class Plante(
         caracteristiques += $"      - Vitesse de croissance : {this.vitesseCroissance} semaines pour atteindre l'âge adulte\n";
 
         return caracteristiques;
+    }
+
+    /*
+        Incrémente le taux d'arrosage de la plante de 50%.
+    */
+    public void Desalterer()
+    {
+        this.tauxArrosage += QuantiteArrosage;
     }
 
     /*

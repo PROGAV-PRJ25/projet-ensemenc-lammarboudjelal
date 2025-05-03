@@ -72,4 +72,26 @@ public class Terrain(string unNom)
         this.plantes[x,y] = null;
         return true;
     }
+
+    /*
+        Arrose une plante du terrain à partir des coordonnées saisies.
+        Un arrosage ajoute 50%
+    */
+    public bool Arroser()
+    {
+        Console.WriteLine("Coordonnées de la plante à arroser :");
+        int x = Simulation.SaisirEntier("Ligne ", 1, 5) - 1; // -1 car un tableau commence à l'indice 0.
+        int y = Simulation.SaisirEntier("Colonne ", 1, 5) - 1;
+
+        // Emplacement non occupé.
+        if (this.plantes[x, y] == null)
+        {
+            Console.WriteLine("Aucune plante n'est positionnée à ses coordonnées. C'est dommage, vous venez de perdre une action...");
+            return false;
+        }
+        
+        this.plantes[x,y]!.Desalterer();
+
+        return true;
+    }
 }

@@ -398,6 +398,16 @@ public class Simulation
     }
 
     /*
+        Permet au joueur d'arroser une plante sur un terrain choisi.
+    */
+    private void Arroser()
+    {
+        bool planteArrosee = this.ChoisirTerrain().Arroser();
+        if(planteArrosee)
+            Console.WriteLine("Votre plante est désaltérée !");
+    }
+
+    /*
         Affiche le menu des actions et traite le choix du joueur.
 
         return : False si le joueur choisit de quitter le jeu.
@@ -419,7 +429,7 @@ public class Simulation
         switch (choix)
         {
             case "1":
-                Console.WriteLine("Coming soon...");
+                this.Arroser();
                 nbActionsRestantes--;
                 break;
             case "2":
