@@ -7,7 +7,7 @@ public class Simulation
     private Terrain terrain1 = new("Terrain 1"); // Premier terrain du joueur (5x5 cases).
     private Terrain terrain2 = new("Terrain 2"); // Deuxième terrain du joueur (5x5 cases).
     private Monde monde = new PlaineChampignon(); // Monde choisi par le joueur (par défaut Monde 1 - Plaine Champignon).
-    private ModeDeJeu modeDeJeu = ModeDeJeu.Classique; // Mode de jeu sélectionné par le joueur.
+    // private ModeDeJeu modeDeJeu = ModeDeJeu.Classique; // Mode de jeu sélectionné par le joueur.
     private Dictionary<TypePlante, int> recoltes = []; // Dictionnaire des récoltes du joueur (type de récolte, quantité).
     private Dictionary<TypePlante,int> graines = []; // Dictionnaire des semis disponibles pour le joueur (type de plante, quantité).
     private const int NbActionsAutorisees = 8; // Nombre d'actions que le joueur peut réaliser à chaque tour.
@@ -182,7 +182,7 @@ public class Simulation
             for (int j = 0; j < 5; j++)
             {
                 if (terrain1.Plantes?[i,j] is not null)
-                    Console.Write($"| {terrain1.Plantes[i,j].Symbole} ");
+                    Console.Write($"| {terrain1.Plantes[i,j]!.Symbole} ");
                 else
                     Console.Write($"|    ");
             }
@@ -192,7 +192,7 @@ public class Simulation
             for (int j = 0; j < 5; j++)
             {
                 if (terrain2.Plantes?[i,j] is not null)
-                    Console.Write($"| {terrain2.Plantes[i,j].Symbole} ");
+                    Console.Write($"| {terrain2.Plantes[i,j]!.Symbole} ");
                 else
                     Console.Write($"|    ");
             }
@@ -237,7 +237,7 @@ public class Simulation
         if(! existePlantes) 
             Console.WriteLine("(Aucune plante plantée pour l'instant)");
 
-        Console.WriteLine("Terrain 2 : ");
+        Console.WriteLine("\nTerrain 2 : ");
         for (int i = 0; i < this.terrain2.Plantes.GetLength(0); i++)
         {
             for (int j = 0; j < this.terrain2.Plantes.GetLength(1); j++)
@@ -282,7 +282,7 @@ public class Simulation
     {
         while (true)
         {
-            Console.WriteLine("\nQuel terrain souhaitez-vous utiliser ?");
+            Console.WriteLine("\nSur quel terrain souhaitez-vous agir ?");
             Console.WriteLine("1. Terrain 1");
             Console.WriteLine("2. Terrain 2");
 
@@ -388,6 +388,16 @@ public class Simulation
     }
 
     /*
+        Permet au joueur de retirer une plante sur un terrain choisi.
+    */
+    private void Desherber()
+    {
+        bool planteRetiree = this.ChoisirTerrain().Desherber();
+        if(planteRetiree)
+            Console.WriteLine("Plante retirée avec succès !");
+    }
+
+    /*
         Affiche le menu des actions et traite le choix du joueur.
 
         return : False si le joueur choisit de quitter le jeu.
@@ -421,7 +431,7 @@ public class Simulation
                 nbActionsRestantes--;
                 break;
             case "4":
-                Console.WriteLine("Coming soon...");
+                this.Desherber();
                 nbActionsRestantes--;
                 break;
             case "5":
