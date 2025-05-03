@@ -4,13 +4,14 @@
 */
 public class Simulation
 {
-    private Terrain? terrain1; // Premier terrain du joueur (5x5 cases).
-    private Terrain? terrain2; // Deuxième terrain du joueur (5x5 cases).
+    private Terrain terrain1 = new("Terrain 1"); // Premier terrain du joueur (5x5 cases).
+    private Terrain terrain2 = new("Terrain 2"); // Deuxième terrain du joueur (5x5 cases).
     private Monde monde = new PlaineChampignon(); // Monde choisi par le joueur (par défaut Monde 1 - Plaine Champignon).
     private ModeDeJeu modeDeJeu = ModeDeJeu.Classique; // Mode de jeu sélectionné par le joueur.
     private Dictionary<TypePlante, int> recoltes = []; // Dictionnaire des récoltes du joueur (type de récolte, quantité).
     private Dictionary<TypePlante,int> graines = []; // Dictionnaire des semis disponibles pour le joueur (type de plante, quantité).
-    private int nbActionsRestantes = 8; // Nombre d'actions que le joueur peut réaliser à chaque tour.
+    private const int NbActionsAutorisees = 8; // Nombre d'actions que le joueur peut réaliser à chaque tour.
+    private int nbActionsRestantes = NbActionsAutorisees; // Nombre d'actions restants au joueur (réinitialisé chaque semaine).
 
     /*
         Demande au joueur de confirmer une action (O/N).
@@ -49,8 +50,8 @@ public class Simulation
     {
         if (this.monde.TypesSolsDisponibles is not null)
         {
-            this.terrain1 = new Terrain("Terrain 1", this.monde.TypesSolsDisponibles.First());
-            this.terrain2 = new Terrain("Terrain 2", this.monde.TypesSolsDisponibles.Last());
+            this.terrain1.TypeSol = this.monde.TypesSolsDisponibles.First();
+            this.terrain2.TypeSol = this.monde.TypesSolsDisponibles.Last();
         }
     }
 
@@ -148,7 +149,7 @@ public class Simulation
     */
     private static void AfficherSeparateur()
     {
-        Console.WriteLine("\n-----------------------------------------------------\n");
+        Console.WriteLine("\n----------------------------------------------------------\n");
         
     }
 
@@ -157,8 +158,8 @@ public class Simulation
     */
     private void AfficherTerrains()
     {
-        Console.WriteLine("        Terrain 1                Terrain 2\n");
-        Console.WriteLine("    A   B   C   D   E        A   B   C   D   E");
+        Console.WriteLine("          Terrain 1                     Terrain 2\n");
+        Console.WriteLine("    1    2    3    4    5         1    2    3    4    5");
 
         for (int i = 0; i < 5; i++)
         {
@@ -166,13 +167,13 @@ public class Simulation
             Console.Write("  ");
             for (int j = 0; j < 5; j++)
             {
-                Console.Write("+---");
+                Console.Write("+----");
             }
-            Console.Write("+   ");
+            Console.Write("+    ");
 
             for (int j = 0; j < 5; j++)
             {
-                Console.Write("+---");
+                Console.Write("+----");
             }
             Console.WriteLine("+");
 
@@ -180,37 +181,35 @@ public class Simulation
             Console.Write($"{i+1} ");
             for (int j = 0; j < 5; j++)
             {
-                if (terrain1?.Plantes?[i,j] is not null)
-                {
-                    Console.Write($"| {terrain1?.Plantes[i,j].Symbole} ");
-                }
-                Console.Write($"|   ");
+                if (terrain1.Plantes?[i,j] is not null)
+                    Console.Write($"| {terrain1.Plantes[i,j].Symbole} ");
+                else
+                    Console.Write($"|    ");
             }
-            Console.Write("|   ");
+            Console.Write("|    ");
             
 
             for (int j = 0; j < 5; j++)
             {
-                if (terrain2?.Plantes?[i,j] is not null)
-                {
-                    Console.Write($"| {terrain2?.Plantes[i,j].Symbole} ");
-                }
-                Console.Write($"|   ");
+                if (terrain2.Plantes?[i,j] is not null)
+                    Console.Write($"| {terrain2.Plantes[i,j].Symbole} ");
+                else
+                    Console.Write($"|    ");
             }
-            Console.WriteLine("|   ");
+            Console.WriteLine("|");
         }
 
         // Dernière ligne horizontale
         Console.Write("  ");
         for (int j = 0; j < 5; j++)
         {
-            Console.Write("+---");
+            Console.Write("+----");
         }
-        Console.Write("+   ");
+        Console.Write("+    ");
 
         for (int j = 0; j < 5; j++)
         {
-            Console.Write("+---");
+            Console.Write("+----");
         }
         Console.WriteLine("+");
     }
@@ -220,24 +219,172 @@ public class Simulation
     */
     private void AfficherPlantes()
     {
-        Console.WriteLine("MES PLANTES");
-        Console.WriteLine("(Aucune plante plantée pour l'instant)");
+        Console.WriteLine("MES PLANTES\n");
+
+        bool existePlantes = false;
+
+        Console.WriteLine("Terrain 1 : ");
+        for (int i = 0; i < this.terrain1.Plantes.GetLength(0); i++)
+        {
+            for (int j = 0; j < this.terrain1.Plantes.GetLength(1); j++)
+            {
+                if (this.terrain1.Plantes[i,j] is not null)
+                {
+                    Console.WriteLine($"({i+1},{j+1}) {this.terrain1.Plantes[i,j]}");
+                }
+            }
+        }
+        if(! existePlantes) 
+            Console.WriteLine("(Aucune plante plantée pour l'instant)");
+
+        Console.WriteLine("Terrain 2 : ");
+        for (int i = 0; i < this.terrain2.Plantes.GetLength(0); i++)
+        {
+            for (int j = 0; j < this.terrain2.Plantes.GetLength(1); j++)
+            {
+                if (this.terrain2.Plantes[i,j] is not null)
+                {
+                    Console.WriteLine($"({i+1},{j+1}) {this.terrain2.Plantes[i,j]}");
+                    existePlantes = true;
+                }
+            }
+        }
+        if(! existePlantes) 
+            Console.WriteLine("(Aucune plante plantée pour l'instant)");
+
         Console.WriteLine();
     }
 
     /*
         Affiche l'inventaire actuel de graines du joueur.
-    */
-    private void AfficherInventaire()
-    {
-        Console.WriteLine("INVENTAIRE");
 
+        param avecCaracteristiques : Permet d'indiquer si on souhaite afficher les caractéristiques des plantes en plus.
+    */
+    private void AfficherInventaire(bool avecCaracteristiques = false)
+    {
+        Console.WriteLine("INVENTAIRE\n");
+        
+        int i = 1;
         foreach (var graine in graines)
         {
-            Console.WriteLine($"- {graine.Key} : {graine.Value} graines restantes");
+            Console.WriteLine($"{i} - {graine.Key} : {graine.Value} graines restantes");
+            if(avecCaracteristiques) Console.WriteLine($"{Plante.AfficherDescription(graine.Key)}\n");
+            i++;
+        }
+    }
+
+    /*
+        Demande à l'utilisateur de choisir entre son terrain 1 et 2.
+
+        return : Le terrain sélectionné. 
+    */
+    private Terrain ChoisirTerrain()
+    {
+        while (true)
+        {
+            Console.WriteLine("\nQuel terrain souhaitez-vous utiliser ?");
+            Console.WriteLine("1. Terrain 1");
+            Console.WriteLine("2. Terrain 2");
+
+            Console.Write("Entrez votre choix : ");
+            string saisie = Console.ReadLine() !;
+
+            if (saisie == "1")
+                return this.terrain1;
+
+            if (saisie == "2")
+                return this.terrain2;
+
+            Console.WriteLine("Choix invalide. Veuillez réessayer.");
+        }
+    }
+
+    /*
+        Demande un entier à l'utilisateur dans une plage définie.
+     
+        param message : Message affiché à l'utilisateur.
+        param min : Valeur minimale autorisée.
+        param max : Valeur maximale autorisée.
+
+        return : Un entier valide dans l’intervalle.
+    */
+    public static int SaisirEntier(string message, int min, int max)
+    {
+        int valeur = min - 1;
+        while (valeur < min || valeur > max)
+        {
+            Console.Write(message + $" ({min} - {max}) : ");
+            int.TryParse(Console.ReadLine()!, out valeur);
+
+            if (valeur < min || valeur > max)
+            {
+                Console.WriteLine($"Choix invalide. Veuillez saisir un chiffre entre {min} et {max}.");
+                AttendreUtilisateurPourContinuer();
+                Console.WriteLine();
+            }
         }
 
-        Console.WriteLine();
+        return valeur;
+    }
+
+    /*
+        Demande à l'utilisateur de choisir parmi les semis qu'il possède.
+
+        return : Type de plante correspondant au semis choisi.
+    */
+    private TypePlante ChoisirSemis()
+    {
+        AfficherInventaire(true);
+
+        bool choixValide = false;
+        int choix;
+        TypePlante typeChoisi = default;
+
+        while (! choixValide)
+        {
+            choix = SaisirEntier("Choisissez un type de plante à semer ", 1, this.graines.Count); 
+            typeChoisi = this.graines.Keys.ElementAt(choix - 1); 
+
+            if (this.graines[typeChoisi] == 0)
+                Console.WriteLine("Vous n'avez plus de graines de ce type. Veuillez en choisir une autre.");
+            else
+                choixValide = true;
+        }
+
+        this.graines[typeChoisi] -= 1;
+        return typeChoisi;
+    }
+
+    /*
+        Permet au joueur de semer une plante sur un terrain.
+        Le joueur choisi le type de plante, un terrain, des coordonnées valides, 
+        et la graine est plantée si l'emplacement est libre.
+    */
+    private void Semer()
+    {
+        Console.WriteLine("\n=> Semer\n");
+
+        // Si le joueur n'a plus de graines dans son inventaire, il ne peut rien semer.
+        int totalGraines = 0;
+        foreach (var graine in this.graines)
+        {
+            totalGraines += graine.Value;
+        }
+        if (totalGraines == 0)
+        {
+            Console.WriteLine("Vous n'avez plus de graines dans votre inventaire.");
+            return;
+        }
+
+        // Choix de la plante à semer.
+        TypePlante typeChoisi = this.ChoisirSemis();
+
+        // Semence.
+        bool plantee = this.ChoisirTerrain().Semer(typeChoisi);
+        if (plantee)
+            Console.WriteLine("Graine plantée avec succès !");
+        else
+            Console.WriteLine("La graine n’a pas pu être plantée.");
     }
 
     /*
@@ -270,7 +417,7 @@ public class Simulation
                 nbActionsRestantes--;
                 break;
             case "3":
-                Console.WriteLine("Coming soon...");
+                this.Semer();
                 nbActionsRestantes--;
                 break;
             case "4":
@@ -291,7 +438,6 @@ public class Simulation
         }
 
         AttendreUtilisateurPourContinuer();
-        Console.Clear();
         return true;
     }
 
@@ -301,7 +447,7 @@ public class Simulation
     */
     private void AfficherMeteo()
     {
-        Console.WriteLine("MÉTÉO");
+        Console.WriteLine("MÉTÉO\n");
 
         this.monde.DefinirMeteoActuelle();
 
@@ -319,30 +465,40 @@ public class Simulation
 
         while (partieEnCours)
         {
-            this.monde.AfficherIllustration();
-            Console.WriteLine($"    --- {this.monde.Nom} - Semaine {semaine} ---");
-            AfficherSeparateur();
+            if (semaine != 1)
+                Console.WriteLine($"Une semaine vient de s'écouler...\nEspérons que vos plantes vont bien...");
+            Console.WriteLine($"C'est parti pour la semaine {semaine} !");
 
-            this.AfficherMeteo();
-            AfficherSeparateur();
-
-            this.AfficherTerrains();
-            AfficherSeparateur();
-
-            this.AfficherPlantes();
-            AfficherSeparateur();
-
-            this.AfficherInventaire();
-            AfficherSeparateur();
+            AttendreUtilisateurPourContinuer();
+            Console.Clear();
 
             while (nbActionsRestantes > 0 && partieEnCours)
             {
+                this.monde.AfficherIllustration();
+                Console.WriteLine($"          --- {this.monde.Nom} - Semaine {semaine} ---");
+                AfficherSeparateur();
+
+                this.AfficherMeteo();
+                AfficherSeparateur();
+
+                this.AfficherTerrains();
+                AfficherSeparateur();
+
+                this.AfficherPlantes();
+                AfficherSeparateur();
+
+                this.AfficherInventaire();
+                AfficherSeparateur();
+
                 partieEnCours = this.ChoisirAction();
+
+                Console.Clear();
             }
 
             if (partieEnCours)
             {
                 semaine++;
+                nbActionsRestantes = NbActionsAutorisees;
             }
         }
 
@@ -363,7 +519,7 @@ public class Simulation
         Console.WriteLine("- Vous disposez de deux terrains de 5x5 cases chacun.");
         Console.WriteLine("- Vous commencez avec 2 graines de chaque type de plante disponible dans votre monde.");
         Console.WriteLine("- Chaque semaine, une météo est générée aléatoirement et influence vos cultures.");
-        Console.WriteLine("- Vous pouvez réaliser jusqu'à 8 actions par semaine : arroser, semer, désherber, récolter...");
+        Console.WriteLine($"- Vous pouvez réaliser jusqu'à {NbActionsAutorisees} actions par semaine : arroser, semer, désherber, récolter...");
         Console.WriteLine("- Passez au tour suivant lorsque vous avez terminé vos actions.");
         Console.WriteLine("- Votre objectif est de faire prospérer votre potager au fil des semaines !\n");
 
@@ -386,6 +542,8 @@ public class Simulation
 
         // Affichage des consignes.
         this.AfficherConsignes();
+
+        Console.Clear();
 
         // Lancement du jeu.
         this.LancerBouclePrincipale();

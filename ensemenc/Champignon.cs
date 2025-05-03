@@ -8,7 +8,6 @@ public class Champignon : Plante
         Constructeur de la classe Champignon.
     */
     public Champignon(
-        string unNom, 
         string unSymbole = "🍄",
         TypePlante unType = TypePlante.Champignon, 
         int uneTaille = 1, 
@@ -18,7 +17,7 @@ public class Champignon : Plante
         int uneTempMax = 20, 
         int uneVitesseCroissance = 2, 
         int uneEsperanceVie = 3, 
-        TypeSol unSolPrefere = TypeSol.Humifere) : base(unNom, unSymbole, unType, uneTaille, desBesoinsEau, desBesoinsLuminosite, uneTempMin, uneTempMax, uneVitesseCroissance, uneEsperanceVie, unSolPrefere)
+        TypeSol unSolPrefere = TypeSol.Humifere) : base(unSymbole, unType, uneTaille, desBesoinsEau, desBesoinsLuminosite, uneTempMin, uneTempMax, uneVitesseCroissance, uneEsperanceVie, unSolPrefere)
     {
     }
 }

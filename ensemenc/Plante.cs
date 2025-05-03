@@ -2,7 +2,6 @@
     Classe abstraite représentant une plante de jeu.
 */
 public abstract class Plante(
-    string unNom,
     string unSymbole,
     TypePlante unType,
     int uneTaille,
@@ -14,10 +13,9 @@ public abstract class Plante(
     int uneEsperanceVie,
     TypeSol unSolPrefere)
 {
-    protected string nom = unNom; // Nom de la plante.
     protected string symbole = unSymbole; // Symbole affiché pour représenter la plante.
     protected TypePlante type = unType; // Type de la plante.
-    protected int taille = uneTaille; // Taille de la plante sur la grille à l'âge adulte.
+    protected int taille = uneTaille; // Taille de la plante.
     protected int besoinsEau = desBesoinsEau; // Besoins en eau en pourcentage.
     protected int besoinsLuminosite = desBesoinsLuminosite; // Besoins en lumière en pourcentage.
     protected int temperatureMin = uneTempMin; // Température minimale supportée par la plante.
@@ -41,17 +39,66 @@ public abstract class Plante(
     /*
         Retourne une description textuelle de la plante.
 
-        return : Chaîne de caractères décrivant la plante.
+        return : Chaîne de caractères décrivant l'état actuel de la plante.
     */
     public override string ToString()
     {
-        string plante = $"{this.nom} {this.symbole} :\n";
+        string plante = $"{this.type} {this.symbole} :\n";
         plante += $"  - État : {this.etat}\n";
         plante += $"  - Croissance : {this.croissance}\n";
         plante += $"  - Taux d'arrosage : {this.tauxArrosage}%\n";
-        plante += $"  - Besoins : {this.besoinsEau}% en eau et {this.besoinsLuminosite}% en luminosité\n";
         plante += $"  - Production : {this.productions}\n";
 
         return plante;
+    }
+
+    /*
+        Affiche les caractéristiques d'une plante.
+
+        return : Chaîne de caractères décrivant les caractéristiques de la plante.
+    */
+    public string AfficherCaracteristiques()
+    {
+        string caracteristiques = $"      - Sol préféré : {this.solPrefere}\n";
+        caracteristiques += $"      - Taille : {this.taille}\n";
+        caracteristiques += $"      - Besoins : {this.besoinsEau}% en eau et {this.besoinsLuminosite}% en luminosité\n";
+        caracteristiques += $"      - Température de survie : entre {this.temperatureMin}°C et {this.temperatureMax}°C\n";
+        caracteristiques += $"      - Vitesse de croissance : {this.vitesseCroissance} semaines pour atteindre l'âge adulte\n";
+
+        return caracteristiques;
+    }
+
+    /*
+        Crée une instance de plante en fonction du type.
+
+        return : Instance de plante.
+    */
+    public static Plante CreerPlanteDepuisType(TypePlante type)
+    {
+        return type switch
+        {
+            TypePlante.Tomate => new Tomate(),
+            TypePlante.Fraise => new Fraise(),
+            TypePlante.Marguerite => new Marguerite(),
+            TypePlante.Champignon => new Champignon(),
+            _=> throw new Exception("Type de plante inconnu.")
+        };
+    }
+
+    /*
+        Affiche la description d'une plante en fonction du type.
+
+        return : La description de la plante.
+    */
+    public static string AfficherDescription(TypePlante type)
+    {
+        return type switch
+        {
+            TypePlante.Tomate => $"{new Tomate().AfficherCaracteristiques()}",
+            TypePlante.Fraise => $"{new Fraise().AfficherCaracteristiques()}",
+            TypePlante.Marguerite => $"{new Marguerite().AfficherCaracteristiques()}",
+            TypePlante.Champignon => $"{new Champignon().AfficherCaracteristiques()}",
+            _=> throw new Exception("Type de plante inconnu.")
+        };
     }
 }

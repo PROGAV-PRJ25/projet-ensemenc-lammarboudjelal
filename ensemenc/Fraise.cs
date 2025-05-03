@@ -3,7 +3,6 @@
     Hérite de la classe Plante et initialise ses caractéristiques propres.
 */
 public class Fraise(
-    string unNom,
     string unSymbole = "🍓",
     TypePlante unType = TypePlante.Fraise,
     int uneTaille = 1,
@@ -13,6 +12,6 @@ public class Fraise(
     int uneTempMax = 25,
     int uneVitesseCroissance = 3,
     int uneEsperanceVie = 1,
-    TypeSol unSolPrefere = TypeSol.Humifere) : Plante(unNom, unSymbole, unType, uneTaille, desBesoinsEau, desBesoinsLuminosite, uneTempMin, uneTempMax, uneVitesseCroissance, uneEsperanceVie, unSolPrefere)
+    TypeSol unSolPrefere = TypeSol.Humifere) : Plante(unSymbole, unType, uneTaille, desBesoinsEau, desBesoinsLuminosite, uneTempMin, uneTempMax, uneVitesseCroissance, uneEsperanceVie, unSolPrefere)
 {
 }
