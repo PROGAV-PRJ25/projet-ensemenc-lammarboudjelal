@@ -16,8 +16,9 @@ public class Champignon : Plante
         int uneTempMin = 5, 
         int uneTempMax = 20, 
         int uneVitesseCroissance = 2, 
-        int uneEsperanceVie = 3, 
-        TypeSol unSolPrefere = TypeSol.Humifere) : base(unSymbole, unType, uneTaille, desBesoinsEau, desBesoinsLuminosite, uneTempMin, uneTempMax, uneVitesseCroissance, uneEsperanceVie, unSolPrefere)
+        int uneEsperanceVie = 5, 
+        TypeSol unSolPrefere = TypeSol.Humifere, 
+        int unNbProductionsMaxPossible = 1) : base(unSymbole, unType, uneTaille, desBesoinsEau, desBesoinsLuminosite, uneTempMin, uneTempMax, uneVitesseCroissance, uneEsperanceVie, unSolPrefere, unNbProductionsMaxPossible)
     {
     }
 }

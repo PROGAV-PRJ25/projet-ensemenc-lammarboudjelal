@@ -11,7 +11,8 @@ public class Marguerite(
     int uneTempMin = 12,
     int uneTempMax = 28,
     int uneVitesseCroissance = 2,
-    int uneEsperanceVie = 3,
-    TypeSol unSolPrefere = TypeSol.Humifere) : Plante(unSymbole, unType, uneTaille, desBesoinsEau, desBesoinsLuminosite, uneTempMin, uneTempMax, uneVitesseCroissance, uneEsperanceVie, unSolPrefere)
+    int uneEsperanceVie = 6,
+    TypeSol unSolPrefere = TypeSol.Humifere,
+    int unNbProductionsMaxPossible = 1) : Plante(unSymbole, unType, uneTaille, desBesoinsEau, desBesoinsLuminosite, uneTempMin, uneTempMax, uneVitesseCroissance, uneEsperanceVie, unSolPrefere, unNbProductionsMaxPossible)
 {
 }

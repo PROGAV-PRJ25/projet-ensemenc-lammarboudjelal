@@ -11,7 +11,8 @@ public abstract class Plante(
     int uneTempMax,
     int uneVitesseCroissance,
     int uneEsperanceVie,
-    TypeSol unSolPrefere)
+    TypeSol unSolPrefere,
+    int unNbProductionsMaxPossible)
 {
     protected string symbole = unSymbole; // Symbole affiché pour représenter la plante.
     protected TypePlante type = unType; // Type de la plante.
@@ -20,14 +21,15 @@ public abstract class Plante(
     protected int besoinsLuminosite = desBesoinsLuminosite; // Besoins en lumière en pourcentage.
     protected int temperatureMin = uneTempMin; // Température minimale supportée par la plante.
     protected int temperatureMax = uneTempMax; // Température maximale supportée par la plante.
-    protected int vitesseCroissance = uneVitesseCroissance; // Nombre de semaines nécessaires pour atteindre la maturité (l'âge adulte).
-    protected int esperanceVie = uneEsperanceVie; // Espérance de vie de la plante en nombre de semaines si elle n'est pas récoltée.
+    protected int vitesseCroissance = uneVitesseCroissance; // Nombre de semaines nécessaires pour passer d'un âge à un autre.
+    protected int esperanceVie = uneEsperanceVie; // Durée de vie restante à partir de l'âge adulte si rien de fâcheux ne lui arrive.
     protected TypeSol solPrefere = unSolPrefere; // Type de sol préféré par la plante (conditions de pouce optimale).
     protected int tauxArrosage = 0; // Niveau d'eau de la plante en pourcentage (par défaut 0%). 
     private const int QuantiteArrosage = 50; // Pourcentage d'eau ajouté à la plante suite à un arrosage.
     protected Etat etat = Etat.BonneSante; // État de santé (par défaut "Bonne santé").
     protected Croissance croissance = Croissance.Semi; // Niveau de croissance de la plante (par défaut "Semi").
-    protected int productions = 0; // Nombre de production de la plante (fruits, légumes...) (par défaut 0).
+    protected int nbProductionsActuel = 0; // Nombre actuel de production de la plante (fruits, légumes...) (par défaut 0).
+    protected int nbProductionsMaxPossible = unNbProductionsMaxPossible; // Nombre de production de la plante (fruits, légumes...) maximal possible.
 
     /*
         Accesseur en lecture uniquement du symbole affiché pour représenter la plante.
@@ -48,7 +50,7 @@ public abstract class Plante(
         plante += $"  - État : {this.etat}\n";
         plante += $"  - Croissance : {this.croissance}\n";
         plante += $"  - Taux d'arrosage : {this.tauxArrosage}%\n";
-        plante += $"  - Production : {this.productions}\n";
+        plante += $"  - Production : {this.nbProductionsActuel}\n";
 
         return plante;
     }

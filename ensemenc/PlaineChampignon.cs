@@ -28,7 +28,7 @@ public class PlaineChampignon : Monde
         this.meteosPossibles.Add(new Meteo(22, 80, 5));  // Beau temps
         this.meteosPossibles.Add(new Meteo(12, 30, 60)); // Fortes pluies
 
-        this.meteoEnCours = this.meteosPossibles[0]; // Par défaut, la météo de départ du monde correspond à la météo la plus simple.
+        this.meteoPrevisionnelle = this.meteosPossibles[0]; // Par défaut, la météo de départ du monde correspond à la météo la plus simple.
     }
 
     /*

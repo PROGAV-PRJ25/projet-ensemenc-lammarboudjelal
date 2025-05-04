@@ -11,7 +11,8 @@ public class Tomate(
     int uneTempMin = 10,
     int uneTempMax = 30,
     int uneVitesseCroissance = 3,
-    int uneEsperanceVie = 1,
-    TypeSol unSolPrefere = TypeSol.Humifere) : Plante(unSymbole, unType, uneTaille, desBesoinsEau, desBesoinsLuminosite, uneTempMin, uneTempMax, uneVitesseCroissance, uneEsperanceVie, unSolPrefere)
+    int uneEsperanceVie = 8,
+    TypeSol unSolPrefere = TypeSol.Humifere,
+    int unNbProductionsMaxPossible = 3) : Plante(unSymbole, unType, uneTaille, desBesoinsEau, desBesoinsLuminosite, uneTempMin, uneTempMax, uneVitesseCroissance, uneEsperanceVie, unSolPrefere, unNbProductionsMaxPossible)
 {
 }

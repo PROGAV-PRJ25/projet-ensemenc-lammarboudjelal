@@ -462,16 +462,16 @@ public class Simulation
     }
 
     /*
-        Affiche la météo de la semaine passée.
+        Affiche la météo prévisionnelle de la semaine à venir.
         La météo est sélectionnée aléatoirement parmi les météos possibles dans le monde choisi.
     */
     private void AfficherMeteo()
     {
-        Console.WriteLine("MÉTÉO\n");
+        Console.WriteLine("MÉTÉO PRÉVISIONNELLE DE LE SEMAINE À VENIR\n");
 
-        this.monde.DefinirMeteoActuelle();
+        this.monde.DefinirMeteoPrevisionnelle();
 
-        Console.WriteLine($"{this.monde.MeteoEnCours}");
+        Console.WriteLine($"{this.monde.MeteoPrevisionnelle}");
     }
 
     /*
