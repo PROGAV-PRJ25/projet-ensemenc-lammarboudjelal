@@ -42,7 +42,7 @@ public abstract class Monde(string unNom)
     }
 
     /*
-        Accesseur en lecture uniquement de la météo en cours.
+        Accesseur en lecture uniquement de la météo prévisionnelle.
     */
     public Meteo MeteoPrevisionnelle
     {

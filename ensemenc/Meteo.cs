@@ -5,7 +5,31 @@ public class Meteo(int uneTemperature, int unTauxEnsoleillement, int unTauxPluie
 {
     private int temperature = uneTemperature; // Température en degrés Celsius.
     private int tauxEnsoleillement = unTauxEnsoleillement; // Taux d'ensoleillement en pourcentage.
-    private int tauxPluie = unTauxPluie; // Taux de précipitations en pourcentage.
+    private int tauxPluie = unTauxPluie; // Taux de précipitation en pourcentage.
+
+    /*
+        Accesseur en lecture uniquement de la température.
+    */
+    public int Temperature
+    {
+        get { return temperature; }
+    }
+
+    /*
+        Accesseur en lecture uniquement du taux d'ensoleillement.
+    */
+    public int TauxEnsoleillement
+    {
+        get { return tauxEnsoleillement; }
+    }
+
+    /*
+        Accesseur en lecture uniquement du taux de précipitation.
+    */
+    public int TauxPluie
+    {
+        get { return tauxPluie; }
+    }
 
     /*
         Retourne une description textuelle de la météo.

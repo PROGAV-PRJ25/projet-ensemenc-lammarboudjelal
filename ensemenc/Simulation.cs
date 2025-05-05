@@ -37,7 +37,7 @@ public class Simulation
     /*
         Affiche un message pour demander à l'utilisateur d'appuyer sur une touche pour continuer.
     */
-    private static void AttendreUtilisateurPourContinuer()
+    public static void AttendreUtilisateurPourContinuer()
     {
         Console.WriteLine("Appuyez sur une touche pour continuer...");
         Console.ReadKey();
@@ -143,7 +143,9 @@ public class Simulation
     */
     private static void AfficherSeparateur()
     {
-        Console.WriteLine("\n----------------------------------------------------------\n");
+        Console.WriteLine();
+        Console.WriteLine("----------------------------------------------------------");
+        Console.WriteLine();
         
     }
 
@@ -203,6 +205,7 @@ public class Simulation
             }
             Console.Write("+    ");
         }
+        Console.WriteLine();
     }
 
     /*
@@ -247,8 +250,6 @@ public class Simulation
         bool plantesT1 = AfficherPlantesTerrain(this.terrain1);
         Console.WriteLine();
         bool plantesT2 = AfficherPlantesTerrain(this.terrain2);
-
-        Console.WriteLine();
     }
 
     /*
@@ -459,13 +460,10 @@ public class Simulation
 
     /*
         Affiche la météo prévisionnelle de la semaine à venir.
-        La météo est sélectionnée aléatoirement parmi les météos possibles dans le monde choisi.
     */
     private void AfficherMeteo()
     {
         Console.WriteLine("MÉTÉO PRÉVISIONNELLE DE LE SEMAINE À VENIR\n");
-
-        this.monde.DefinirMeteoPrevisionnelle();
 
         Console.WriteLine($"{this.monde.MeteoPrevisionnelle}");
     }
@@ -487,6 +485,9 @@ public class Simulation
 
             AttendreUtilisateurPourContinuer();
             Console.Clear();
+
+            // La météo prévisionnelle est sélectionnée aléatoirement parmi les météos possibles dans le monde choisi.
+            this.monde.DefinirMeteoPrevisionnelle();
 
             while (nbActionsRestantes > 0 && partieEnCours)
             {
@@ -511,6 +512,10 @@ public class Simulation
                 Console.Clear();
             }
 
+            // Mise à jour des plantes en fin de tour
+            this.terrain1.MettreAJourPlantes(this.monde.MeteoPrevisionnelle);
+            this.terrain2.MettreAJourPlantes(this.monde.MeteoPrevisionnelle);
+
             if (partieEnCours)
             {
                 semaine++;
@@ -534,7 +539,7 @@ public class Simulation
         Console.WriteLine("Règles du jeu :");
         Console.WriteLine("- Vous disposez de deux terrains de 5x5 cases chacun.");
         Console.WriteLine("- Vous commencez avec 2 graines de chaque type de plante disponible dans votre monde.");
-        Console.WriteLine("- Chaque semaine, une météo est générée aléatoirement et influence vos cultures.");
+        Console.WriteLine("- Chaque semaine, une météo prévisionnelle est générée aléatoirement et influence vos cultures.");
         Console.WriteLine($"- Vous pouvez réaliser jusqu'à {NbActionsAutorisees} actions par semaine : arroser, semer, désherber, récolter...");
         Console.WriteLine("- Passez au tour suivant lorsque vous avez terminé vos actions.");
         Console.WriteLine("- Votre objectif est de faire prospérer votre potager au fil des semaines !\n");

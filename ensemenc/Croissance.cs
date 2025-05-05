@@ -1,7 +1,7 @@
 // Niveaux de croissance d'une plante
 public enum Croissance
 {
-    Semi,
+    Semis,
     Bebe,
     Adolescent,
     Adulte

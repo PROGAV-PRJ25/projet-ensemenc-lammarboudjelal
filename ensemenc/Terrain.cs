@@ -105,4 +105,24 @@ public class Terrain(string unNom)
 
         return true;
     }
+
+    /*
+        Met à jour toutes les plantes du terrain selon les conditions météorologiques, caractéristiques du terrain et ses conditions de vie.
+
+        param meteo : Météo de la semaine impactant la plante.
+    */
+    public void MettreAJourPlantes(Meteo meteo)
+    {
+        for (int i = 0; i < this.plantes.GetLength(0); i++)
+        {
+            for (int j = 0; j < this.plantes.GetLength(1); j++)
+            {
+                Plante? plante = this.plantes[i, j];
+                if (plante != null && plante.Etat != Etat.Morte)
+                {
+                    plante.MettreAJour(meteo, this.typeSol);
+                }
+            }
+        }
+    }
 }
