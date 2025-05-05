@@ -48,11 +48,8 @@ public class Simulation
     */
     private void InitialiserTerrains()
     {
-        if (this.monde.TypesSolsDisponibles is not null)
-        {
-            this.terrain1.TypeSol = this.monde.TypesSolsDisponibles.First();
-            this.terrain2.TypeSol = this.monde.TypesSolsDisponibles.Last();
-        }
+        this.terrain1.TypeSol = this.monde.TypesSolsDisponibles.First();
+        this.terrain2.TypeSol = this.monde.TypesSolsDisponibles.Last();
     }
 
     /*
@@ -61,13 +58,10 @@ public class Simulation
     */
     private void InitialiserInventaire()
     {
-        if (this.monde.TypesPlanteDisponibles is not null)
+        foreach (var typePlante in this.monde.TypesPlanteDisponibles)
         {
-            foreach (var typePlante in this.monde.TypesPlanteDisponibles)
-            {
-                this.graines.Add(typePlante, 2);
-                this.recoltes.Add(typePlante, 0);
-            }
+            this.graines.Add(typePlante, 2);
+            this.recoltes.Add(typePlante, 0);
         }
     }
 
@@ -201,56 +195,58 @@ public class Simulation
 
         // Dernière ligne horizontale
         Console.Write("  ");
-        for (int j = 0; j < 5; j++)
+        for (int k = 0; k < 2; k++)
         {
-            Console.Write("+----");
+            for (int j = 0; j < 5; j++)
+            {
+                Console.Write("+----");
+            }
+            Console.Write("+    ");
         }
-        Console.Write("+    ");
-
-        for (int j = 0; j < 5; j++)
-        {
-            Console.Write("+----");
-        }
-        Console.WriteLine("+");
     }
 
     /*
-        Affiche les informations sur les plantes actuellement semées.
+        Affiche les plantes présentes sur un terrain donné, avec leurs coordonnées et leur représentation.
+
+        param terrain : Le terrain à analyser.
+
+        return : True si au moins une plante est présente, False sinon.
+    */
+    private bool AfficherPlantesTerrain(Terrain terrain)
+    {
+        Console.WriteLine($"{terrain.Nom} :");
+        bool planteTrouvee = false;
+
+        for (int i = 0; i < terrain.Plantes.GetLength(0); i++)
+        {
+            for (int j = 0; j < terrain.Plantes.GetLength(1); j++)
+            {
+                if (terrain.Plantes[i, j] is not null)
+                {
+                    Console.WriteLine($"({i + 1},{j + 1}) {terrain.Plantes[i, j]}");
+                    planteTrouvee = true;
+                }
+            }
+        }
+
+        if (!planteTrouvee)
+        {
+            Console.WriteLine("(Aucune plante plantée pour l'instant)");
+        }
+
+        return planteTrouvee;
+    }
+
+    /*
+        Affiche les informations sur les plantes actuellement semées sur les deux terrains du joueur.
     */
     private void AfficherPlantes()
     {
         Console.WriteLine("MES PLANTES\n");
 
-        bool existePlantes = false;
-
-        Console.WriteLine("Terrain 1 : ");
-        for (int i = 0; i < this.terrain1.Plantes.GetLength(0); i++)
-        {
-            for (int j = 0; j < this.terrain1.Plantes.GetLength(1); j++)
-            {
-                if (this.terrain1.Plantes[i,j] is not null)
-                {
-                    Console.WriteLine($"({i+1},{j+1}) {this.terrain1.Plantes[i,j]}");
-                }
-            }
-        }
-        if(! existePlantes) 
-            Console.WriteLine("(Aucune plante plantée pour l'instant)");
-
-        Console.WriteLine("\nTerrain 2 : ");
-        for (int i = 0; i < this.terrain2.Plantes.GetLength(0); i++)
-        {
-            for (int j = 0; j < this.terrain2.Plantes.GetLength(1); j++)
-            {
-                if (this.terrain2.Plantes[i,j] is not null)
-                {
-                    Console.WriteLine($"({i+1},{j+1}) {this.terrain2.Plantes[i,j]}");
-                    existePlantes = true;
-                }
-            }
-        }
-        if(! existePlantes) 
-            Console.WriteLine("(Aucune plante plantée pour l'instant)");
+        bool plantesT1 = AfficherPlantesTerrain(this.terrain1);
+        Console.WriteLine();
+        bool plantesT2 = AfficherPlantesTerrain(this.terrain2);
 
         Console.WriteLine();
     }

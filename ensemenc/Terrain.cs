@@ -24,6 +24,27 @@ public class Terrain(string unNom)
     {
         get { return plantes; }
     }
+
+    /*
+        Accesseur en lecture uniquement du nom du terrain.
+    */
+    public string Nom
+    {
+        get { return nom; }
+    }
+
+    /*
+        Demande les coordonnées à l'utilisateur et retourne (x, y).
+    
+        return : Tuple (x, y) si l'utilisateur entre des valeurs valides.
+    */
+    private static (int x, int y) SaisirCoordonnees(string action)
+    {
+        Console.WriteLine($"Coordonnées de la plante à {action} :");
+        int x = Simulation.SaisirEntier("Ligne ", 1, 5) - 1; // -1 car un tableau commence à l'indice 0.
+        int y = Simulation.SaisirEntier("Colonne ", 1, 5) - 1;
+        return (x, y);
+    }
     
     /*
         Sème une plante du type donné à l'emplacement (x, y) si possible.
@@ -34,12 +55,8 @@ public class Terrain(string unNom)
     */
     public bool Semer(TypePlante type)
     {
-        // Choix des coordonnées de semence.
-        Console.WriteLine("Coordonnées de la graine :");
-        int x = Simulation.SaisirEntier("Ligne ", 1, 5) - 1; // -1 car un tableau commence à l'indice 0.
-        int y = Simulation.SaisirEntier("Colonne ", 1, 5) - 1;
+        var (x,y) = SaisirCoordonnees("semer");
 
-        // Emplacement déjà occupé.
         if (this.plantes[x, y] != null)
         {
             Console.WriteLine($"L'emplacement est déjà occupé par {this.plantes[x, y]!.Symbole}. C'est dommage, vous venez de perdre une graine...");
@@ -58,14 +75,11 @@ public class Terrain(string unNom)
     */
     public bool Desherber()
     {
-        Console.WriteLine("Coordonnées de la plante à retirer :");
-        int x = Simulation.SaisirEntier("Ligne ", 1, 5) - 1; // -1 car un tableau commence à l'indice 0.
-        int y = Simulation.SaisirEntier("Colonne ", 1, 5) - 1;
+        var (x, y) = SaisirCoordonnees("retirer");
 
-        // Emplacement non occupé.
         if (this.plantes[x, y] == null)
         {
-            Console.WriteLine("Aucune plante n'est positionnée à ses coordonnées. C'est dommage, vous venez de perdre une action...");
+            Console.WriteLine("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
             return false;
         }
         
@@ -79,14 +93,11 @@ public class Terrain(string unNom)
     */
     public bool Arroser()
     {
-        Console.WriteLine("Coordonnées de la plante à arroser :");
-        int x = Simulation.SaisirEntier("Ligne ", 1, 5) - 1; // -1 car un tableau commence à l'indice 0.
-        int y = Simulation.SaisirEntier("Colonne ", 1, 5) - 1;
+        var (x, y) = SaisirCoordonnees("arroser");
 
-        // Emplacement non occupé.
         if (this.plantes[x, y] == null)
         {
-            Console.WriteLine("Aucune plante n'est positionnée à ses coordonnées. C'est dommage, vous venez de perdre une action...");
+            Console.WriteLine("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
             return false;
         }
         
