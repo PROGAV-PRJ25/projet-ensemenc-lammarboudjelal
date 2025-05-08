@@ -450,6 +450,15 @@ public class Simulation
     }
 
     /*
+        Permet au joueur de soigner une plante.
+    */
+    private void Soigner()
+    {
+        Console.WriteLine("\n=> Soigner");
+        this.ChoisirTerrain().Traiter();
+    }
+
+    /*
         Affiche le menu des actions et traite le choix du joueur.
 
         return : False si le joueur choisit de quitter le jeu.
@@ -461,8 +470,9 @@ public class Simulation
         Console.WriteLine("2. Récolter");
         Console.WriteLine("3. Semer");
         Console.WriteLine("4. Désherber");
-        Console.WriteLine("5. Passer au tour suivant");
-        Console.WriteLine("6. Quitter le jeu\n");
+        Console.WriteLine("5. Soigner");
+        Console.WriteLine("6. Passer au tour suivant");
+        Console.WriteLine("7. Quitter le jeu\n");
 
         Console.Write("Entrez le numéro de l'action que vous souhaitez réaliser : ");
         
@@ -487,10 +497,14 @@ public class Simulation
                 nbActionsRestantes--;
                 break;
             case "5":
+                this.Soigner();
+                nbActionsRestantes--;
+                break;
+            case "6":
                 Console.WriteLine("Vous passez au tour suivant !");
                 nbActionsRestantes = 0;
                 break;
-            case "6":
+            case "7":
                 Console.WriteLine("Vous quittez le jeu...");
                 return false;
 

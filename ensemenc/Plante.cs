@@ -319,4 +319,21 @@ public abstract class Plante(
         Initialise les probabilités de maladies spécifiques à la plante.
     */
     protected abstract void InitialiserProbabilitesMaladies();
+
+    /*
+        Soigne la plante si elle est malade.
+
+        return : True si la plante était malade et qu'elle est de nouveau sur pieds, false sinon.
+    */
+    public bool Guerir()
+    {
+        if (this.etat == Etat.Malade)
+        {
+            this.maladieActuelle = null;
+            this.etat = Etat.BonneSante;
+            this.toursMalade = 0;
+            return true;
+        }
+        return false;
+    }
 }

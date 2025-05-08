@@ -89,7 +89,9 @@ public class Terrain(string unNom)
 
     /*
         Arrose une plante du terrain à partir des coordonnées saisies.
-        Un arrosage ajoute 50%
+        Un arrosage ajoute 50% d'eau au taux d'arrosage d'une plante.
+
+        return : True si une plante a été arrosée, false sinon.
     */
     public bool Arroser()
     {
@@ -151,5 +153,22 @@ public class Terrain(string unNom)
         planteSelectionnee.NbProductionsActuel = 0;
 
         return (true, type, quantite);
+    }
+
+    /*
+        Traite une plante du terrain si possible.
+    */
+    public void Traiter()
+    {
+        var (x, y) = SaisirCoordonnees("soigner");
+        
+        Plante? planteSelectionnee = this.plantes[x,y];
+
+        if (planteSelectionnee == null)
+            Console.WriteLine("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
+        else if (planteSelectionnee.Guerir())
+            Console.WriteLine("Votre plante a été soignée, elle pète la forme !");
+        else
+            Console.WriteLine("Cette plante était déjà en bonne santé. C'est dommage, vous venez de perdre une action...");
     }
 }
