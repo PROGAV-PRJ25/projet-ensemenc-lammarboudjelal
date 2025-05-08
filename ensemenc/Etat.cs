@@ -2,5 +2,6 @@
 public enum Etat
 {
     BonneSante,
+    Malade,
     Morte
 }

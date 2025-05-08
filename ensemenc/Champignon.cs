@@ -7,18 +7,28 @@ public class Champignon : Plante
     /*
         Constructeur de la classe Champignon.
     */
-    public Champignon(
-        string unSymbole = "🍄",
-        TypePlante unType = TypePlante.Champignon, 
-        int uneTaille = 1, 
-        int desBesoinsEau = 80, 
-        int desBesoinsLuminosite = 20, 
-        int uneTempMin = 5, 
-        int uneTempMax = 20, 
-        int uneVitesseCroissance = 2, 
-        int uneEsperanceVie = 5, 
-        TypeSol unSolPrefere = TypeSol.Humifere, 
-        int unNbProductionsMaxPossible = 1) : base(unSymbole, unType, uneTaille, desBesoinsEau, desBesoinsLuminosite, uneTempMin, uneTempMax, uneVitesseCroissance, uneEsperanceVie, unSolPrefere, unNbProductionsMaxPossible)
+    public Champignon() : base(
+        unSymbole : "🍄",
+        unType : TypePlante.Champignon, 
+        uneTaille : 1, 
+        desBesoinsEau : 80, 
+        desBesoinsLuminosite : 20, 
+        uneTempMin : 5, 
+        uneTempMax : 20, 
+        uneVitesseCroissance : 2, 
+        uneEsperanceVie : 5, 
+        unSolPrefere : TypeSol.Humifere, 
+        unNbProductionsMaxPossible : 1) 
     {
+        this.InitialiserProbabilitesMaladies(); 
+    }
+
+    /*
+        Initialise les probabilités de maladies spécifiques au champignon.
+    */
+    protected override void InitialiserProbabilitesMaladies()
+    {
+        ProbaMaladies[Maladie.Necrose] = 15;
+        ProbaMaladies[Maladie.Moisissure] = 20;
     }
 }

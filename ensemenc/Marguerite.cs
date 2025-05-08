@@ -2,17 +2,32 @@
     Représente une plante spécifique : Marguerite.
     Hérite de la classe Plante et initialise ses caractéristiques propres.
 */
-public class Marguerite(
-    string unSymbole = "🌼",
-    TypePlante unType = TypePlante.Marguerite,
-    int uneTaille = 1,
-    int desBesoinsEau = 40,
-    int desBesoinsLuminosite = 90,
-    int uneTempMin = 12,
-    int uneTempMax = 28,
-    int uneVitesseCroissance = 2,
-    int uneEsperanceVie = 6,
-    TypeSol unSolPrefere = TypeSol.Humifere,
-    int unNbProductionsMaxPossible = 1) : Plante(unSymbole, unType, uneTaille, desBesoinsEau, desBesoinsLuminosite, uneTempMin, uneTempMax, uneVitesseCroissance, uneEsperanceVie, unSolPrefere, unNbProductionsMaxPossible)
+public class Marguerite : Plante
 {
+    /*
+        Constructeur de la classe Marguerite.
+    */
+    public Marguerite() : base(
+        unSymbole: "🌼",
+        unType: TypePlante.Marguerite,
+        uneTaille: 1,
+        desBesoinsEau: 40,
+        desBesoinsLuminosite: 90,
+        uneTempMin: 12,
+        uneTempMax: 28,
+        uneVitesseCroissance: 2,
+        uneEsperanceVie: 6,
+        unSolPrefere: TypeSol.Humifere,
+        unNbProductionsMaxPossible: 1)
+    {
+        this.InitialiserProbabilitesMaladies(); 
+    }
+
+    /*
+        Initialise les probabilités de maladies spécifiques à la marguerite.
+    */
+    protected override void InitialiserProbabilitesMaladies()
+    {
+        ProbaMaladies[Maladie.Oidium] = 10;
+    }
 }

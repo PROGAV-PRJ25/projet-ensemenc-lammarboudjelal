@@ -2,17 +2,33 @@
     Représente une plante spécifique : Fraise.
     Hérite de la classe Plante et initialise ses caractéristiques propres.
 */
-public class Fraise(
-    string unSymbole = "🍓",
-    TypePlante unType = TypePlante.Fraise,
-    int uneTaille = 1,
-    int desBesoinsEau = 60,
-    int desBesoinsLuminosite = 85,
-    int uneTempMin = 8,
-    int uneTempMax = 25,
-    int uneVitesseCroissance = 3,
-    int uneEsperanceVie = 7,
-    TypeSol unSolPrefere = TypeSol.Humifere,
-    int unNbProductionsMaxPossible = 4) : Plante(unSymbole, unType, uneTaille, desBesoinsEau, desBesoinsLuminosite, uneTempMin, uneTempMax, uneVitesseCroissance, uneEsperanceVie, unSolPrefere, unNbProductionsMaxPossible)
+public class Fraise : Plante
 {
+    /*
+        Constructeur de la classe Fraise.
+    */
+    public Fraise() : base(
+        unSymbole: "🍓",
+        unType: TypePlante.Fraise,
+        uneTaille: 1,
+        desBesoinsEau: 60,
+        desBesoinsLuminosite: 85,
+        uneTempMin: 8,
+        uneTempMax: 25,
+        uneVitesseCroissance: 3,
+        uneEsperanceVie: 7,
+        unSolPrefere: TypeSol.Humifere,
+        unNbProductionsMaxPossible: 4)
+    {
+        this.InitialiserProbabilitesMaladies(); 
+    }
+
+    /*
+        Initialise les probabilités de maladies spécifiques à la fraise.
+    */
+    protected override void InitialiserProbabilitesMaladies()
+    {
+        ProbaMaladies[Maladie.Moisissure] = 20;
+        ProbaMaladies[Maladie.Mildiou] = 10;
+    }
 }

@@ -31,6 +31,9 @@ public abstract class Plante(
     protected Croissance croissance = Croissance.Semis; // Niveau de croissance de la plante (par défaut "Semis").
     protected int nbProductionsActuel = 0; // Nombre actuel de production de la plante (fruits, légumes...) (par défaut 0).
     protected int nbProductionsMaxPossible = unNbProductionsMaxPossible; // Nombre de production de la plante (fruits, légumes...) maximal possible.
+    protected Dictionary<Maladie, int> ProbaMaladies { get; } = []; // Probabilité que la plante attrape une maladie donnée, exprimée en %.
+    protected Maladie? maladieActuelle = null;
+    protected int toursMalade = 0;
 
     /*
         Accesseur en lecture uniquement du symbole affiché pour représenter la plante.
@@ -249,13 +252,47 @@ public abstract class Plante(
     /*
         Réduit le taux d’arrosage par deux en fin de semaine.
     */
-    private void ReduirArrosage()
+    private void ReduireArrosage()
     {
         this.tauxArrosage /= 2;
     }
 
     /*
-        Applique tous les effets de la météo et du temps sur une plante.
+        Tente de contaminer la plante avec l'une des maladies dont elle est sensible.
+        Si la plante est déjà malade depuis 2 tours, elle meurt.
+        La plante ne peut attraper qu'une maladie à la fois.
+    */
+    private void TenterContamination()
+    {
+        if (this.etat == Etat.Malade)
+        {
+            this.toursMalade++;
+            if (this.toursMalade >= 2)
+            {
+                this.etat = Etat.Morte;
+                return;
+            }
+            return;
+        }
+
+        // Tentative de contamination : 
+        //  - un nombre aléatoire est tiré entre 1 et 100,
+        //  - si ce nombre est inférieur ou égale à la probabilité de contamination 
+        //    de la maladie, alors la plante tombe malade.
+        foreach (var proba in ProbaMaladies)
+        {
+            int tirage = Random.Shared.Next(1,101);
+            if (tirage <= proba.Value)
+            {
+                this.maladieActuelle = proba.Key;
+                this.etat = Etat.Malade;
+                return;
+            }
+        }
+    }
+
+    /*
+        Applique tous les effets de la météo et du temps sur une plante à chaque fin de tour.
 
         param meteo : Météo actuelle.
         param typeSol : Type de sol du terrain sur lequel la plante est cultivée.
@@ -265,11 +302,21 @@ public abstract class Plante(
         this.AjusterArrosage(meteo);
         this.VerifierTemperature(meteo);
         if (this.croissance == Croissance.Adulte) this.GererVieillissement();
-        if (this.etat == Etat.BonneSante) 
+        if (this.etat != Etat.BonneSante) 
         {
-            this.GererCroissance(meteo, typeSol);
-            this.GererProduction();
-            this.ReduirArrosage();
+            // Tant qu'une plante est malade, elle ne peut ni grandir, ni produire.
+            if (this.etat == Etat.BonneSante)
+            {
+                this.GererCroissance(meteo, typeSol);
+                this.GererProduction();
+            }
+            this.ReduireArrosage();
+            this.TenterContamination();
         }
     }
+
+    /*
+        Initialise les probabilités de maladies spécifiques à la plante.
+    */
+    protected abstract void InitialiserProbabilitesMaladies();
 }

@@ -2,17 +2,33 @@
     Représente une plante spécifique : Tomate.
     Hérite de la classe Plante et initialise ses caractéristiques propres.
 */
-public class Tomate(
-    string unSymbole = "🍅",
-    TypePlante unType = TypePlante.Tomate,
-    int uneTaille = 1,
-    int desBesoinsEau = 60,
-    int desBesoinsLuminosite = 70,
-    int uneTempMin = 10,
-    int uneTempMax = 30,
-    int uneVitesseCroissance = 3,
-    int uneEsperanceVie = 8,
-    TypeSol unSolPrefere = TypeSol.Humifere,
-    int unNbProductionsMaxPossible = 3) : Plante(unSymbole, unType, uneTaille, desBesoinsEau, desBesoinsLuminosite, uneTempMin, uneTempMax, uneVitesseCroissance, uneEsperanceVie, unSolPrefere, unNbProductionsMaxPossible)
+public class Tomate : Plante
 {
+    /*
+        Constructeur de la classe Tomate.
+    */
+    public Tomate() : base(
+        unSymbole: "🍅",
+        unType: TypePlante.Tomate,
+        uneTaille: 2,
+        desBesoinsEau: 70,
+        desBesoinsLuminosite: 80,
+        uneTempMin: 10,
+        uneTempMax: 30,
+        uneVitesseCroissance: 4,
+        uneEsperanceVie: 12,
+        unSolPrefere: TypeSol.Argileux,
+        unNbProductionsMaxPossible: 3)
+    {
+        this.InitialiserProbabilitesMaladies(); 
+    }
+
+    /*
+        Initialise les probabilités de maladies spécifiques à la tomate.
+    */
+    protected override void InitialiserProbabilitesMaladies()
+    {
+        ProbaMaladies[Maladie.Mildiou] = 25;
+        ProbaMaladies[Maladie.Oidium] = 10;
+    }
 }
