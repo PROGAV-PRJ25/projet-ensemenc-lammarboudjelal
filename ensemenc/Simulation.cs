@@ -139,7 +139,7 @@ public class Simulation
 
         return : Un entier valide dans l’intervalle.
     */
-    public static int SaisirEntier(string message, int min, int max)
+    private static int SaisirEntier(string message, int min, int max)
     {
         int valeur = min - 1;
         while (valeur < min || valeur > max)
@@ -159,15 +159,33 @@ public class Simulation
     }
 
     /*
+        Demande les coordonnées à l'utilisateur et retourne (x, y).
+    
+        return : Tuple (x, y) si l'utilisateur entre des valeurs valides.
+    */
+    private static (int x, int y) SaisirCoordonnees(string action)
+    {
+        Console.WriteLine($"Coordonnées de la plante à {action} :");
+        int x = SaisirEntier("Ligne ", 1, 5) - 1; // -1 car un tableau commence à l'indice 0.
+        int y = SaisirEntier("Colonne ", 1, 5) - 1;
+        return (x, y);
+    }
+
+    /*
         Permet au joueur d'arroser une plante sur un terrain choisi.
     */
     private void Arroser()
     {
         Console.WriteLine("\n=> Arroser");
 
-        bool planteArrosee = this.ChoisirTerrain().Arroser();
+        var (x, y) = SaisirCoordonnees("arroser");
+
+        bool planteArrosee = this.ChoisirTerrain().Arroser(x, y);
+
         if(planteArrosee)
             Console.WriteLine("Votre plante est désaltérée !");
+        else
+            Console.WriteLine("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
     }
 
     /*
@@ -177,8 +195,9 @@ public class Simulation
     {
         Console.WriteLine("\n=> Récolter");
 
-        Terrain terrainChoisi = this.ChoisirTerrain();
-        var (plantePresente, type, quantite) = terrainChoisi.Recolter();
+        var (x, y) = SaisirCoordonnees("récolter");
+
+        var (plantePresente, type, quantite) = this.ChoisirTerrain().Recolter(x, y);
 
         if (! plantePresente)
             Console.WriteLine("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
@@ -250,12 +269,15 @@ public class Simulation
         // Choix de la plante à semer.
         TypePlante typeChoisi = this.ChoisirSemis();
 
+        // Choix des coordonnées de semis.
+        var (x,y) = SaisirCoordonnees("semer");
+
         // Semence.
-        bool plantee = this.ChoisirTerrain().Semer(typeChoisi);
+        bool plantee = this.ChoisirTerrain().Semer(typeChoisi, x, y);
         if (plantee)
             Console.WriteLine("Graine plantée avec succès !");
         else
-            Console.WriteLine("La graine n’a pas pu être plantée.");
+            Console.WriteLine($"L'emplacement est déjà occupé par une autre plante. C'est dommage, vous venez de perdre une graine...");
     }
 
     /*
@@ -265,9 +287,13 @@ public class Simulation
     {
         Console.WriteLine("\n=> Désherber");
 
-        bool planteRetiree = this.ChoisirTerrain().Desherber();
+        var (x, y) = SaisirCoordonnees("retirer");
+
+        bool planteRetiree = this.ChoisirTerrain().Desherber(x, y);
         if(planteRetiree)
             Console.WriteLine("Plante retirée avec succès !");
+        else 
+            Console.WriteLine("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
     }
 
     /*
@@ -276,7 +302,10 @@ public class Simulation
     private void Soigner()
     {
         Console.WriteLine("\n=> Soigner");
-        this.ChoisirTerrain().Traiter();
+
+        var (x, y) = SaisirCoordonnees("soigner");
+
+        this.ChoisirTerrain().Traiter(x, y);
     }
 
     /*
