@@ -49,6 +49,31 @@ public abstract class Plante(
     }
 
     /*
+        Accesseur en lecture uniquement du nombre de production maximal que peut donner la plante.
+    */
+    public int NbProductionsMaxPossible 
+    { 
+        get { return nbProductionsMaxPossible; }
+    }
+
+    /*
+        Accesseur en lecture et écriture du nombre de production actuel de la plante.
+    */
+    public int NbProductionsActuel 
+    { 
+        get { return nbProductionsActuel; }
+        set { nbProductionsActuel = value; }
+    }
+
+    /*
+        Accesseur en lecture uniquement du type de la plante.
+    */
+    public TypePlante Type 
+    { 
+        get { return type; }
+    }
+
+    /*
         Retourne une description textuelle de la plante.
 
         return : Chaîne de caractères décrivant l'état actuel de la plante.
@@ -118,6 +143,23 @@ public abstract class Plante(
             TypePlante.Fraise => $"{new Fraise().AfficherCaracteristiques()}",
             TypePlante.Marguerite => $"{new Marguerite().AfficherCaracteristiques()}",
             TypePlante.Champignon => $"{new Champignon().AfficherCaracteristiques()}",
+            _=> throw new Exception("Type de plante inconnu.")
+        };
+    }
+
+    /*
+        Indique le nombre de production d'une plante selon son type.
+
+        return : Le nombre de production de la plante.
+    */
+    public static int IndiquerNbProductionsSelonType(TypePlante type)
+    {
+        return type switch
+        {
+            TypePlante.Tomate => new Tomate().NbProductionsMaxPossible,
+            TypePlante.Fraise => new Fraise().NbProductionsMaxPossible,
+            TypePlante.Marguerite => new Marguerite().NbProductionsMaxPossible,
+            TypePlante.Champignon => new Champignon().NbProductionsMaxPossible,
             _=> throw new Exception("Type de plante inconnu.")
         };
     }

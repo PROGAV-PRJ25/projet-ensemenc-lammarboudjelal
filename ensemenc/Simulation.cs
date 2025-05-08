@@ -261,12 +261,25 @@ public class Simulation
     {
         Console.WriteLine("INVENTAIRE\n");
         
+        // Graines
+        Console.WriteLine("Graines disponibles :\n");
         int i = 1;
         foreach (var graine in graines)
         {
-            Console.WriteLine($"{i} - {graine.Key} : {graine.Value} graines restantes");
+            Console.WriteLine($"{i} - {graine.Key} : {graine.Value} graine(s) restante(s)");
             if(avecCaracteristiques) Console.WriteLine($"{Plante.AfficherDescription(graine.Key)}\n");
             i++;
+        }
+
+        // Récoltes
+        if (this.recoltes.Any(kv => kv.Value > 0) && !avecCaracteristiques)
+        {
+            Console.WriteLine("\nRécoltes en stock :\n");
+            foreach (var recolte in recoltes)
+            {
+                if (recolte.Value > 0)
+                    Console.WriteLine($"- {recolte.Key} : {recolte.Value} unité(s) récoltée(s)");
+            }
         }
     }
 
@@ -389,6 +402,8 @@ public class Simulation
     */
     private void Desherber()
     {
+        Console.WriteLine("\n=> Désherber");
+
         bool planteRetiree = this.ChoisirTerrain().Desherber();
         if(planteRetiree)
             Console.WriteLine("Plante retirée avec succès !");
@@ -399,9 +414,39 @@ public class Simulation
     */
     private void Arroser()
     {
+        Console.WriteLine("\n=> Arroser");
+
         bool planteArrosee = this.ChoisirTerrain().Arroser();
         if(planteArrosee)
             Console.WriteLine("Votre plante est désaltérée !");
+    }
+
+    /*
+        Permet au joueur de récolter les productions d'une plante.
+    */
+    private void Recolter()
+    {
+        Console.WriteLine("\n=> Récolter");
+
+        Terrain terrainChoisi = this.ChoisirTerrain();
+        var (plantePresente, type, quantite) = terrainChoisi.Recolter();
+
+        if (! plantePresente)
+            Console.WriteLine("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
+        else if (quantite == 0)
+            Console.WriteLine("Cette plante n’a rien produit cette semaine. Il faudra patienter...");
+        else
+        {
+            if (type != null)
+            {
+                if (this.recoltes.ContainsKey(type.Value))
+                    this.recoltes[type.Value] += quantite;
+                else
+                    this.recoltes[type.Value] = quantite;
+
+                Console.WriteLine($"Vous avez récolté {quantite} unité(s) de {type} !");
+            }
+        }
     }
 
     /*
@@ -430,7 +475,7 @@ public class Simulation
                 nbActionsRestantes--;
                 break;
             case "2":
-                Console.WriteLine("Coming soon...");
+                this.Recolter();
                 nbActionsRestantes--;
                 break;
             case "3":

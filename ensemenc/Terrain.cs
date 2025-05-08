@@ -125,4 +125,31 @@ public class Terrain(string unNom)
             }
         }
     }
+
+    /*
+        Récolte les productions d'une plante si possible.
+
+        return : Un tuple contenant :
+                    - bool : true si une plante est présente à l'emplacement sélectionnée par le joueur,
+                    - TypePlante? : le type de la plante (null si pas de plante),
+                    - int : la quantité de production récoltée (0 si aucune production).
+    */
+    public (bool plantePresente, TypePlante? type, int quantite) Recolter()
+    {
+        var (x, y) = SaisirCoordonnees("récolter");
+
+        Plante? planteSelectionnee = this.plantes[x,y];
+
+        if (planteSelectionnee == null)
+        {
+            return (false, null, 0);
+        }
+
+        int quantite = planteSelectionnee.NbProductionsActuel;
+        TypePlante type = planteSelectionnee.Type;
+        
+        planteSelectionnee.NbProductionsActuel = 0;
+
+        return (true, type, quantite);
+    }
 }
