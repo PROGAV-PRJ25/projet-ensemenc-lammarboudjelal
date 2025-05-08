@@ -5,10 +5,8 @@
 public class PlaineChampignon : Monde
 {
     /*
-        Constructeur de Plaine Champignon.
+        Constructeur de la classe Plaine Champignon.
         Initialise le sol, les plantes et les météos typiques du monde.
-
-        param unNom : Nom du monde (par défaut "Plaine Champignon").
     */
     public PlaineChampignon(string unNom = "Plaine Champignon") : base(unNom)
     {
@@ -29,6 +27,9 @@ public class PlaineChampignon : Monde
         this.meteosPossibles.Add(new Meteo(12, 30, 60)); // Fortes pluies
 
         this.meteoPrevisionnelle = this.meteosPossibles[0]; // Par défaut, la météo de départ du monde correspond à la météo la plus simple.
+
+        // Initialisation de l'illustration du monde.
+        this.InitialiserIllustration();
     }
 
     /*
@@ -48,21 +49,21 @@ public class PlaineChampignon : Monde
     }
 
     /*
-        Affiche une illustration ASCII représentant la Plaine Champignon.
+        Initialiser une illustration ASCII représentant la Plaine Champignon.
     */
-    public override void AfficherIllustration()
+    public override void InitialiserIllustration()
     {
-        Console.WriteLine("                 ⠀⠀⠀⠀⠀⠀⠀⣀⣀⡤⠤⢤⣀⡀");
-        Console.WriteLine("                 ⠀⠀⠀⢀⡤⠚⠉⠑⣀⠔⠐⠢⠀⠈⡹⠶⣄");
-        Console.WriteLine("                 ⠀⠀⡰⠋⠀⠀⠀⠀⡏⢄⣀⡰⢠⠊⠀⠀⠈⠳⡄");
-        Console.WriteLine("                 ⠀⣸⣅⡀⠀⠀⣀⠔⠀⢀⡀⠀⠸⡀⠀⠀⠀⠀⢸⡄");
-        Console.WriteLine("                 ⢀⣿⣿⣾⡭⡭⠐⢢⠊⠁⠈⢣⠀⠙⠢⢄⣠⣴⣿⣷");
-        Console.WriteLine("                 ⢸⠁⠀⠈⠹⣿⣶⣼⣆⣀⣀⣼⣠⣤⣾⣿⠟⠉⠙⢿");
-        Console.WriteLine("                 ⠈⢧⡀⠀⣠⣿⡿⠿⠿⠿⠿⠿⠿⠿⣿⣿⡀⠀⣀⠞");
-        Console.WriteLine("                 ⠀⠀⠈⠉⢩⠃⠀⢀⣤⠀⠀⢠⣦⠀⠀⢸⠉⠉");
-        Console.WriteLine("                 ⠀⠀⠀⠀⢸⠀⠀⠀⠉⡀⠀⢈⠁⠀⠀⢸");
-        Console.WriteLine("                 ⠀⠀⠀⠀⠘⣆⠀⠀⠀⠉⠂⠁⠀⠀⢀⡼");
-        Console.WriteLine("                ⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠉⠉⠉⠉⠉");
+        this.Illustration = "                 ⠀⠀⠀⠀⠀⠀⠀⣀⣀⡤⠤⢤⣀⡀\n";
+        this.Illustration += "                 ⠀⠀⠀⢀⡤⠚⠉⠑⣀⠔⠐⠢⠀⠈⡹⠶⣄\n";
+        this.Illustration += "                 ⠀⠀⡰⠋⠀⠀⠀⠀⡏⢄⣀⡰⢠⠊⠀⠀⠈⠳⡄\n";
+        this.Illustration += "                 ⠀⣸⣅⡀⠀⠀⣀⠔⠀⢀⡀⠀⠸⡀⠀⠀⠀⠀⢸⡄\n";
+        this.Illustration += "                 ⢀⣿⣿⣾⡭⡭⠐⢢⠊⠁⠈⢣⠀⠙⠢⢄⣠⣴⣿⣷\n";
+        this.Illustration += "                 ⢸⠁⠀⠈⠹⣿⣶⣼⣆⣀⣀⣼⣠⣤⣾⣿⠟⠉⠙⢿\n";
+        this.Illustration += "                 ⠈⢧⡀⠀⣠⣿⡿⠿⠿⠿⠿⠿⠿⠿⣿⣿⡀⠀⣀⠞\n";
+        this.Illustration += "                 ⠀⠀⠈⠉⢩⠃⠀⢀⣤⠀⠀⢠⣦⠀⠀⢸⠉⠉\n";
+        this.Illustration += "                 ⠀⠀⠀⠀⢸⠀⠀⠀⠉⡀⠀⢈⠁⠀⠀⢸\n";
+        this.Illustration += "                 ⠀⠀⠀⠀⠘⣆⠀⠀⠀⠉⠂⠁⠀⠀⢀⡼\n";
+        this.Illustration += "                ⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠉⠉⠉⠉⠉\n";
     }
 }
 

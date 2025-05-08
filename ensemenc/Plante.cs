@@ -32,8 +32,8 @@ public abstract class Plante(
     protected int nbProductionsActuel = 0; // Nombre actuel de production de la plante (fruits, légumes...) (par défaut 0).
     protected int nbProductionsMaxPossible = unNbProductionsMaxPossible; // Nombre de production de la plante (fruits, légumes...) maximal possible.
     protected Dictionary<Maladie, int> ProbaMaladies { get; } = []; // Probabilité que la plante attrape une maladie donnée, exprimée en %.
-    protected Maladie? maladieActuelle = null;
-    protected int toursMalade = 0;
+    protected Maladie? maladieActuelle = null; // Maladie dont souffre actuellement la plante.
+    protected int toursMalade = 0; // Compteur de tours de jeu où la plante est malade lorsqu'elle l'est.
 
     /*
         Accesseur en lecture uniquement du symbole affiché pour représenter la plante.
@@ -114,57 +114,6 @@ public abstract class Plante(
     public void Desalterer()
     {
         this.tauxArrosage += QuantiteArrosage;
-    }
-
-    /*
-        Crée une instance de plante en fonction du type.
-
-        return : Instance de plante.
-    */
-    public static Plante CreerPlanteDepuisType(TypePlante type)
-    {
-        return type switch
-        {
-            TypePlante.Tomate => new Tomate(),
-            TypePlante.Fraise => new Fraise(),
-            TypePlante.Marguerite => new Marguerite(),
-            TypePlante.Champignon => new Champignon(),
-            _=> throw new Exception("Type de plante inconnu.")
-        };
-    }
-
-    /*
-        Affiche la description d'une plante en fonction du type.
-
-        return : La description de la plante.
-    */
-    public static string AfficherDescription(TypePlante type)
-    {
-        return type switch
-        {
-            TypePlante.Tomate => $"{new Tomate().AfficherCaracteristiques()}",
-            TypePlante.Fraise => $"{new Fraise().AfficherCaracteristiques()}",
-            TypePlante.Marguerite => $"{new Marguerite().AfficherCaracteristiques()}",
-            TypePlante.Champignon => $"{new Champignon().AfficherCaracteristiques()}",
-            _=> throw new Exception("Type de plante inconnu.")
-        };
-    }
-
-    /*
-        Indique le nombre de production d'une plante selon son type.
-
-        return : Le nombre de production de la plante.
-    */
-    public static int IndiquerNbProductionsSelonType(TypePlante type)
-    {
-        return type switch
-        {
-            TypePlante.Tomate => new Tomate().NbProductionsMaxPossible,
-            TypePlante.Fraise => new Fraise().NbProductionsMaxPossible,
-            TypePlante.Marguerite => new Marguerite().NbProductionsMaxPossible,
-            TypePlante.Champignon => new Champignon().NbProductionsMaxPossible,
-            _=> throw new Exception("Type de plante inconnu.")
-        };
     }
 
     /*
@@ -316,11 +265,6 @@ public abstract class Plante(
     }
 
     /*
-        Initialise les probabilités de maladies spécifiques à la plante.
-    */
-    protected abstract void InitialiserProbabilitesMaladies();
-
-    /*
         Soigne la plante si elle est malade.
 
         return : True si la plante était malade et qu'elle est de nouveau sur pieds, false sinon.
@@ -336,4 +280,60 @@ public abstract class Plante(
         }
         return false;
     }
+
+    /*
+        Crée une instance de plante en fonction du type.
+
+        return : Instance de plante.
+    */
+    public static Plante CreerPlanteDepuisType(TypePlante type)
+    {
+        return type switch
+        {
+            TypePlante.Tomate => new Tomate(),
+            TypePlante.Fraise => new Fraise(),
+            TypePlante.Marguerite => new Marguerite(),
+            TypePlante.Champignon => new Champignon(),
+            _=> throw new Exception("Type de plante inconnu.")
+        };
+    }
+
+    /*
+        Affiche la description d'une plante en fonction du type.
+
+        return : La description de la plante.
+    */
+    public static string AfficherDescription(TypePlante type)
+    {
+        return type switch
+        {
+            TypePlante.Tomate => $"{new Tomate().AfficherCaracteristiques()}",
+            TypePlante.Fraise => $"{new Fraise().AfficherCaracteristiques()}",
+            TypePlante.Marguerite => $"{new Marguerite().AfficherCaracteristiques()}",
+            TypePlante.Champignon => $"{new Champignon().AfficherCaracteristiques()}",
+            _=> throw new Exception("Type de plante inconnu.")
+        };
+    }
+
+    /*
+        Indique le nombre de production d'une plante selon son type.
+
+        return : Le nombre de production de la plante.
+    */
+    public static int IndiquerNbProductionsSelonType(TypePlante type)
+    {
+        return type switch
+        {
+            TypePlante.Tomate => new Tomate().NbProductionsMaxPossible,
+            TypePlante.Fraise => new Fraise().NbProductionsMaxPossible,
+            TypePlante.Marguerite => new Marguerite().NbProductionsMaxPossible,
+            TypePlante.Champignon => new Champignon().NbProductionsMaxPossible,
+            _=> throw new Exception("Type de plante inconnu.")
+        };
+    }
+
+    /*
+        Méthode abstraite pour initialiser les probabilités de maladies spécifiques à la plante.
+    */
+    protected abstract void InitialiserProbabilitesMaladies();
 }

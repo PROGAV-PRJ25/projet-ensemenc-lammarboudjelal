@@ -8,6 +8,7 @@ public abstract class Monde(string unNom)
     protected List<Meteo> meteosPossibles = []; // Liste des météos possibles dans ce monde.
     protected List<TypePlante> typesPlanteDisponibles = []; // Liste des types de plantes disponibles.
     protected List<TypeSol> typesSolsDisponibles = []; // Liste des types de sols disponibles.
+    public string Illustration { get; set; } = ""; // Illustration propre au monde.
 
     /*
         Accesseur en lecture uniquement du nom du monde.
@@ -50,7 +51,7 @@ public abstract class Monde(string unNom)
     }
 
     /*
-        Défini la météo actuelle en sélectionnant aléatoirement une des météos possibles du monde.
+        Définit la météo actuelle en sélectionnant aléatoirement une des météos possibles du monde.
     */
     public void DefinirMeteoPrevisionnelle()
     {
@@ -65,7 +66,7 @@ public abstract class Monde(string unNom)
     public abstract void AfficherDescription();
 
     /*
-        Méthode abstraite pour afficher une illustration ASCII du monde.
+        Méthode abstraite pour initialiser une illustration ASCII propre au monde.
     */
-    public abstract void AfficherIllustration();
+    public abstract void InitialiserIllustration();
 }

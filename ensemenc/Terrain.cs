@@ -4,9 +4,9 @@
 */
 public class Terrain(string unNom)
 {
-    private string nom = unNom; // Nom du terrain.
+    private readonly string nom = unNom; // Nom du terrain.
     private TypeSol typeSol = default; // Type de sol (humifère, argileux, sableux...).
-    private Plante?[,] plantes = new Plante?[5, 5]; // Grille de 5x5 représentant les emplacements de plantes.
+    private readonly Plante?[,] plantes = new Plante?[5, 5]; // Grille de 5x5 représentant les emplacements de plantes.
 
     /*
         Accesseur en lecture et écriture du type de sol du terrain.
@@ -109,26 +109,6 @@ public class Terrain(string unNom)
     }
 
     /*
-        Met à jour toutes les plantes du terrain selon les conditions météorologiques, caractéristiques du terrain et ses conditions de vie.
-
-        param meteo : Météo de la semaine impactant la plante.
-    */
-    public void MettreAJourPlantes(Meteo meteo)
-    {
-        for (int i = 0; i < this.plantes.GetLength(0); i++)
-        {
-            for (int j = 0; j < this.plantes.GetLength(1); j++)
-            {
-                Plante? plante = this.plantes[i, j];
-                if (plante != null && plante.Etat != Etat.Morte)
-                {
-                    plante.MettreAJour(meteo, this.typeSol);
-                }
-            }
-        }
-    }
-
-    /*
         Récolte les productions d'une plante si possible.
 
         return : Un tuple contenant :
@@ -170,5 +150,25 @@ public class Terrain(string unNom)
             Console.WriteLine("Votre plante a été soignée, elle pète la forme !");
         else
             Console.WriteLine("Cette plante était déjà en bonne santé. C'est dommage, vous venez de perdre une action...");
+    }
+
+    /*
+        Met à jour toutes les plantes du terrain selon les conditions météorologiques, caractéristiques du terrain et ses conditions de vie.
+
+        param meteo : Météo de la semaine impactant la plante.
+    */
+    public void MettreAJourPlantes(Meteo meteo)
+    {
+        for (int i = 0; i < this.plantes.GetLength(0); i++)
+        {
+            for (int j = 0; j < this.plantes.GetLength(1); j++)
+            {
+                Plante? plante = this.plantes[i, j];
+                if (plante != null && plante.Etat != Etat.Morte)
+                {
+                    plante.MettreAJour(meteo, this.typeSol);
+                }
+            }
+        }
     }
 }

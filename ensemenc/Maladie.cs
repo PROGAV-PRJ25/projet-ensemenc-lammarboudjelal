@@ -1,4 +1,4 @@
-// Représente les différentes maladies que peuvent attraper les plantes.
+// Différentes maladies que peuvent attraper les plantes.
 public enum Maladie
 {
     Mildiou, 
