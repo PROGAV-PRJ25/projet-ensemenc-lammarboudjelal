@@ -76,13 +76,13 @@ public class PlaineChampignon : Monde
         switch (tirage)
         {
             case 0:
-                this.GererGoombaver(terrain1, terrain2);
+                GererGoombaver(terrain1, terrain2);
                 break;
             case 1:
-                this.GererKoopascargot(terrain1, terrain2);
+                GererKoopascargot(terrain1, terrain2);
                 break;
             case 2:
-                this.GererPuceronKoopa(terrain1, terrain2);
+                GererPuceronKoopa(terrain1, terrain2);
                 break;
         }
 
@@ -93,100 +93,76 @@ public class PlaineChampignon : Monde
 
     /*
         Le PuceronKoopa s'attaque à une plante adulte et détruit sa production.
-    */
-    private void GererPuceronKoopa(Terrain terrain1, Terrain terrain2)
-    {
+        Le PuceronKoopa ne sort que s’il y a au moins une plante dont les productions sont récoltables.
+        Le joueur dispose de 3 tentatives pour repousser l'intrus, sinon la plante perdra ses productions.
 
+        param terrain1 : Premier terrain du joueur.
+        param terrain2 : Deuxième terrain du joueur.
+    */
+    private static void GererPuceronKoopa(Terrain terrain1, Terrain terrain2)
+    {
+        GererAttaqueNuisible(
+            nomNuisible: "🐞 PuceronKoopa",
+            messageIntro: "Une nuée de PuceronsKoopas envahit sur votre potager !",
+            terrain1: terrain1,
+            terrain2: terrain2,
+            conditionCible: p => p.NbProductionsActuel > 0,
+            actionCible: (plante, terrain) =>
+            {
+                plante.NbProductionsActuel = 0;
+                Console.WriteLine($"Les PuceronsKoopas ont détruit les récoltes de la plante {plante.Symbole} en ({plante.X + 1}, {plante.Y + 1}) !");
+            }
+        );
     }
 
     /*
-        Le Koopascargot se déplace lentement sur une plante et ralentit sa croissance.
-    */
-    private void GererKoopascargot(Terrain terrain1, Terrain terrain2)
-    {
+        Le Koopascargot ralentit la croissance de la plante ciblée s’il n’est pas repoussé.
+        Le Koopascargot ne sort que s’il y a au moins une plante en bonne santé et non adulte (car ralentir la croissance d'une plante adulte 
+        serait un avantage puisqu'elle mourrait moins rapidement), puis cible une plante aléatoirement.
+        Le joueur dispose de 3 tentatives pour repousser l'intrus, sinon la plante ciblée aura sa croissance de ralentit de deux semaines.
 
+        param terrain1 : Premier terrain du joueur.
+        param terrain2 : Deuxième terrain du joueur.
+    */
+    private static void GererKoopascargot(Terrain terrain1, Terrain terrain2)
+    {
+        GererAttaqueNuisible(
+            nomNuisible: "🐌 Koopascargot",
+            messageIntro: "Un bruit visqueux se rapproche... Un Koopascargot rampe vers votre potager !",
+            terrain1: terrain1,
+            terrain2: terrain2,
+            conditionCible: p => p.Etat == Etat.BonneSante && p.Croissance != Croissance.Adulte,
+            actionCible: (plante, terrain) =>
+            {
+                plante.RetarderCroissance();
+                Console.WriteLine($"Le Koopascargot a ralenti la croissance de votre plante {plante.Symbole} en ({plante.X + 1}, {plante.Y + 1}) !");
+            }
+        );
     }
 
     /*
         Gère une attaque de Goombaver sur un des terrains.
-        Le Goombaver ne sort que s’il y a une plante, puis cible une plante aléatoirement.
+        Le Goombaver ne sort que s’il y a au moins une plante vivante, puis cible une plante aléatoirement.
         Le joueur dispose de 3 tentatives pour repousser l'intrus, sinon la plante ciblée est mangée.
+
+        param terrain1 : Premier terrain du joueur.
+        param terrain2 : Deuxième terrain du joueur.
     */
-    private void GererGoombaver(Terrain terrain1, Terrain terrain2)
+    private static void GererGoombaver(Terrain terrain1, Terrain terrain2)
     {
-        // Les plantes des terrains 1 et 2 sont rassemblées dans une même liste.
-        List<Plante> toutesLesPlantes = [.. terrain1.Plantes, .. terrain2.Plantes];
-
-        // L'intrus n'agit pas si aucune plante n'est plantée.
-        if (toutesLesPlantes.Count == 0)
-        {
-            Console.WriteLine("🐛 Un Goombaver rode... mais ne trouve aucune plante. Il s’enfuit !");
-            return;
-        }
-
-        // Définition de la plante ciblée par l'intrus.
-        Plante cible = toutesLesPlantes[new Random().Next(toutesLesPlantes.Count)];
-        Terrain terrainCible = terrain1.Plantes.Contains(cible) ? terrain1 : terrain2;
-
-        // Affichage animé de l'intrus.
-        Console.Clear();
-        Console.WriteLine("Le sol tremble doucement sous vos pieds...");
-        Thread.Sleep(2000);
-        Console.WriteLine("Un Goombaver surgit du sous-sol !\n");
-        Thread.Sleep(2000);
-        Console.WriteLine($"Il fonce vers votre plante {cible.Symbole} en ({cible.X + 1}, {cible.Y + 1}) !");
-
-        int essaisRestants = 3;
-        bool repousse = false;
-
-        while (essaisRestants > 0 && !repousse)
-        {
-            Console.WriteLine($"\nQue faire ? (Actions restantes : {essaisRestants}/8)\n");
-            Console.WriteLine("1. Frapper le sol (succès : 70%)");
-            Console.WriteLine("2. Vaporiser un jet d'eau (succès : 60%)");
-            Console.WriteLine("3. Allumer un répulsif sonore (succès : 80%)");
-            Console.WriteLine("4. Ne rien faire\n");
-
-            Console.Write("Entrez le numéro de l'action que vous souhaitez réaliser : ");
-            string choix = Console.ReadLine()!;
-            double tirage = new Random().NextDouble();
-
-            switch (choix)
+        GererAttaqueNuisible(
+            nomNuisible: "🐛 Goombaver",
+            messageIntro: "Le sol tremble... Un Goombaver surgit du sous-sol !",
+            terrain1: terrain1,
+            terrain2: terrain2,
+            conditionCible: p => p.Etat != Etat.Morte,
+            actionCible: (plante, terrain) =>
             {
-                case "1":
-                    Console.WriteLine("\n=> Vous frappez le sol avec puissance !");
-                    repousse = tirage < 0.7;
-                    break;
-                case "2":
-                    Console.WriteLine("\n=> Vous aspergez la zone d’eau !");
-                    repousse = tirage < 0.6;
-                    break;
-                case "3":
-                    Console.WriteLine("\n=> Vous activez un répulsif sonore !");
-                    repousse = tirage < 0.8;
-                    break;
-                default:
-                    Console.WriteLine("\n=> Vous ne faites rien...Original comme choix...");
-                    essaisRestants = 0;
-                    break;
+                Console.WriteLine($"\nLe Goombaver dévore votre plante {plante.Symbole} en ({plante.X + 1}, {plante.Y + 1}) !");
+                terrain.Emplacements[plante.X, plante.Y] = null;
+                terrain.Plantes.Remove(plante);
             }
-
-            essaisRestants--;
-
-            if (repousse)
-            {
-                Console.WriteLine("\nLe Goombaver est effrayé et détale sous terre !");
-                return;
-            }
-
-            if (essaisRestants > 0 && !repousse)
-                Console.WriteLine("\nLe Goombaver hésite mais reste menaçant...");
-        }
-
-        // Le joueur n'est pas parvenu à se débarraser de l'intrus : la plante est perdue.
-        Console.WriteLine($"\nÉchec ! Le Goombaver a dévoré votre {cible.Symbole} en ({cible.X + 1}, {cible.Y + 1}) !");
-        terrainCible.Emplacements[cible.X, cible.Y] = null;
-        terrainCible.Plantes.Remove(cible);
+        );
     }
 }
 

@@ -185,8 +185,10 @@ public class Simulation
 
         bool planteArrosee = terrainChoisi.Arroser(x, y);
 
-        if(planteArrosee)
+        if(planteArrosee && terrainChoisi.Emplacements[x, y]!.Etat != Etat.Morte)
             Console.WriteLine("Votre plante est désaltérée !");
+        else if(planteArrosee && terrainChoisi.Emplacements[x, y]!.Etat == Etat.Morte)
+            Console.WriteLine("Vous venez d'arroser une plante morte. C'est dommage, vous venez de perdre une action inutilement...");
         else
             Console.WriteLine("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
     }

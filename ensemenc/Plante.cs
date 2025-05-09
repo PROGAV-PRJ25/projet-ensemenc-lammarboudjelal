@@ -97,6 +97,14 @@ public abstract class Plante(
     }
 
     /*
+        Accesseur en lecture uniquement de la croissance de la plante.
+    */
+    public Croissance Croissance 
+    { 
+        get { return croissance; }
+    }
+
+    /*
         Retourne une description textuelle de la plante.
 
         return : Chaîne de caractères décrivant l'état actuel de la plante.
@@ -239,6 +247,7 @@ public abstract class Plante(
             if (this.toursMalade >= 2)
             {
                 this.etat = Etat.Morte;
+                this.NbProductionsActuel = 0; // Les productions d'une plante malade sont perdues.
                 return;
             }
             return;
@@ -299,6 +308,19 @@ public abstract class Plante(
             return true;
         }
         return false;
+    }
+
+    /*
+        Retarde artificiellement la croissance de la plante de deux semaines.
+        Utilisé par certains nuisibles.
+    */
+    public void RetarderCroissance()
+    {
+        if (this.age > 0) 
+        {
+            this.age -= 2;
+            this.croissance = (Croissance)(this.age / this.vitesseCroissance);
+        }
     }
 
     /*

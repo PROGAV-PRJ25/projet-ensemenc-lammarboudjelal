@@ -61,6 +61,113 @@ public abstract class Monde(string unNom)
     }
 
     /*
+        Gère une attaque générique d’un nuisible sur les terrains du joueur.
+
+        Cette méthode mutualise la logique des urgences : elle sélectionne une plante cible parmi toutes celles du joueur, affiche une séquence animée, 
+        puis permet au joueur de tenter plusieurs actions pour protéger la plante. Si aucune n’aboutit, une action spécifique (passée en paramètre) est appliquée.
+
+        param nomNuisible : Nom affiché du nuisible.
+        param messageIntro : Message d’introduction avant l’attaque.
+        param terrain1 : Premier terrain du joueur.
+        param terrain2 : Deuxième terrain du joueur.
+        param conditionCible : Condition pour qu’une plante soit considérée comme une cible valable.
+        param actionCible : Méthode spécifique à appeler si le nuisible atteint sa cible. Elle prend en paramètre la plante et le terrain affecté.
+    */
+    protected static void GererAttaqueNuisible(
+        string nomNuisible,
+        string messageIntro,
+        Terrain terrain1,
+        Terrain terrain2,
+        Func<Plante, bool> conditionCible,
+        Action<Plante, Terrain> actionCible)
+    {
+        // Les plantes éligibles (selon la condition de cible) des terrains 1 et 2 sont rassemblées dans une même liste.
+        List<(Plante plante, Terrain terrain)> plantesEligibles = [];
+
+        foreach (var plante in terrain1.Plantes)
+            if (conditionCible(plante))
+                plantesEligibles.Add((plante, terrain1));
+
+        foreach (var plante in terrain2.Plantes)
+            if (conditionCible(plante))
+                plantesEligibles.Add((plante, terrain2));
+
+        // Si aucune cible valide, l’attaque est sans effet.
+        if (plantesEligibles.Count == 0)
+        {
+            Console.WriteLine($"\n{nomNuisible} rode... mais il ne trouve rien à nuire !");
+            Console.WriteLine("Il repart sans causer de dégâts.\n");
+            Thread.Sleep(2000);
+            return;
+        }
+
+        // Définition de la plante ciblée par le nuisible.
+        var (cible, terrainCible) = plantesEligibles[new Random().Next(plantesEligibles.Count)];
+
+        // Affichage animé de l'arrivée du nuisible.
+        Console.Clear();
+        Console.WriteLine(messageIntro);
+        Thread.Sleep(2000);
+        Console.WriteLine($"\n{nomNuisible} approche votre plante {cible.Symbole} en ({cible.X + 1}, {cible.Y + 1}) !");
+        Thread.Sleep(1500);
+
+        // Actions du joueur pour contrer l'attaque.
+        int essaisRestants = 3;
+        bool repousse = false;
+
+        while (essaisRestants > 0 && !repousse)
+        {
+            Console.WriteLine($"\nQue faire ? (Actions restantes : {essaisRestants}/3)\n");
+            Console.WriteLine("1. Frapper le sol (succès : 70%)");
+            Console.WriteLine("2. Vaporiser un jet d'eau (succès : 60%)");
+            Console.WriteLine("3. Allumer un répulsif sonore (succès : 80%)");
+            Console.WriteLine("4. Ne rien faire\n");
+
+            Console.Write("Entrez le numéro de l'action que vous souhaitez réaliser : ");
+            string choix = Console.ReadLine()!;
+            double tirage = new Random().NextDouble();
+            Thread.Sleep(1500);
+
+            switch (choix)
+            {
+                case "1":
+                    Console.WriteLine("\n=> Vous frappez le sol avec puissance !");
+                    repousse = tirage < 0.7;
+                    break;
+                case "2":
+                    Console.WriteLine("\n=> Vous aspergez la zone d’eau !");
+                    repousse = tirage < 0.6;
+                    break;
+                case "3":
+                    Console.WriteLine("\n=> Vous activez un répulsif sonore !");
+                    repousse = tirage < 0.8;
+                    break;
+                default:
+                    Console.WriteLine("\n=> Vous ne faites rien...Original comme choix...");
+                    essaisRestants = 0;
+                    break;
+            }
+
+            essaisRestants--;
+
+            if (repousse)
+            {
+                Console.WriteLine($"\n{nomNuisible} est repoussé !");
+                return;
+            }
+
+            if (essaisRestants > 0) 
+            {
+                Console.WriteLine($"\n{nomNuisible} hésite mais reste menaçant...");
+                Thread.Sleep(1500);
+            }
+        }
+
+        // Si le joueur a échoué, l’action spécifique définie pour ce nuisible est appliquée.
+        actionCible(cible, terrainCible); 
+    }
+
+    /*
         Méthode abstraite pour afficher la description du monde.
     */
     public abstract void AfficherDescription();
@@ -71,7 +178,10 @@ public abstract class Monde(string unNom)
     public abstract void InitialiserIllustration();
 
     /*
-        Lance un événement d'urgence spécifique au monde.
+        Méthode abstraite pour lancer un événement d'urgence spécifique au monde.
+
+        param terrain1 : Premier terrain du joueur.
+        param terrain2 : Deuxième terrain du joueur.
     */
     public abstract void LancerUrgence(Terrain terrain1, Terrain terrain2);
 }
