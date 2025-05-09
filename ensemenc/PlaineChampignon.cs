@@ -34,18 +34,28 @@ public class PlaineChampignon : Monde
 
     /*
         Affiche une description détaillée du monde Plaine Champignon.
-        Liste les caractéristiques : température, météo et plantes disponibles.
+        Liste les caractéristiques : température, météo, plantes et nuisibles spécifiques.
     */
     public override void AfficherDescription()
     {
-        Console.WriteLine($"Monde 1 — {this.nom}\n");
+        Console.Clear();
+        
+        Console.WriteLine("═════════════════════════════════════════════════════════════════════");
+        Console.WriteLine($"MONDE 1 — {this.nom}");
+        Console.WriteLine("═════════════════════════════════════════════════════════════════════\n");
 
-        Console.WriteLine($"Bienvenue dans {this.nom}, un monde doux et paisible où tout pousse... sauf quand un Goombavers passe par là !\n");
+        Console.WriteLine("Bienvenue dans la douce et verdoyante Plaine Champignon !");
+        Console.WriteLine("Ici, tout pousse joyeusement... sauf quand un Goombaver passe par là !\n");
 
-        Console.WriteLine("Caractéristiques :\n");
-        Console.WriteLine("   - Température : 10°C à 25°C (tempéré)");
-        Console.WriteLine("   - Météo : alternance pluie / soleil");
-        Console.WriteLine("   - Plantes : Tomate, Fraise, Marguerite, Champignon\n");
+        Console.WriteLine("Caractéristiques du monde :");
+        Console.WriteLine("─────────────────────────────────────────────────────────────────────");
+        Console.WriteLine("Température idéale : entre 10°C et 25°C (climat tempéré)");
+        Console.WriteLine("Météo typique : alternance harmonieuse de pluie et de soleil");
+        Console.WriteLine("Plantes cultivables : Tomate 🍅, Fraise 🍓, Marguerite 🌼, Champignon 🍄");
+        Console.WriteLine("Nuisibles locaux :");
+        Console.WriteLine("   - Goombaver : dévore vos plantes s’il n’est pas repoussé à temps.");
+        Console.WriteLine("   - PuceronsKoopa : volent les productions non récoltées.");
+        Console.WriteLine("   - Koopascargot : ralentit la croissance de vos plantes.\n");
     }
 
     /*

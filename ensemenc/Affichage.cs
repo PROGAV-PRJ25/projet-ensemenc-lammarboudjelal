@@ -58,21 +58,44 @@ public class Affichage()
     */
     public static void AfficherConsignes(Monde monde)
     {
-        Console.WriteLine($"{monde.Illustration}");
+        Console.Clear();
+        Console.WriteLine($"{monde.Illustration}\n");
 
-        Console.WriteLine($"\nVous avez choisi de jouer dans le monde {monde.Nom}.");
-        Console.WriteLine("La partie va pouvoir commencer !\n");
+        Console.WriteLine("═════════════════════════════════════════════════════════════════════");
+        Console.WriteLine($"Bienvenue dans le monde de {monde.Nom} !");
+        Console.WriteLine("═════════════════════════════════════════════════════════════════════\n");
 
-        Console.WriteLine("Règles du jeu :\n");
-        Console.WriteLine("- Vous disposez de deux terrains de 5x5 cases chacun.");
-        Console.WriteLine("- Vous commencez avec 2 graines de chaque type de plante disponible dans votre monde.\n");
-        Console.WriteLine("- Chaque semaine, une météo prévisionnelle est générée aléatoirement et influence vos cultures.");
-        Console.WriteLine($"- Vous pouvez réaliser jusqu'à {Simulation.NbActionsAutorisees} actions par semaine : arroser, semer, désherber, récolter...");
-        Console.WriteLine("- Passez au tour suivant lorsque vous avez terminé vos actions.\n");
-        Console.WriteLine("- Conçernant vos plantes, plus les conditions préférées sont réunies, plus elles poussent vite.");
-        Console.WriteLine("- En revanche, si les conditions préférées d'une plante ne sont pas respectées à au moins 50%, elle meurt.");
-        Console.WriteLine("- De plus, les plantes malades meurent au bout de deux semaines.\n");
-        Console.WriteLine("-> Votre objectif est de faire prospérer votre potager au fil des semaines !\n");
+        Console.WriteLine("RÈGLES DU JEU");
+        Console.WriteLine("─────────────────────────────────────────────────────────────────────");
+
+        Console.WriteLine("Potager & Ressources :");
+        Console.WriteLine($"- Vous disposez de deux terrains de 5x5 cases chacun.");
+        Console.WriteLine("- Vous débutez avec 2 graines de chaque plante disponible dans le monde choisi.\n");
+
+        Console.WriteLine("Météo & Saisons :");
+        Console.WriteLine("- Chaque semaine, une météo prévisionnelle influence vos plantes.");
+        Console.WriteLine("- Température, ensoleillement et pluie jouent un rôle crucial.\n");
+
+        Console.WriteLine("Actions disponibles :");
+        Console.WriteLine($"- Vous pouvez effectuer jusqu’à {Simulation.NbActionsAutorisees} actions par semaine.");
+        Console.WriteLine("- Actions possibles : arroser, semer, désherber, récolter...");
+        Console.WriteLine("- Vous pouvez passer au tour suivant une fois vos actions terminées.\n");
+
+        Console.WriteLine("Croissance des plantes :");
+        Console.WriteLine("- Des conditions optimales (eau, soleil, sol) accélèrent leur croissance.");
+        Console.WriteLine("- Si l’arrosage ou la température s’éloigne trop de leurs besoins : elles meurent !");
+        Console.WriteLine("- Une plante malade pendant 2 semaines consécutives meurt également.\n");
+
+        Console.WriteLine("Mode Urgence :");
+        Console.WriteLine("- Chaque semaine, il y a 60% de chances qu'une urgence survienne !");
+        Console.WriteLine("- Vous devrez réagir à un nuisible spécifique à votre monde.");
+        Console.WriteLine("- Vous avez 3 actions pour éviter ses dégâts !");
+        Console.WriteLine("- Exemples de nuisibles dans ce monde : Goombaver, Koopascargot, PuceronKoopa.\n");
+
+        Console.WriteLine("Objectif :");
+        Console.WriteLine("-> Faites prospérer votre potager et protégez vos plantations !\n");
+
+        Console.WriteLine("═════════════════════════════════════════════════════════════════════");
     }
 
     /*
