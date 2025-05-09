@@ -65,5 +65,128 @@ public class PlaineChampignon : Monde
         this.Illustration += "                 ⠀⠀⠀⠀⠘⣆⠀⠀⠀⠉⠂⠁⠀⠀⢀⡼\n";
         this.Illustration += "                ⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠉⠉⠉⠉⠉\n";
     }
+
+    /*
+        Gère une urgence spécifique à la Plaine Champignon : Goombaver, Koopascargot, ou PuceronKoopa.
+    */
+    public override void LancerUrgence(Terrain terrain1, Terrain terrain2)
+    {
+        int tirage = new Random().Next(3);
+
+        switch (tirage)
+        {
+            case 0:
+                this.GererGoombaver(terrain1, terrain2);
+                break;
+            case 1:
+                this.GererKoopascargot(terrain1, terrain2);
+                break;
+            case 2:
+                this.GererPuceronKoopa(terrain1, terrain2);
+                break;
+        }
+
+        Thread.Sleep(2000);
+        Console.WriteLine("\nL'urgence est terminée. Retour à la culture !\n");
+        Simulation.AttendreUtilisateurPourContinuer();
+    }
+
+    /*
+        Le PuceronKoopa s'attaque à une plante adulte et détruit sa production.
+    */
+    private void GererPuceronKoopa(Terrain terrain1, Terrain terrain2)
+    {
+
+    }
+
+    /*
+        Le Koopascargot se déplace lentement sur une plante et ralentit sa croissance.
+    */
+    private void GererKoopascargot(Terrain terrain1, Terrain terrain2)
+    {
+
+    }
+
+    /*
+        Gère une attaque de Goombaver sur un des terrains.
+        Le Goombaver ne sort que s’il y a une plante, puis cible une plante aléatoirement.
+        Le joueur dispose de 3 tentatives pour repousser l'intrus, sinon la plante ciblée est mangée.
+    */
+    private void GererGoombaver(Terrain terrain1, Terrain terrain2)
+    {
+        // Les plantes des terrains 1 et 2 sont rassemblées dans une même liste.
+        List<Plante> toutesLesPlantes = [.. terrain1.Plantes, .. terrain2.Plantes];
+
+        // L'intrus n'agit pas si aucune plante n'est plantée.
+        if (toutesLesPlantes.Count == 0)
+        {
+            Console.WriteLine("🐛 Un Goombaver rode... mais ne trouve aucune plante. Il s’enfuit !");
+            return;
+        }
+
+        // Définition de la plante ciblée par l'intrus.
+        Plante cible = toutesLesPlantes[new Random().Next(toutesLesPlantes.Count)];
+        Terrain terrainCible = terrain1.Plantes.Contains(cible) ? terrain1 : terrain2;
+
+        // Affichage animé de l'intrus.
+        Console.Clear();
+        Console.WriteLine("Le sol tremble doucement sous vos pieds...");
+        Thread.Sleep(2000);
+        Console.WriteLine("Un Goombaver surgit du sous-sol !\n");
+        Thread.Sleep(2000);
+        Console.WriteLine($"Il fonce vers votre plante {cible.Symbole} en ({cible.X + 1}, {cible.Y + 1}) !");
+
+        int essaisRestants = 3;
+        bool repousse = false;
+
+        while (essaisRestants > 0 && !repousse)
+        {
+            Console.WriteLine($"\nQue faire ? (Actions restantes : {essaisRestants}/8)\n");
+            Console.WriteLine("1. Frapper le sol (succès : 70%)");
+            Console.WriteLine("2. Vaporiser un jet d'eau (succès : 60%)");
+            Console.WriteLine("3. Allumer un répulsif sonore (succès : 80%)");
+            Console.WriteLine("4. Ne rien faire\n");
+
+            Console.Write("Entrez le numéro de l'action que vous souhaitez réaliser : ");
+            string choix = Console.ReadLine()!;
+            double tirage = new Random().NextDouble();
+
+            switch (choix)
+            {
+                case "1":
+                    Console.WriteLine("\n=> Vous frappez le sol avec puissance !");
+                    repousse = tirage < 0.7;
+                    break;
+                case "2":
+                    Console.WriteLine("\n=> Vous aspergez la zone d’eau !");
+                    repousse = tirage < 0.6;
+                    break;
+                case "3":
+                    Console.WriteLine("\n=> Vous activez un répulsif sonore !");
+                    repousse = tirage < 0.8;
+                    break;
+                default:
+                    Console.WriteLine("\n=> Vous ne faites rien...Original comme choix...");
+                    essaisRestants = 0;
+                    break;
+            }
+
+            essaisRestants--;
+
+            if (repousse)
+            {
+                Console.WriteLine("\nLe Goombaver est effrayé et détale sous terre !");
+                return;
+            }
+
+            if (essaisRestants > 0 && !repousse)
+                Console.WriteLine("\nLe Goombaver hésite mais reste menaçant...");
+        }
+
+        // Le joueur n'est pas parvenu à se débarraser de l'intrus : la plante est perdue.
+        Console.WriteLine($"\nÉchec ! Le Goombaver a dévoré votre {cible.Symbole} en ({cible.X + 1}, {cible.Y + 1}) !");
+        terrainCible.Emplacements[cible.X, cible.Y] = null;
+        terrainCible.Plantes.Remove(cible);
+    }
 }
 

@@ -134,8 +134,8 @@ public class Affichage()
             Console.Write($"{i+1} ");
             for (int j = 0; j < 5; j++)
             {
-                if (terrain1.Plantes?[i,j] is not null)
-                    Console.Write($"| {terrain1.Plantes[i,j]!.Symbole} ");
+                if (terrain1.Emplacements?[i,j] is not null)
+                    Console.Write($"| {terrain1.Emplacements[i,j]!.Symbole} ");
                 else
                     Console.Write($"|    ");
             }
@@ -144,8 +144,8 @@ public class Affichage()
 
             for (int j = 0; j < 5; j++)
             {
-                if (terrain2.Plantes?[i,j] is not null)
-                    Console.Write($"| {terrain2.Plantes[i,j]!.Symbole} ");
+                if (terrain2.Emplacements?[i,j] is not null)
+                    Console.Write($"| {terrain2.Emplacements[i,j]!.Symbole} ");
                 else
                     Console.Write($"|    ");
             }
@@ -174,29 +174,20 @@ public class Affichage()
 
         return : True si au moins une plante est présente, False sinon.
     */
-    public static bool AfficherPlantesTerrain(Terrain terrain)
+    public static void AfficherPlantesTerrain(Terrain terrain)
     {
         Console.WriteLine($"{terrain.Nom} :");
-        bool planteTrouvee = false;
-
-        for (int i = 0; i < terrain.Plantes.GetLength(0); i++)
-        {
-            for (int j = 0; j < terrain.Plantes.GetLength(1); j++)
-            {
-                if (terrain.Plantes[i, j] is not null)
-                {
-                    Console.WriteLine($"({i + 1},{j + 1}) {terrain.Plantes[i, j]}");
-                    planteTrouvee = true;
-                }
-            }
-        }
+        bool planteTrouvee = terrain.Plantes.Count != 0;
 
         if (!planteTrouvee)
-        {
             Console.WriteLine("(Aucune plante plantée pour l'instant)");
+        else
+        {
+            foreach (var plante in terrain.Plantes)
+            {
+                Console.WriteLine($"({plante.X + 1},{plante.Y + 1}) {plante}");
+            }
         }
-
-        return planteTrouvee;
     }
 
     /*
@@ -209,9 +200,9 @@ public class Affichage()
     {
         Console.WriteLine("MES PLANTES\n");
 
-        bool plantesT1 = AfficherPlantesTerrain(terrain1);
+        AfficherPlantesTerrain(terrain1);
         Console.WriteLine();
-        bool plantesT2 = AfficherPlantesTerrain(terrain2);
+        AfficherPlantesTerrain(terrain2);
 
         AfficherSeparateur();
     }

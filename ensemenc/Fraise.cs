@@ -7,7 +7,7 @@ public class Fraise : Plante
     /*
         Constructeur de la classe Fraise.
     */
-    public Fraise() : base(
+    public Fraise(int uneCoordX = 0, int uneCoordY = 0) : base(
         unSymbole: "🍓",
         unType: TypePlante.Fraise,
         uneTaille: 1,
@@ -18,7 +18,9 @@ public class Fraise : Plante
         uneVitesseCroissance: 3,
         uneEsperanceVie: 7,
         unSolPrefere: TypeSol.Humifere,
-        unNbProductionsMaxPossible: 4)
+        unNbProductionsMaxPossible: 4,
+        uneCoordX : uneCoordX,
+        uneCoordY : uneCoordY)
     {
         this.InitialiserProbabilitesMaladies(); 
     }

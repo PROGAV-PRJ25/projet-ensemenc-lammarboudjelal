@@ -7,7 +7,7 @@ public class Marguerite : Plante
     /*
         Constructeur de la classe Marguerite.
     */
-    public Marguerite() : base(
+    public Marguerite(int uneCoordX = 0, int uneCoordY = 0) : base(
         unSymbole: "🌼",
         unType: TypePlante.Marguerite,
         uneTaille: 1,
@@ -18,7 +18,9 @@ public class Marguerite : Plante
         uneVitesseCroissance: 2,
         uneEsperanceVie: 6,
         unSolPrefere: TypeSol.Humifere,
-        unNbProductionsMaxPossible: 1)
+        unNbProductionsMaxPossible: 1,
+        uneCoordX : uneCoordX,
+        uneCoordY : uneCoordY)
     {
         this.InitialiserProbabilitesMaladies(); 
     }

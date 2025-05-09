@@ -7,7 +7,6 @@ public class Simulation
     private Terrain terrain1 = new("Terrain 1"); // Premier terrain du joueur (5x5 cases).
     private Terrain terrain2 = new("Terrain 2"); // Deuxième terrain du joueur (5x5 cases).
     private Monde monde = new PlaineChampignon(); // Monde choisi par le joueur (par défaut Monde 1 - Plaine Champignon).
-    // private ModeDeJeu modeDeJeu = ModeDeJeu.Classique; // Mode de jeu sélectionné par le joueur.
     private Dictionary<TypePlante, int> recoltes = []; // Dictionnaire des récoltes du joueur (type de récolte, quantité).
     private Dictionary<TypePlante,int> graines = []; // Dictionnaire des semis disponibles pour le joueur (type de plante, quantité).
     public const int NbActionsAutorisees = 8; // Nombre d'actions que le joueur peut réaliser à chaque tour.
@@ -119,6 +118,7 @@ public class Simulation
 
             Console.Write("Entrez votre choix : ");
             string saisie = Console.ReadLine() !;
+            Console.WriteLine();
 
             if (saisie == "1")
                 return this.terrain1;
@@ -168,6 +168,7 @@ public class Simulation
         Console.WriteLine($"Coordonnées de la plante à {action} :");
         int x = SaisirEntier("Ligne ", 1, 5) - 1; // -1 car un tableau commence à l'indice 0.
         int y = SaisirEntier("Colonne ", 1, 5) - 1;
+        Console.WriteLine();
         return (x, y);
     }
 
@@ -178,9 +179,11 @@ public class Simulation
     {
         Console.WriteLine("\n=> Arroser");
 
+        Terrain terrainChoisi = this.ChoisirTerrain();
+
         var (x, y) = SaisirCoordonnees("arroser");
 
-        bool planteArrosee = this.ChoisirTerrain().Arroser(x, y);
+        bool planteArrosee = terrainChoisi.Arroser(x, y);
 
         if(planteArrosee)
             Console.WriteLine("Votre plante est désaltérée !");
@@ -195,9 +198,11 @@ public class Simulation
     {
         Console.WriteLine("\n=> Récolter");
 
+        Terrain terrainChoisi = this.ChoisirTerrain();
+
         var (x, y) = SaisirCoordonnees("récolter");
 
-        var (plantePresente, type, quantite) = this.ChoisirTerrain().Recolter(x, y);
+        var (plantePresente, type, quantite) = terrainChoisi.Recolter(x, y);
 
         if (! plantePresente)
             Console.WriteLine("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
@@ -269,11 +274,14 @@ public class Simulation
         // Choix de la plante à semer.
         TypePlante typeChoisi = this.ChoisirSemis();
 
+        // Choix du terrain sur lequel mettre le semis.
+        Terrain terrainChoisi = this.ChoisirTerrain();
+
         // Choix des coordonnées de semis.
         var (x,y) = SaisirCoordonnees("semer");
 
         // Semence.
-        bool plantee = this.ChoisirTerrain().Semer(typeChoisi, x, y);
+        bool plantee = terrainChoisi.Semer(typeChoisi, x, y);
         if (plantee)
             Console.WriteLine("Graine plantée avec succès !");
         else
@@ -287,9 +295,11 @@ public class Simulation
     {
         Console.WriteLine("\n=> Désherber");
 
+        Terrain terrainChoisi = this.ChoisirTerrain();
+
         var (x, y) = SaisirCoordonnees("retirer");
 
-        bool planteRetiree = this.ChoisirTerrain().Desherber(x, y);
+        bool planteRetiree = terrainChoisi.Desherber(x, y);
         if(planteRetiree)
             Console.WriteLine("Plante retirée avec succès !");
         else 
@@ -303,9 +313,11 @@ public class Simulation
     {
         Console.WriteLine("\n=> Soigner");
 
+        Terrain terrainChoisi = this.ChoisirTerrain();
+
         var (x, y) = SaisirCoordonnees("soigner");
 
-        this.ChoisirTerrain().Traiter(x, y);
+        terrainChoisi.Traiter(x, y);
     }
 
     /*
@@ -350,7 +362,6 @@ public class Simulation
             case "7":
                 Console.WriteLine("Vous quittez le jeu...");
                 return false;
-
             default:
                 Console.WriteLine("Choix invalide.");
                 break;
@@ -358,6 +369,19 @@ public class Simulation
 
         AttendreUtilisateurPourContinuer();
         return true;
+    }
+
+    /*
+        Lance un événement d'urgence dans le jeu (mode urgence).
+        Le joueur doit agir rapidement contre un nuisible spécifique.
+    */
+    private void LancerModeUrgence()
+    {
+        Console.Clear();
+        Console.WriteLine("⚠️ URGENCE : Quelque chose menace votre potager !\n");
+        Thread.Sleep(2000);
+
+        this.monde.LancerUrgence(this.terrain1, this.terrain2);
     }
 
     /*
@@ -371,6 +395,8 @@ public class Simulation
 
         while (partieEnCours)
         {
+            Console.Clear();
+
             if (semaine != 1)
                 Console.WriteLine($"Une semaine vient de s'écouler...\nEspérons que vos plantes vont bien...");
             Console.WriteLine($"C'est parti pour la semaine {semaine} !");
@@ -397,6 +423,14 @@ public class Simulation
                 partieEnCours = this.ChoisirAction();
 
                 Console.Clear();
+            }
+
+            // Déclenchement du mode urgence : 60% de chance de déclencher un évènement
+            if (partieEnCours)
+            {
+                bool urgence = Random.Shared.NextDouble() < 0.6;
+                if (urgence)
+                    this.LancerModeUrgence();
             }
 
             // Mise à jour des plantes en fin de tour

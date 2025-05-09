@@ -69,4 +69,9 @@ public abstract class Monde(string unNom)
         Méthode abstraite pour initialiser une illustration ASCII propre au monde.
     */
     public abstract void InitialiserIllustration();
+
+    /*
+        Lance un événement d'urgence spécifique au monde.
+    */
+    public abstract void LancerUrgence(Terrain terrain1, Terrain terrain2);
 }

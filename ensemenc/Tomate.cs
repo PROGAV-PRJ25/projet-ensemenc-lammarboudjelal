@@ -7,7 +7,7 @@ public class Tomate : Plante
     /*
         Constructeur de la classe Tomate.
     */
-    public Tomate() : base(
+    public Tomate(int uneCoordX = 0, int uneCoordY = 0) : base(
         unSymbole: "🍅",
         unType: TypePlante.Tomate,
         uneTaille: 2,
@@ -18,7 +18,9 @@ public class Tomate : Plante
         uneVitesseCroissance: 4,
         uneEsperanceVie: 12,
         unSolPrefere: TypeSol.Argileux,
-        unNbProductionsMaxPossible: 3)
+        unNbProductionsMaxPossible: 3,
+        uneCoordX : uneCoordX,
+        uneCoordY : uneCoordY)
     {
         this.InitialiserProbabilitesMaladies(); 
     }

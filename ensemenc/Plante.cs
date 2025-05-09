@@ -12,7 +12,9 @@ public abstract class Plante(
     int uneVitesseCroissance,
     int uneEsperanceVie,
     TypeSol unSolPrefere,
-    int unNbProductionsMaxPossible)
+    int unNbProductionsMaxPossible,
+    int uneCoordX,
+    int uneCoordY)
 {
     protected string symbole = unSymbole; // Symbole affiché pour représenter la plante.
     protected TypePlante type = unType; // Type de la plante.
@@ -34,6 +36,8 @@ public abstract class Plante(
     protected Dictionary<Maladie, int> ProbaMaladies { get; } = []; // Probabilité que la plante attrape une maladie donnée, exprimée en %.
     protected Maladie? maladieActuelle = null; // Maladie dont souffre actuellement la plante.
     protected int toursMalade = 0; // Compteur de tours de jeu où la plante est malade lorsqu'elle l'est.
+    protected int x = uneCoordX; // Coordonnées en x de la plante.
+    protected int y = uneCoordY; // Coordonnées en y de la plante.
 
     /*
         Accesseur en lecture uniquement du symbole affiché pour représenter la plante.
@@ -74,6 +78,22 @@ public abstract class Plante(
     public TypePlante Type 
     { 
         get { return type; }
+    }
+
+    /*
+        Accesseur en lecture uniquement de l'emplacement en x de la plante.
+    */
+    public int X 
+    { 
+        get { return x; }
+    }
+
+    /*
+        Accesseur en lecture uniquement de l'emplacement en y de la plante.
+    */
+    public int Y 
+    { 
+        get { return y; }
     }
 
     /*
@@ -284,22 +304,28 @@ public abstract class Plante(
     /*
         Crée une instance de plante en fonction du type.
 
+        param type : Type de la plante à créer.
+        param x : Coordonnées d'emplacement en x de la plante.
+        param y : Coordonnées d'emplacement en y de la plante.
+
         return : Instance de plante.
     */
-    public static Plante CreerPlanteDepuisType(TypePlante type)
+    public static Plante CreerPlanteDepuisType(TypePlante type, int x, int y)
     {
         return type switch
         {
-            TypePlante.Tomate => new Tomate(),
-            TypePlante.Fraise => new Fraise(),
-            TypePlante.Marguerite => new Marguerite(),
-            TypePlante.Champignon => new Champignon(),
+            TypePlante.Tomate => new Tomate(x, y),
+            TypePlante.Fraise => new Fraise(x, y),
+            TypePlante.Marguerite => new Marguerite(x, y),
+            TypePlante.Champignon => new Champignon(x, y),
             _=> throw new Exception("Type de plante inconnu.")
         };
     }
 
     /*
         Affiche la description d'une plante en fonction du type.
+
+        param type : Type de la plante dont la description doit être affichée.
 
         return : La description de la plante.
     */
@@ -317,6 +343,8 @@ public abstract class Plante(
 
     /*
         Indique le nombre de production d'une plante selon son type.
+
+        param type : Type de la plante dont on souhaite récupérer le nombre maximal de production possible.
 
         return : Le nombre de production de la plante.
     */

@@ -6,7 +6,8 @@ public class Terrain(string unNom)
 {
     private readonly string nom = unNom; // Nom du terrain.
     private TypeSol typeSol = default; // Type de sol (humifère, argileux, sableux...).
-    private readonly Plante?[,] plantes = new Plante?[5, 5]; // Grille de 5x5 représentant les emplacements de plantes.
+    private readonly Plante?[,] emplacements = new Plante?[5, 5]; // Grille de 5x5 représentant les emplacements de plantes.
+    private readonly List<Plante> plantes = []; // Plantes plantées sur le terrain.
 
     /*
         Accesseur en lecture et écriture du type de sol du terrain.
@@ -20,9 +21,9 @@ public class Terrain(string unNom)
     /*
         Accesseur en lecture uniquement de la grille représentant les emplacements de plantes.
     */
-    public Plante?[,] Plantes
+    public Plante?[,] Emplacements
     {
-        get { return plantes; }
+        get { return emplacements; }
     }
 
     /*
@@ -31,6 +32,14 @@ public class Terrain(string unNom)
     public string Nom
     {
         get { return nom; }
+    }
+
+    /*
+        Accesseur en lecture uniquement du plantes plantées sur le terrain.
+    */
+    public List<Plante> Plantes
+    {
+        get { return plantes; }
     }
     
     /*
@@ -44,10 +53,12 @@ public class Terrain(string unNom)
     */
     public bool Semer(TypePlante type, int x, int y)
     {
-        if (this.plantes[x, y] != null)
+        if (this.emplacements[x, y] != null)
             return false;
 
-        this.plantes[x,y] = Plante.CreerPlanteDepuisType(type);
+        Plante nouvellePlante = Plante.CreerPlanteDepuisType(type, x, y);
+        this.plantes.Add(nouvellePlante);
+        this.emplacements[x,y] = nouvellePlante;
         return true;
     }
 
@@ -61,10 +72,11 @@ public class Terrain(string unNom)
     */
     public bool Desherber(int x, int y)
     {
-        if (this.plantes[x, y] == null)
+        if (this.emplacements[x, y] == null)
             return false;
         
-        this.plantes[x,y] = null;
+        this.plantes.Remove(this.emplacements[x, y]!);
+        this.emplacements[x,y] = null;
         return true;
     }
 
@@ -79,10 +91,10 @@ public class Terrain(string unNom)
     */
     public bool Arroser(int x, int y)
     {
-        if (this.plantes[x, y] == null)
+        if (this.emplacements[x, y] == null)
             return false;
         
-        this.plantes[x,y]!.Desalterer();
+        this.emplacements[x,y]!.Desalterer();
         return true;
     }
 
@@ -99,7 +111,7 @@ public class Terrain(string unNom)
     */
     public (bool plantePresente, TypePlante? type, int quantite) Recolter(int x, int y)
     {
-        Plante? planteSelectionnee = this.plantes[x,y];
+        Plante? planteSelectionnee = this.emplacements[x,y];
 
         if (planteSelectionnee == null)
             return (false, null, 0);
@@ -120,7 +132,7 @@ public class Terrain(string unNom)
     */
     public void Traiter(int x, int y)
     {    
-        Plante? planteSelectionnee = this.plantes[x,y];
+        Plante? planteSelectionnee = this.emplacements[x, y];
 
         if (planteSelectionnee == null)
             Console.WriteLine("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
@@ -137,15 +149,10 @@ public class Terrain(string unNom)
     */
     public void MettreAJourPlantes(Meteo meteo)
     {
-        for (int i = 0; i < this.plantes.GetLength(0); i++)
+        foreach (var plante in this.plantes)
         {
-            for (int j = 0; j < this.plantes.GetLength(1); j++)
-            {
-                Plante? plante = this.plantes[i, j];
-
-                if (plante != null && plante.Etat != Etat.Morte)
-                    plante.MettreAJour(meteo, this.typeSol);
-            }
+            if (plante.Etat != Etat.Morte)
+                plante.MettreAJour(meteo, this.typeSol);
         }
     }
 }

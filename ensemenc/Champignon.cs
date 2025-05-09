@@ -7,7 +7,7 @@ public class Champignon : Plante
     /*
         Constructeur de la classe Champignon.
     */
-    public Champignon() : base(
+    public Champignon(int uneCoordX = 0, int uneCoordY = 0) : base(
         unSymbole : "🍄",
         unType : TypePlante.Champignon, 
         uneTaille : 1, 
@@ -18,7 +18,9 @@ public class Champignon : Plante
         uneVitesseCroissance : 2, 
         uneEsperanceVie : 5, 
         unSolPrefere : TypeSol.Humifere, 
-        unNbProductionsMaxPossible : 1) 
+        unNbProductionsMaxPossible : 1,
+        uneCoordX : uneCoordX,
+        uneCoordY : uneCoordY) 
     {
         this.InitialiserProbabilitesMaladies(); 
     }
