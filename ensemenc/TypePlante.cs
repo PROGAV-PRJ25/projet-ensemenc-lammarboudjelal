@@ -4,5 +4,9 @@ public enum TypePlante
     Tomate,
     Fraise,
     Marguerite,
-    Champignon
+    Champignon,
+    Cactus,
+    AloeVera,
+    PlanteFeu,
+    Dattier
 }

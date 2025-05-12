@@ -12,7 +12,7 @@ public class Affichage()
         Console.WriteLine("║           CHOIX DU MONDE         ║");
         Console.WriteLine("╠══════════════════════════════════╣");
         Console.WriteLine("║ 1. Plaine Champignon             ║");
-        Console.WriteLine("║ 2. Désert Chomp (à venir)        ║");
+        Console.WriteLine("║ 2. Désert Chomp                  ║");
         Console.WriteLine("║ 3. Jungle Wiggler (à venir)      ║");
         Console.WriteLine("║ 4. Royaume Sorbet (à venir)      ║");
         Console.WriteLine("║ 5. Tropique Lakitu (à venir)     ║");
@@ -89,8 +89,7 @@ public class Affichage()
         Console.WriteLine("Mode Urgence :");
         Console.WriteLine("- Chaque semaine, il y a 60% de chances qu'une urgence survienne !");
         Console.WriteLine("- Vous devrez réagir à un nuisible spécifique à votre monde.");
-        Console.WriteLine("- Vous avez 3 actions pour éviter ses dégâts !");
-        Console.WriteLine("- Exemples de nuisibles dans ce monde : Goombaver, Koopascargot, PuceronKoopa.\n");
+        Console.WriteLine("- Vous avez 3 actions pour éviter ses dégâts !\n");
 
         Console.WriteLine("Objectif :");
         Console.WriteLine("-> Faites prospérer votre potager et protégez vos plantations !\n");

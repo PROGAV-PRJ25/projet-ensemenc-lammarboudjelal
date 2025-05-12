@@ -105,6 +105,14 @@ public abstract class Plante(
     }
 
     /*
+        Accesseur en lecture uniquement de la taille de la plante.
+    */
+    public int Taille 
+    { 
+        get { return taille; }
+    }
+
+    /*
         Retourne une description textuelle de la plante.
 
         return : Chaîne de caractères décrivant l'état actuel de la plante.
@@ -259,7 +267,7 @@ public abstract class Plante(
         //    de la maladie, alors la plante tombe malade.
         foreach (var proba in ProbaMaladies)
         {
-            int tirage = Random.Shared.Next(1,101);
+            int tirage = new Random().Next(1,101);
             if (tirage <= proba.Value)
             {
                 this.maladieActuelle = proba.Key;
@@ -340,6 +348,10 @@ public abstract class Plante(
             TypePlante.Fraise => new Fraise(x, y),
             TypePlante.Marguerite => new Marguerite(x, y),
             TypePlante.Champignon => new Champignon(x, y),
+            TypePlante.Cactus => new Cactus(x, y),
+            TypePlante.AloeVera => new AloeVera(x, y),
+            TypePlante.Dattier => new Dattier(x, y),
+            TypePlante.PlanteFeu => new PlanteFeu(x, y),
             _=> throw new Exception("Type de plante inconnu.")
         };
     }
@@ -359,6 +371,10 @@ public abstract class Plante(
             TypePlante.Fraise => $"{new Fraise().AfficherCaracteristiques()}",
             TypePlante.Marguerite => $"{new Marguerite().AfficherCaracteristiques()}",
             TypePlante.Champignon => $"{new Champignon().AfficherCaracteristiques()}",
+            TypePlante.Cactus => $"{new Cactus().AfficherCaracteristiques()}",
+            TypePlante.AloeVera => $"{new AloeVera().AfficherCaracteristiques()}",
+            TypePlante.Dattier => $"{new Dattier().AfficherCaracteristiques()}",
+            TypePlante.PlanteFeu => $"{new PlanteFeu().AfficherCaracteristiques()}",
             _=> throw new Exception("Type de plante inconnu.")
         };
     }
@@ -378,6 +394,10 @@ public abstract class Plante(
             TypePlante.Fraise => new Fraise().NbProductionsMaxPossible,
             TypePlante.Marguerite => new Marguerite().NbProductionsMaxPossible,
             TypePlante.Champignon => new Champignon().NbProductionsMaxPossible,
+            TypePlante.Cactus => new Cactus().NbProductionsMaxPossible,
+            TypePlante.AloeVera => new AloeVera().NbProductionsMaxPossible,
+            TypePlante.Dattier => new Dattier().NbProductionsMaxPossible,
+            TypePlante.PlanteFeu => new PlanteFeu().NbProductionsMaxPossible,
             _=> throw new Exception("Type de plante inconnu.")
         };
     }

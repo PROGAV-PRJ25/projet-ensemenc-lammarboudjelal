@@ -88,6 +88,11 @@ public class Simulation
                     mondeValide = DemanderConfirmation();
                     break;
                 case "2":
+                    Console.Clear();
+                    this.monde = new DesertChomp();
+                    this.monde.AfficherDescription();
+                    mondeValide = DemanderConfirmation();
+                    break;
                 case "3":
                 case "4":
                 case "5":
@@ -430,7 +435,7 @@ public class Simulation
             // Déclenchement du mode urgence : 60% de chance de déclencher un évènement
             if (partieEnCours)
             {
-                bool urgence = Random.Shared.NextDouble() < 0.6;
+                bool urgence = new Random().NextDouble() < 0.6;
                 if (urgence)
                     this.LancerModeUrgence();
             }

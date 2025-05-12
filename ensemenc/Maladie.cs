@@ -5,4 +5,6 @@ public enum Maladie
     Moisissure,
     Necrose,
     Oidium,
+    Fusariose,
+    CarenceEnFer
 }

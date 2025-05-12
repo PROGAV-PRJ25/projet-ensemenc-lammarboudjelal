@@ -72,6 +72,7 @@ public abstract class Monde(string unNom)
         param terrain2 : Deuxième terrain du joueur.
         param conditionCible : Condition pour qu’une plante soit considérée comme une cible valable.
         param actionCible : Méthode spécifique à appeler si le nuisible atteint sa cible. Elle prend en paramètre la plante et le terrain affecté.
+        param options : Liste d’actions disponibles pour repousser le nuisible avec leurs probabilités de succès. Si null, on utilise les actions par défaut.
     */
     protected static void GererAttaqueNuisible(
         string nomNuisible,
@@ -79,7 +80,8 @@ public abstract class Monde(string unNom)
         Terrain terrain1,
         Terrain terrain2,
         Func<Plante, bool> conditionCible,
-        Action<Plante, Terrain> actionCible)
+        Action<Plante, Terrain> actionCible,
+        List<(string description, double probaReussite)>? options = null)
     {
         // Les plantes éligibles (selon la condition de cible) des terrains 1 et 2 sont rassemblées dans une même liste.
         List<(Plante plante, Terrain terrain)> plantesEligibles = [];
@@ -111,6 +113,14 @@ public abstract class Monde(string unNom)
         Console.WriteLine($"\n{nomNuisible} approche votre plante {cible.Symbole} en ({cible.X + 1}, {cible.Y + 1}) !");
         Thread.Sleep(1500);
 
+        // Définition des actions possibles
+        List<(string, double)> actions = options ??
+        [
+            ("Frapper le sol", 0.7),
+            ("Vaporiser un jet d'eau", 0.6),
+            ("Allumer un répulsif sonore", 0.8)
+        ];
+
         // Actions du joueur pour contrer l'attaque.
         int essaisRestants = 3;
         bool repousse = false;
@@ -118,35 +128,30 @@ public abstract class Monde(string unNom)
         while (essaisRestants > 0 && !repousse)
         {
             Console.WriteLine($"\nQue faire ? (Actions restantes : {essaisRestants}/3)\n");
-            Console.WriteLine("1. Frapper le sol (succès : 70%)");
-            Console.WriteLine("2. Vaporiser un jet d'eau (succès : 60%)");
-            Console.WriteLine("3. Allumer un répulsif sonore (succès : 80%)");
-            Console.WriteLine("4. Ne rien faire\n");
+
+            for (int i = 0; i < actions.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {actions[i].Item1} (succès : {actions[i].Item2 * 100:0}%)");
+            }
+            Console.WriteLine($"{actions.Count + 1}. Ne rien faire\n");
 
             Console.Write("Entrez le numéro de l'action que vous souhaitez réaliser : ");
-            string choix = Console.ReadLine()!;
+            string saisie = Console.ReadLine()!;
             double tirage = new Random().NextDouble();
-            Thread.Sleep(1500);
 
-            switch (choix)
+            if (int.TryParse(saisie, out int choix) && choix >= 1 && choix <= actions.Count)
             {
-                case "1":
-                    Console.WriteLine("\n=> Vous frappez le sol avec puissance !");
-                    repousse = tirage < 0.7;
-                    break;
-                case "2":
-                    Console.WriteLine("\n=> Vous aspergez la zone d’eau !");
-                    repousse = tirage < 0.6;
-                    break;
-                case "3":
-                    Console.WriteLine("\n=> Vous activez un répulsif sonore !");
-                    repousse = tirage < 0.8;
-                    break;
-                default:
-                    Console.WriteLine("\n=> Vous ne faites rien...Original comme choix...");
-                    essaisRestants = 0;
-                    break;
+                var action = actions[choix - 1];
+                Console.WriteLine($"\n=> Vous tentez : {action.Item1} !");
+                repousse = tirage < action.Item2;
             }
+            else
+            {
+                Console.WriteLine("\n=> Vous ne faites rien... Original comme choix...");
+                essaisRestants = 0;
+            }
+            
+            Thread.Sleep(1500);
 
             essaisRestants--;
 
