@@ -20,7 +20,7 @@ public class Simulation
     private static bool DemanderConfirmation()
     {
         Console.WriteLine();
-        Console.WriteLine("Voulez-vous valider votre choix ? [O] Oui / [N] Non");
+        Affichage.AfficherSaisieUtilisateur("Voulez-vous valider votre choix ? [O] Oui / [N] Non\n");
 
         string reponse = Console.ReadLine() !;
         if (reponse != null && (reponse.Equals("O", StringComparison.CurrentCultureIgnoreCase) || reponse.Equals("OUI", StringComparison.CurrentCultureIgnoreCase)))
@@ -38,7 +38,7 @@ public class Simulation
     */
     public static void AttendreUtilisateurPourContinuer()
     {
-        Console.WriteLine("Appuyez sur une touche pour continuer...");
+        Affichage.AfficherSaisieUtilisateur("Appuyez sur une touche pour continuer...");
         Console.ReadKey();
     }
 
@@ -77,7 +77,7 @@ public class Simulation
 
             Affichage.AfficherMenuMondes();
 
-            Console.Write("Sélectionnez un monde (1 ou 2) : ");
+            Affichage.AfficherSaisieUtilisateur("Sélectionnez un monde (1 ou 2) : ");
             string choix = Console.ReadLine() !;
 
             switch (choix)
@@ -114,7 +114,7 @@ public class Simulation
             Console.WriteLine("1. Terrain 1");
             Console.WriteLine("2. Terrain 2");
 
-            Console.Write("Entrez votre choix : ");
+            Affichage.AfficherSaisieUtilisateur("Entrez votre choix : ");
             string saisie = Console.ReadLine() !;
             Console.WriteLine();
 
@@ -142,7 +142,7 @@ public class Simulation
         int valeur = min - 1;
         while (valeur < min || valeur > max)
         {
-            Console.Write(message + $" ({min} - {max}) : ");
+            Affichage.AfficherSaisieUtilisateur(message + $" ({min} - {max}) : ");
             int.TryParse(Console.ReadLine()!, out valeur);
 
             if (valeur < min || valeur > max)
@@ -330,7 +330,7 @@ public class Simulation
         Console.WriteLine($"Que faire ? (Actions restantes : {nbActionsRestantes}/8)\n");
         Affichage.AfficherMenuActions();
         
-        Console.Write("Entrez le numéro de l'action que vous souhaitez réaliser : ");
+        Affichage.AfficherSaisieUtilisateur("Entrez le numéro de l'action que vous souhaitez réaliser : ");
         string choix = Console.ReadLine()!;
 
         switch (choix)
@@ -399,7 +399,7 @@ public class Simulation
 
             if (semaine != 1)
                 Console.WriteLine($"Une semaine vient de s'écouler...\nEspérons que vos plantes vont bien...");
-            Console.WriteLine($"C'est parti pour la semaine {semaine} !");
+            Console.WriteLine($"C'est parti pour la semaine {semaine} !\n");
 
             AttendreUtilisateurPourContinuer();
             Console.Clear();

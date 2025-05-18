@@ -135,7 +135,7 @@ public abstract class Monde(string unNom)
             }
             Console.WriteLine($"{actions.Count + 1}. Ne rien faire\n");
 
-            Console.Write("Entrez le numéro de l'action que vous souhaitez réaliser : ");
+            Affichage.AfficherSaisieUtilisateur("Entrez le numéro de l'action que vous souhaitez réaliser : ");
             string saisie = Console.ReadLine()!;
             double tirage = new Random().NextDouble();
 

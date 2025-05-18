@@ -91,7 +91,7 @@ public class Affichage()
         Console.WriteLine("Objectif :");
         Console.WriteLine("-> Faites prospérer votre potager et protégez vos plantations !\n");
 
-        Console.WriteLine("═════════════════════════════════════════════════════════════════════");
+        Console.WriteLine("═════════════════════════════════════════════════════════════════════\n");
     }
 
     /*
@@ -315,5 +315,17 @@ public class Affichage()
     public static void AfficherAvertissement(string message)
     {
         AfficherMessageColore(message, ConsoleColor.DarkYellow);
+    }
+
+    /*
+        Affiche un message d'interaction avec l'utilisateur en cyan (par exemple : saisie attendue).
+
+        param message : Le texte à afficher.
+    */
+    public static void AfficherSaisieUtilisateur(string message)
+    {
+        Console.ForegroundColor = ConsoleColor.DarkCyan;
+        Console.Write(message);
+        Console.ResetColor();
     }
 }
