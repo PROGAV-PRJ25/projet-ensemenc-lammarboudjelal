@@ -261,22 +261,33 @@ ___
 ENSemenC
 │
 ├── Program.cs                 // Point d’entrée du jeu
+│
 ├── Simulation.cs              // Logique principale du jeu
+│
 ├── Affichage.cs               // Fonctions d’affichage console
-├── Monde.cs                   // Classe abstraite pour les mondes
+│
+├── mondes                     // Dossier regroupant l'ensemble des classes de mondes
+│   ├── Monde.cs               // Classe abstraite des mondes
 │   ├── PlaineChampignon.cs    // Monde 1
 │   └── DesertChomp.cs         // Monde 2
+│
 ├── Terrain.cs                 // Gestion des plantes sur les terrains
-├── Plante.cs                  // Classe abstraite des plantes
+│
+├── plantes                    // Dossier regroupant l'ensemble des classes de plantes
+│   ├── Plante.cs              // Classe abstraite des plantes
 │   ├── Tomate.cs              // Exemples de plantes
 │   ├── Fraise.cs
 │   ├── Cactus.cs
 │   ├── PlanteFeu.cs
 │   └── ...
+│
 ├── Meteo.cs                   // Météo de la semaine
-├── TypePlante.cs              // Énumérations (TypePlante, TypeSol, Maladie...)
-├── TypeSol.cs 
-└── ...             
+│
+├── enum                       // Dossier regroupant les énumérations (TypePlante, TypeSol, Maladie...)
+│   ├── TypePlante.cs         
+│   ├── TypeSol.cs   
+│   └── ...           
+└──             
 ```
 
 La **matrice d'implication**, le **diagramme UML** et le **rapport technique** du projet sont également disponibles.
