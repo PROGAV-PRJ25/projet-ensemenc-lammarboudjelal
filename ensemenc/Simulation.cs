@@ -94,7 +94,7 @@ public class Simulation
                     mondeValide = DemanderConfirmation();
                     break;
                 default:
-                    Console.WriteLine("Choix invalide. Veuillez saisir un chiffre entre 1 et 2.");
+                    Affichage.AfficherErreur("Choix invalide. Veuillez saisir un chiffre entre 1 et 2.");
                     AttendreUtilisateurPourContinuer();
                     break;
             }
@@ -124,7 +124,7 @@ public class Simulation
             if (saisie == "2")
                 return this.terrain2;
 
-            Console.WriteLine("Choix invalide. Veuillez réessayer.");
+            Affichage.AfficherErreur("Choix invalide. Veuillez réessayer.");
         }
     }
 
@@ -147,7 +147,7 @@ public class Simulation
 
             if (valeur < min || valeur > max)
             {
-                Console.WriteLine($"Choix invalide. Veuillez saisir un chiffre entre {min} et {max}.");
+                Affichage.AfficherErreur($"Choix invalide. Veuillez saisir un chiffre entre {min} et {max}.");
                 AttendreUtilisateurPourContinuer();
                 Console.WriteLine();
             }
@@ -183,12 +183,12 @@ public class Simulation
 
         bool planteArrosee = terrainChoisi.Arroser(x, y);
 
-        if(planteArrosee && terrainChoisi.Emplacements[x, y]!.Etat != Etat.Morte)
+        if (planteArrosee && terrainChoisi.Emplacements[x, y]!.Etat != Etat.Morte)
             Console.WriteLine("Votre plante est désaltérée !");
-        else if(planteArrosee && terrainChoisi.Emplacements[x, y]!.Etat == Etat.Morte)
-            Console.WriteLine("Vous venez d'arroser une plante morte. C'est dommage, vous venez de perdre une action inutilement...");
+        else if (planteArrosee && terrainChoisi.Emplacements[x, y]!.Etat == Etat.Morte)
+            Affichage.AfficherAvertissement("Vous venez d'arroser une plante morte. C'est dommage, vous venez de perdre une action inutilement...");
         else
-            Console.WriteLine("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
+            Affichage.AfficherAvertissement("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
     }
 
     /*
@@ -204,10 +204,10 @@ public class Simulation
 
         var (plantePresente, type, quantite) = terrainChoisi.Recolter(x, y);
 
-        if (! plantePresente)
-            Console.WriteLine("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
+        if (!plantePresente)
+            Affichage.AfficherAvertissement("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
         else if (quantite == 0)
-            Console.WriteLine("Cette plante n’a rien produit cette semaine. Il faudra patienter...");
+            Affichage.AfficherAvertissement("Cette plante n’a rien produit cette semaine. Il faudra patienter...");
         else
         {
             if (type != null)
@@ -217,7 +217,7 @@ public class Simulation
                 else
                     this.recoltes[type.Value] = quantite;
 
-                Console.WriteLine($"Vous avez récolté {quantite} unité(s) de {type} !");
+                Affichage.AfficherSucces($"Vous avez récolté {quantite} unité(s) de {type} !");
             }
         }
     }
@@ -238,10 +238,10 @@ public class Simulation
         while (! choixValide)
         {
             choix = SaisirEntier("Choisissez un type de plante à semer ", 1, this.graines.Count); 
-            typeChoisi = this.graines.Keys.ElementAt(choix - 1); 
+            typeChoisi = this.graines.Keys.ElementAt(choix - 1);
 
             if (this.graines[typeChoisi] == 0)
-                Console.WriteLine("Vous n'avez plus de graines de ce type. Veuillez en choisir une autre.");
+                Affichage.AfficherErreur("Vous n'avez plus de graines de ce type. Veuillez en choisir une autre.");
             else
                 choixValide = true;
         }
@@ -267,7 +267,7 @@ public class Simulation
         }
         if (totalGraines == 0)
         {
-            Console.WriteLine("Vous n'avez plus de graines dans votre inventaire.");
+            Affichage.AfficherErreur("Vous n'avez plus de graines dans votre inventaire.");
             return;
         }
 
@@ -283,9 +283,9 @@ public class Simulation
         // Semence.
         bool plantee = terrainChoisi.Semer(typeChoisi, x, y);
         if (plantee)
-            Console.WriteLine("Graine plantée avec succès !");
+            Affichage.AfficherSucces("Graine plantée avec succès !");
         else
-            Console.WriteLine($"L'emplacement est déjà occupé par une autre plante. C'est dommage, vous venez de perdre une graine...");
+            Affichage.AfficherAvertissement($"L'emplacement est déjà occupé par une autre plante. C'est dommage, vous venez de perdre une graine...");
     }
 
     /*
@@ -300,10 +300,10 @@ public class Simulation
         var (x, y) = SaisirCoordonnees("retirer");
 
         bool planteRetiree = terrainChoisi.Desherber(x, y);
-        if(planteRetiree)
-            Console.WriteLine("Plante retirée avec succès !");
-        else 
-            Console.WriteLine("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
+        if (planteRetiree)
+            Affichage.AfficherSucces("Plante retirée avec succès !");
+        else
+            Affichage.AfficherAvertissement("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
     }
 
     /*
@@ -363,7 +363,7 @@ public class Simulation
                 Console.WriteLine("Vous quittez le jeu...");
                 return false;
             default:
-                Console.WriteLine("Choix invalide.");
+                Affichage.AfficherErreur("Choix invalide.");
                 break;
         }
 

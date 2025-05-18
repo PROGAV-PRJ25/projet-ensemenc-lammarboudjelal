@@ -21,7 +21,7 @@ public class Affichage()
         Affiche l'introduction stylisée du jeu.
     */
     public static void AfficherIntroduction()
-    {   
+    {
         Console.WriteLine("        __           ");
         Console.WriteLine("     .-'  |          ");
         Console.WriteLine("    /   <\\|         ");
@@ -150,21 +150,21 @@ public class Affichage()
             Console.WriteLine("+");
 
             // Ligne avec numéro + contenu
-            Console.Write($"{i+1} ");
+            Console.Write($"{i + 1} ");
             for (int j = 0; j < 5; j++)
             {
-                if (terrain1.Emplacements?[i,j] is not null)
-                    Console.Write($"| {terrain1.Emplacements[i,j]!.Symbole} ");
+                if (terrain1.Emplacements?[i, j] is not null)
+                    Console.Write($"| {terrain1.Emplacements[i, j]!.Symbole} ");
                 else
                     Console.Write($"|    ");
             }
             Console.Write("|    ");
-            
+
 
             for (int j = 0; j < 5; j++)
             {
-                if (terrain2.Emplacements?[i,j] is not null)
-                    Console.Write($"| {terrain2.Emplacements[i,j]!.Symbole} ");
+                if (terrain2.Emplacements?[i, j] is not null)
+                    Console.Write($"| {terrain2.Emplacements[i, j]!.Symbole} ");
                 else
                     Console.Write($"|    ");
             }
@@ -233,17 +233,17 @@ public class Affichage()
         param graines : Dictionnaire des semis disponibles pour le joueur (type de plante, quantité).
         param avecCaracteristiques : Permet d'indiquer si on souhaite afficher les caractéristiques des plantes en plus.
     */
-    public static void AfficherInventaire(Dictionary<TypePlante, int> recoltes, Dictionary<TypePlante,int> graines, bool avecCaracteristiques = false)
+    public static void AfficherInventaire(Dictionary<TypePlante, int> recoltes, Dictionary<TypePlante, int> graines, bool avecCaracteristiques = false)
     {
         Console.WriteLine("INVENTAIRE\n");
-        
+
         // Graines
         Console.WriteLine("Graines disponibles :\n");
         int i = 1;
         foreach (var graine in graines)
         {
             Console.WriteLine($"{i} - {graine.Key} : {graine.Value} graine(s) restante(s)");
-            if(avecCaracteristiques) Console.WriteLine($"{Plante.AfficherDescription(graine.Key)}\n");
+            if (avecCaracteristiques) Console.WriteLine($"{Plante.AfficherDescription(graine.Key)}\n");
             i++;
         }
 
@@ -271,5 +271,49 @@ public class Affichage()
         Console.WriteLine("5. Soigner");
         Console.WriteLine("6. Passer au tour suivant");
         Console.WriteLine("7. Quitter le jeu\n");
+    }
+
+    /*
+        Affiche un message en couleur, puis rétablit la couleur par défaut.
+
+        param message : Le texte à afficher.
+        param couleur : La couleur à utiliser.
+    */
+    private static void AfficherMessageColore(string message, ConsoleColor couleur)
+    {
+        Console.ForegroundColor = couleur;
+        Console.WriteLine(message);
+        Console.ResetColor();
+    }
+
+    /*
+        Affiche un message d'erreur en rouge.
+        
+        param message : Le texte d'erreur à afficher.
+    */
+    public static void AfficherErreur(string message)
+    {
+        AfficherMessageColore(message, ConsoleColor.Red);
+    }
+
+    /*
+        Affiche un message de confirmation en vert.
+
+        param message : Le texte d'erreur à afficher.
+    */
+    public static void AfficherSucces(string message)
+    {
+        AfficherMessageColore(message, ConsoleColor.Green);
+    }
+
+    /*
+        Affiche un message d'avertissement en jaune.
+        Un message d'avertissement peut également être un message à connotation négative comme l'annonce de la mort d'une plante.
+
+        param message : Le texte d'erreur à afficher.
+    */
+    public static void AfficherAvertissement(string message)
+    {
+        AfficherMessageColore(message, ConsoleColor.DarkYellow);
     }
 }

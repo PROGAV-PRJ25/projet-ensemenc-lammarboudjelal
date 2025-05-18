@@ -97,8 +97,8 @@ public abstract class Monde(string unNom)
         // Si aucune cible valide, l’attaque est sans effet.
         if (plantesEligibles.Count == 0)
         {
-            Console.WriteLine($"\n{nomNuisible} rode... mais il ne trouve rien à nuire !");
-            Console.WriteLine("Il repart sans causer de dégâts.\n");
+            Affichage.AfficherSucces($"\n{nomNuisible} rode... mais il ne trouve rien à nuire !");
+            Affichage.AfficherSucces("Il repart sans causer de dégâts.\n");
             Thread.Sleep(2000);
             return;
         }
@@ -110,7 +110,7 @@ public abstract class Monde(string unNom)
         Console.Clear();
         Console.WriteLine(messageIntro);
         Thread.Sleep(2000);
-        Console.WriteLine($"\n{nomNuisible} approche votre plante {cible.Symbole} en ({cible.Coordonnees.X + 1}, {cible.Coordonnees.Y + 1}) !");
+        Console.WriteLine($"\n{nomNuisible} approche votre plante {cible.Symbole} en {cible.Coordonnees} !");
         Thread.Sleep(1500);
 
         // Définition des actions possibles
@@ -157,13 +157,13 @@ public abstract class Monde(string unNom)
 
             if (repousse)
             {
-                Console.WriteLine($"\n{nomNuisible} est repoussé !");
+                Affichage.AfficherSucces($"\n{nomNuisible} est repoussé !");
                 return;
             }
 
             if (essaisRestants > 0) 
             {
-                Console.WriteLine($"\n{nomNuisible} hésite mais reste menaçant...");
+                Affichage.AfficherAvertissement($"\n{nomNuisible} hésite mais reste menaçant...");
                 Thread.Sleep(1500);
             }
         }

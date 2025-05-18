@@ -196,7 +196,7 @@ public class Terrain(string unNom)
 
 
         if (planteSelectionnee == null)
-            Console.WriteLine("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
+            Affichage.AfficherAvertissement("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
         else
         {
             // Si le joueur a sélectionné l'enfant d'une plante, il faut récupérer son parent (pour la traiter à la racine O.o).
@@ -206,9 +206,9 @@ public class Terrain(string unNom)
             }
 
             if (planteSelectionnee.Guerir())
-                Console.WriteLine("Votre plante a été soignée, elle pète la forme !");
+                Affichage.AfficherSucces("Votre plante a été soignée, elle pète la forme !");
             else
-                Console.WriteLine("Cette plante était déjà en bonne santé. C'est dommage, vous venez de perdre une action...");
+                Affichage.AfficherAvertissement("Cette plante était déjà en bonne santé. C'est dommage, vous venez de perdre une action...");
         }
     }
 
