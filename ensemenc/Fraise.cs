@@ -10,7 +10,7 @@ public class Fraise : Plante
     public Fraise(int uneCoordX = 0, int uneCoordY = 0) : base(
         unSymbole: "🍓",
         unType: TypePlante.Fraise,
-        uneTaille: 1,
+        uneTailleAdulte: 1,
         desBesoinsEau: 60,
         desBesoinsLuminosite: 85,
         uneTempMin: 8,

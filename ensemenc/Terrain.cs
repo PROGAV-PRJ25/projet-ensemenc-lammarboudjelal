@@ -63,6 +63,32 @@ public class Terrain(string unNom)
     }
 
     /*
+        Retrouve la plante parent d'une plante fille.
+
+        param planteFille : Plante dont on souhaite récupérer le parent.
+
+        return : Plante parente de la plante fille.
+    */
+    private Plante TrouverParent(Plante planteFille)
+    {
+        return this.plantes.Find(p => p == planteFille.PlanteParente)!;
+    }
+
+    /*
+        Retire du terrain les plantes filles d'une plante.
+        
+        param planteParent : Plante dont on souhaite retirer les plantes filles du terrain.
+    */
+    public void RetirerPlantesFilles(Plante planteParent)
+    {
+        foreach (var planteFille in planteParent.PlantesFilles)
+        {
+            this.Emplacements[planteFille.Coordonnees.X, planteFille.Coordonnees.Y] = null;
+        }
+        planteParent.PlantesFilles.Clear();
+    }
+
+    /*
         Retire une plante du terrain à partir des coordonnées saisies.
 
         param x : Coordonnées en x de la parcelle où la plante doit être retirée.
@@ -72,11 +98,31 @@ public class Terrain(string unNom)
     */
     public bool Desherber(int x, int y)
     {
-        if (this.emplacements[x, y] == null)
+        Plante? planteSelectionnee = this.emplacements[x, y];
+
+        // Cas 1 : la plante à désherber n'existe pas, l'emplacement est vide.
+        if (planteSelectionnee == null)
             return false;
-        
-        this.plantes.Remove(this.emplacements[x, y]!);
-        this.emplacements[x,y] = null;
+
+        Plante plantePrincipale = planteSelectionnee;
+
+        // Cas 2 : c’est une plante mère (pas de parent, mais a des filles).
+        if (planteSelectionnee.PlanteParente == null && planteSelectionnee.PlantesFilles.Count != 0)
+        {
+            plantePrincipale = planteSelectionnee;
+        }
+        // Cas 3 : c’est une plante fille, on remonte au parent.
+        else if (planteSelectionnee.PlanteParente != null)
+        {
+            plantePrincipale = this.TrouverParent(planteSelectionnee);
+        }
+
+        // Suppression des plantes filles si nécessaire.
+        this.RetirerPlantesFilles(plantePrincipale);
+
+        // Suppression de la plante principale.
+        this.plantes.Remove(plantePrincipale);
+        this.emplacements[plantePrincipale.Coordonnees.X, plantePrincipale.Coordonnees.Y] = null;
         return true;
     }
 
@@ -91,10 +137,18 @@ public class Terrain(string unNom)
     */
     public bool Arroser(int x, int y)
     {
-        if (this.emplacements[x, y] == null)
+        Plante? planteSelectionnee = this.emplacements[x, y];
+
+        if (planteSelectionnee == null)
             return false;
         
-        this.emplacements[x,y]!.Desalterer();
+        // Si le joueur a sélectionné l'enfant d'une plante, il faut récupérer son parent (pour arroser à la racine O.o).
+        if (planteSelectionnee.PlanteParente != null)
+        {
+            planteSelectionnee = this.TrouverParent(planteSelectionnee);
+        }
+
+        planteSelectionnee.Desalterer();
         return true;
     }
 
@@ -116,6 +170,12 @@ public class Terrain(string unNom)
         if (planteSelectionnee == null)
             return (false, null, 0);
 
+        // Si le joueur a sélectionné l'enfant d'une plante, il faut récupérer son parent.
+        if (planteSelectionnee.PlanteParente != null)
+        {
+            planteSelectionnee = this.TrouverParent(planteSelectionnee);
+        }
+
         int quantite = planteSelectionnee.NbProductionsActuel;
         TypePlante type = planteSelectionnee.Type;
         
@@ -134,12 +194,22 @@ public class Terrain(string unNom)
     {    
         Plante? planteSelectionnee = this.emplacements[x, y];
 
+
         if (planteSelectionnee == null)
             Console.WriteLine("Aucune plante n'est positionnée à ces coordonnées. C'est dommage, vous venez de perdre une action...");
-        else if (planteSelectionnee.Guerir())
-            Console.WriteLine("Votre plante a été soignée, elle pète la forme !");
         else
-            Console.WriteLine("Cette plante était déjà en bonne santé. C'est dommage, vous venez de perdre une action...");
+        {
+            // Si le joueur a sélectionné l'enfant d'une plante, il faut récupérer son parent (pour la traiter à la racine O.o).
+            if (planteSelectionnee.PlanteParente != null)
+            {
+                planteSelectionnee = this.TrouverParent(planteSelectionnee);
+            }
+
+            if (planteSelectionnee.Guerir())
+                Console.WriteLine("Votre plante a été soignée, elle pète la forme !");
+            else
+                Console.WriteLine("Cette plante était déjà en bonne santé. C'est dommage, vous venez de perdre une action...");
+        }
     }
 
     /*
@@ -152,7 +222,7 @@ public class Terrain(string unNom)
         foreach (var plante in this.plantes)
         {
             if (plante.Etat != Etat.Morte)
-                plante.MettreAJour(meteo, this.typeSol);
+                plante.MettreAJour(meteo, this);
         }
     }
 }

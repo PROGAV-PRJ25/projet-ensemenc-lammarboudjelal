@@ -10,7 +10,7 @@ public class Tomate : Plante
     public Tomate(int uneCoordX = 0, int uneCoordY = 0) : base(
         unSymbole: "🍅",
         unType: TypePlante.Tomate,
-        uneTaille: 2,
+        uneTailleAdulte: 2,
         desBesoinsEau: 70,
         desBesoinsLuminosite: 80,
         uneTempMin: 10,

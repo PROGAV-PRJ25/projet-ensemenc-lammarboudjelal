@@ -278,7 +278,7 @@ public class Simulation
         Terrain terrainChoisi = this.ChoisirTerrain();
 
         // Choix des coordonnées de semis.
-        var (x,y) = SaisirCoordonnees("semer");
+        var (x,y) = SaisirCoordonnees("semer (faites attention à prévoir la place nécessaire à l'épanouissement de votre plante)");
 
         // Semence.
         bool plantee = terrainChoisi.Semer(typeChoisi, x, y);
@@ -378,7 +378,7 @@ public class Simulation
     private void LancerModeUrgence()
     {
         Console.Clear();
-        Console.WriteLine("⚠️ URGENCE : Quelque chose menace votre potager !\n");
+        Console.WriteLine("URGENCE : Quelque chose menace votre potager !\n");
         Thread.Sleep(2000);
 
         this.monde.LancerUrgence(this.terrain1, this.terrain2);

@@ -10,7 +10,7 @@ public class Champignon : Plante
     public Champignon(int uneCoordX = 0, int uneCoordY = 0) : base(
         unSymbole : "🍄",
         unType : TypePlante.Champignon, 
-        uneTaille : 1, 
+        uneTailleAdulte : 1, 
         desBesoinsEau : 80, 
         desBesoinsLuminosite : 20, 
         uneTempMin : 5, 

@@ -169,6 +169,7 @@ public class PlaineChampignon : Monde
             actionCible: (plante, terrain) =>
             {
                 Console.WriteLine($"\nLe Goombaver dévore votre plante {plante.Symbole} en {plante.Coordonnees} !");
+                terrain.RetirerPlantesFilles(plante);
                 terrain.Emplacements[plante.Coordonnees.X, plante.Coordonnees.Y] = null;
                 terrain.Plantes.Remove(plante);
             }

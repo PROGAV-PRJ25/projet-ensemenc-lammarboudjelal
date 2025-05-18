@@ -124,6 +124,7 @@ public class DesertChomp : Monde
             actionCible: (plante, terrain) =>
             {
                 Console.WriteLine($"\nLa tempête déracine la {plante.Symbole} en {plante.Coordonnees} !");
+                terrain.RetirerPlantesFilles(plante);
                 terrain.Emplacements[plante.Coordonnees.X, plante.Coordonnees.Y] = null;
                 terrain.Plantes.Remove(plante);
             },
@@ -151,10 +152,11 @@ public class DesertChomp : Monde
             messageIntro: "Un Scaraboss surgit du sable brûlant et fonce vers vos plantations !",
             terrain1: terrain1,
             terrain2: terrain2,
-            conditionCible: plante => plante.Etat == Etat.BonneSante && plante.Taille <= 2 && plante.Croissance != Croissance.Adulte,
+            conditionCible: plante => plante.Etat == Etat.BonneSante && plante.TailleAdulte <= 2 && plante.Croissance != Croissance.Adulte,
             actionCible: (plante, terrain) =>
             {
                 Console.WriteLine($"\nLe Scaraboss dévore votre jeune {plante.Symbole} en {plante.Coordonnees} !");
+                terrain.RetirerPlantesFilles(plante);
                 terrain.Emplacements[plante.Coordonnees.X, plante.Coordonnees.Y] = null;
                 terrain.Plantes.Remove(plante);
             },
@@ -186,6 +188,7 @@ public class DesertChomp : Monde
             actionCible: (plante, terrain) =>
             {
                 Console.WriteLine($"\nLe Chomp des sables dévore les racines de votre plante {plante.Symbole} en {plante.Coordonnees} !");
+                terrain.RetirerPlantesFilles(plante);
                 terrain.Emplacements[plante.Coordonnees.X, plante.Coordonnees.Y] = null;
                 terrain.Plantes.Remove(plante);
             },

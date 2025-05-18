@@ -10,7 +10,7 @@ public class Marguerite : Plante
     public Marguerite(int uneCoordX = 0, int uneCoordY = 0) : base(
         unSymbole: "🌼",
         unType: TypePlante.Marguerite,
-        uneTaille: 1,
+        uneTailleAdulte: 1,
         desBesoinsEau: 40,
         desBesoinsLuminosite: 90,
         uneTempMin: 12,

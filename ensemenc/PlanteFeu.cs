@@ -11,7 +11,7 @@ public class PlanteFeu : Plante
     public PlanteFeu(int uneCoordX = 0, int uneCoordY = 0) : base(
         unSymbole: "🔥",
         unType: TypePlante.PlanteFeu,
-        uneTaille: 2,
+        uneTailleAdulte: 2,
         desBesoinsEau: 25,
         desBesoinsLuminosite: 100,
         uneTempMin: 18,
