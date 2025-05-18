@@ -74,7 +74,7 @@ public class Affichage()
         Console.WriteLine("- Température, ensoleillement et pluie jouent un rôle crucial.\n");
 
         Console.WriteLine("Actions disponibles :");
-        Console.WriteLine($"- Vous pouvez effectuer jusqu’à {Simulation.NbActionsAutorisees} actions par semaine.");
+        Console.WriteLine($"- Vous pouvez effectuer jusqu’à {Simulation.NBACTIONSAUTORISEES} actions par semaine.");
         Console.WriteLine("- Actions possibles : arroser, semer, désherber, récolter...");
         Console.WriteLine("- Vous pouvez passer au tour suivant une fois vos actions terminées.\n");
 

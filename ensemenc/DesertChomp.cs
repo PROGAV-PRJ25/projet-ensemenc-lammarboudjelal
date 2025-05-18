@@ -14,10 +14,10 @@ public class DesertChomp : Monde
         this.typesSolsDisponibles.Add(TypeSol.Sableux);
 
         // Plantes disponibles dans ce monde aride
-        this.typesPlanteDisponibles.Add(TypePlante.Cactus);
-        this.typesPlanteDisponibles.Add(TypePlante.AloeVera);
-        this.typesPlanteDisponibles.Add(TypePlante.PlanteFeu);
-        this.typesPlanteDisponibles.Add(TypePlante.Dattier);
+        this.typesPlantesDisponibles.Add(TypePlante.Cactus);
+        this.typesPlantesDisponibles.Add(TypePlante.AloeVera);
+        this.typesPlantesDisponibles.Add(TypePlante.PlanteFeu);
+        this.typesPlantesDisponibles.Add(TypePlante.Dattier);
 
         // Météos typiques du désert
         this.meteosPossibles.Add(new Meteo(38, 95, 5));   // Canicule

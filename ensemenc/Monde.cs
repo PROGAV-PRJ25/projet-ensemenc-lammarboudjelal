@@ -6,7 +6,7 @@ public abstract class Monde(string unNom)
     protected string nom = unNom; // Nom du monde.
     protected Meteo meteoPrevisionnelle = new(0, 0, 0); // Météo prévisionnelle de la semaine à venir dans le monde.
     protected List<Meteo> meteosPossibles = []; // Liste des météos possibles dans ce monde.
-    protected List<TypePlante> typesPlanteDisponibles = []; // Liste des types de plantes disponibles.
+    protected List<TypePlante> typesPlantesDisponibles = []; // Liste des types de plantes disponibles.
     protected List<TypeSol> typesSolsDisponibles = []; // Liste des types de sols disponibles.
     public string Illustration { get; set; } = ""; // Illustration propre au monde.
 
@@ -31,7 +31,7 @@ public abstract class Monde(string unNom)
     */
     public List<TypePlante> TypesPlanteDisponibles 
     { 
-        get { return typesPlanteDisponibles; } 
+        get { return typesPlantesDisponibles; } 
     } 
 
     /*

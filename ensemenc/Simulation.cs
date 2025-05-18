@@ -4,13 +4,13 @@
 */
 public class Simulation
 {
-    private Terrain terrain1 = new("Terrain 1"); // Premier terrain du joueur (5x5 cases).
-    private Terrain terrain2 = new("Terrain 2"); // Deuxième terrain du joueur (5x5 cases).
+    private readonly Terrain terrain1 = new("Terrain 1"); // Premier terrain du joueur (5x5 cases).
+    private readonly Terrain terrain2 = new("Terrain 2"); // Deuxième terrain du joueur (5x5 cases).
     private Monde monde = new PlaineChampignon(); // Monde choisi par le joueur (par défaut Monde 1 - Plaine Champignon).
-    private Dictionary<TypePlante, int> recoltes = []; // Dictionnaire des récoltes du joueur (type de récolte, quantité).
-    private Dictionary<TypePlante,int> graines = []; // Dictionnaire des semis disponibles pour le joueur (type de plante, quantité).
-    public const int NbActionsAutorisees = 8; // Nombre d'actions que le joueur peut réaliser à chaque tour.
-    private int nbActionsRestantes = NbActionsAutorisees; // Nombre d'actions restants au joueur (réinitialisé chaque semaine).
+    private readonly Dictionary<TypePlante, int> recoltes = []; // Dictionnaire des récoltes du joueur (type de récolte, quantité).
+    private readonly Dictionary<TypePlante,int> graines = []; // Dictionnaire des semis disponibles pour le joueur (type de plante, quantité).
+    public const int NBACTIONSAUTORISEES = 8; // Nombre d'actions que le joueur peut réaliser à chaque tour.
+    private int nbActionsRestantes = NBACTIONSAUTORISEES; // Nombre d'actions restants au joueur (réinitialisé chaque semaine).
 
     /*
         Demande au joueur de confirmer une action (O/N).
@@ -440,7 +440,7 @@ public class Simulation
             if (partieEnCours)
             {
                 semaine++;
-                nbActionsRestantes = NbActionsAutorisees;
+                nbActionsRestantes = NBACTIONSAUTORISEES;
             }
         }
 

@@ -79,13 +79,13 @@ public class Terrain(string unNom)
         
         param planteParent : Plante dont on souhaite retirer les plantes filles du terrain.
     */
-    public void RetirerPlantesFilles(Plante planteParent)
+    public void RetirerPlantesFilles(Plante planteParente)
     {
-        foreach (var planteFille in planteParent.PlantesFilles)
+        foreach (var planteFille in planteParente.PlantesFilles)
         {
             this.Emplacements[planteFille.Coordonnees.X, planteFille.Coordonnees.Y] = null;
         }
-        planteParent.PlantesFilles.Clear();
+        planteParente.PlantesFilles.Clear();
     }
 
     /*

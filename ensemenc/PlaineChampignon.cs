@@ -14,10 +14,10 @@ public class PlaineChampignon : Monde
         this.typesSolsDisponibles.Add(TypeSol.Humifere);
 
         // Plantes disponibles
-        this.typesPlanteDisponibles.Add(TypePlante.Tomate);
-        this.typesPlanteDisponibles.Add(TypePlante.Fraise);
-        this.typesPlanteDisponibles.Add(TypePlante.Champignon);
-        this.typesPlanteDisponibles.Add(TypePlante.Marguerite);
+        this.typesPlantesDisponibles.Add(TypePlante.Tomate);
+        this.typesPlantesDisponibles.Add(TypePlante.Fraise);
+        this.typesPlantesDisponibles.Add(TypePlante.Champignon);
+        this.typesPlantesDisponibles.Add(TypePlante.Marguerite);
 
         // Météos possibles
         this.meteosPossibles.Add(new Meteo(18, 60, 20)); // Météo douce

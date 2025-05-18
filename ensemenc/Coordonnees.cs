@@ -1,7 +1,7 @@
 public class Coordonnees(int unX, int unY)
 {
-    int x = unX;
-    int y = unY;
+    private readonly int x = unX;
+    private readonly int y = unY;
 
     /*
         Accesseur en lecture uniquement de la coordonnée en x.
