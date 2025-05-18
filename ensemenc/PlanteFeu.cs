@@ -16,7 +16,7 @@ public class PlanteFeu : Plante
         desBesoinsLuminosite: 100,
         uneTempMin: 18,
         uneTempMax: 40,
-        uneVitesseCroissance: 3,
+        uneVitesseCroissance: 5,
         uneEsperanceVie: 11,
         unSolPrefere: TypeSol.Sableux,
         unNbProductionsMaxPossible: 1,

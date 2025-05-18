@@ -16,7 +16,7 @@ public class Cactus : Plante
         desBesoinsLuminosite: 95,
         uneTempMin: 20,
         uneTempMax: 45,
-        uneVitesseCroissance: 2,
+        uneVitesseCroissance: 4,
         uneEsperanceVie: 14,
         unSolPrefere: TypeSol.Sableux,
         unNbProductionsMaxPossible: 1,

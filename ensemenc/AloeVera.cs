@@ -16,7 +16,7 @@ public class AloeVera : Plante
         desBesoinsLuminosite: 85,
         uneTempMin: 15,
         uneTempMax: 35,
-        uneVitesseCroissance: 3,
+        uneVitesseCroissance: 5,
         uneEsperanceVie: 11,
         unSolPrefere: TypeSol.Sableux,
         unNbProductionsMaxPossible: 1,

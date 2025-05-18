@@ -16,7 +16,7 @@ public class Dattier : Plante
         desBesoinsLuminosite: 90,
         uneTempMin: 20,
         uneTempMax: 40,
-        uneVitesseCroissance: 3,
+        uneVitesseCroissance: 6,
         uneEsperanceVie: 18,
         unSolPrefere: TypeSol.Sableux,
         unNbProductionsMaxPossible: 10,
