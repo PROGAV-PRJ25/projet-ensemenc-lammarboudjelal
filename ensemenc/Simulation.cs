@@ -77,7 +77,7 @@ public class Simulation
 
             Affichage.AfficherMenuMondes();
 
-            Console.Write("Sélectionnez un monde (1 - 5) : ");
+            Console.Write("Sélectionnez un monde (1 ou 2) : ");
             string choix = Console.ReadLine() !;
 
             switch (choix)
@@ -93,15 +93,8 @@ public class Simulation
                     this.monde.AfficherDescription();
                     mondeValide = DemanderConfirmation();
                     break;
-                case "3":
-                case "4":
-                case "5":
-                    Console.WriteLine("Ce monde n'est pas encore disponible. Veuillez en choisir un autre.");
-                    AttendreUtilisateurPourContinuer();
-                    break;
-
                 default:
-                    Console.WriteLine("Choix invalide. Veuillez saisir un chiffre entre 1 et 5.");
+                    Console.WriteLine("Choix invalide. Veuillez saisir un chiffre entre 1 et 2.");
                     AttendreUtilisateurPourContinuer();
                     break;
             }

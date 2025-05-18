@@ -13,9 +13,6 @@ public class Affichage()
         Console.WriteLine("╠══════════════════════════════════╣");
         Console.WriteLine("║ 1. Plaine Champignon             ║");
         Console.WriteLine("║ 2. Désert Chomp                  ║");
-        Console.WriteLine("║ 3. Jungle Wiggler (à venir)      ║");
-        Console.WriteLine("║ 4. Royaume Sorbet (à venir)      ║");
-        Console.WriteLine("║ 5. Tropique Lakitu (à venir)     ║");
         Console.WriteLine("╚══════════════════════════════════╝");
         Console.WriteLine();
     }
