@@ -204,7 +204,7 @@ public class Affichage()
         {
             foreach (var plante in terrain.Plantes)
             {
-                Console.WriteLine($"({plante.X + 1},{plante.Y + 1}) {plante}");
+                Console.WriteLine($"{plante.Coordonnees} {plante}");
             }
         }
     }

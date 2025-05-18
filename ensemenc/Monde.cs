@@ -110,7 +110,7 @@ public abstract class Monde(string unNom)
         Console.Clear();
         Console.WriteLine(messageIntro);
         Thread.Sleep(2000);
-        Console.WriteLine($"\n{nomNuisible} approche votre plante {cible.Symbole} en ({cible.X + 1}, {cible.Y + 1}) !");
+        Console.WriteLine($"\n{nomNuisible} approche votre plante {cible.Symbole} en ({cible.Coordonnees.X + 1}, {cible.Coordonnees.Y + 1}) !");
         Thread.Sleep(1500);
 
         // Définition des actions possibles

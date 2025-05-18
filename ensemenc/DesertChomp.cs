@@ -123,8 +123,8 @@ public class DesertChomp : Monde
             conditionCible: plante => plante.Croissance != Croissance.Adulte && plante.Etat == Etat.BonneSante,
             actionCible: (plante, terrain) =>
             {
-                Console.WriteLine($"\nLa tempête déracine la {plante.Symbole} en ({plante.X + 1},{plante.Y + 1}) !");
-                terrain.Emplacements[plante.X, plante.Y] = null;
+                Console.WriteLine($"\nLa tempête déracine la {plante.Symbole} en {plante.Coordonnees} !");
+                terrain.Emplacements[plante.Coordonnees.X, plante.Coordonnees.Y] = null;
                 terrain.Plantes.Remove(plante);
             },
             options:
@@ -154,8 +154,8 @@ public class DesertChomp : Monde
             conditionCible: plante => plante.Etat == Etat.BonneSante && plante.Taille <= 2 && plante.Croissance != Croissance.Adulte,
             actionCible: (plante, terrain) =>
             {
-                Console.WriteLine($"\nLe Scaraboss dévore votre jeune {plante.Symbole} en ({plante.X + 1},{plante.Y + 1}) !");
-                terrain.Emplacements[plante.X, plante.Y] = null;
+                Console.WriteLine($"\nLe Scaraboss dévore votre jeune {plante.Symbole} en {plante.Coordonnees} !");
+                terrain.Emplacements[plante.Coordonnees.X, plante.Coordonnees.Y] = null;
                 terrain.Plantes.Remove(plante);
             },
             options:
@@ -185,8 +185,8 @@ public class DesertChomp : Monde
             conditionCible: plante => plante.Etat == Etat.BonneSante,
             actionCible: (plante, terrain) =>
             {
-                Console.WriteLine($"\nLe Chomp des sables dévore les racines de votre plante {plante.Symbole} en ({plante.X + 1},{plante.Y + 1}) !");
-                terrain.Emplacements[plante.X, plante.Y] = null;
+                Console.WriteLine($"\nLe Chomp des sables dévore les racines de votre plante {plante.Symbole} en {plante.Coordonnees} !");
+                terrain.Emplacements[plante.Coordonnees.X, plante.Coordonnees.Y] = null;
                 terrain.Plantes.Remove(plante);
             },
             options:

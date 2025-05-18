@@ -36,8 +36,7 @@ public abstract class Plante(
     protected Dictionary<Maladie, int> ProbaMaladies { get; } = []; // Probabilité que la plante attrape une maladie donnée, exprimée en %.
     protected Maladie? maladieActuelle = null; // Maladie dont souffre actuellement la plante.
     protected int toursMalade = 0; // Compteur de tours de jeu où la plante est malade lorsqu'elle l'est.
-    protected int x = uneCoordX; // Coordonnées en x de la plante.
-    protected int y = uneCoordY; // Coordonnées en y de la plante.
+    protected Coordonnees coordonnees = new(uneCoordX, uneCoordY);  // Coordonnées de la plante.
 
     /*
         Accesseur en lecture uniquement du symbole affiché pour représenter la plante.
@@ -81,19 +80,11 @@ public abstract class Plante(
     }
 
     /*
-        Accesseur en lecture uniquement de l'emplacement en x de la plante.
+        Accesseur en lecture uniquement des coordonnées d'emplacement de la plante.
     */
-    public int X 
+    public Coordonnees Coordonnees 
     { 
-        get { return x; }
-    }
-
-    /*
-        Accesseur en lecture uniquement de l'emplacement en y de la plante.
-    */
-    public int Y 
-    { 
-        get { return y; }
+        get { return coordonnees; }
     }
 
     /*

@@ -120,7 +120,7 @@ public class PlaineChampignon : Monde
             actionCible: (plante, terrain) =>
             {
                 plante.NbProductionsActuel = 0;
-                Console.WriteLine($"Les PuceronsKoopas ont détruit les récoltes de la plante {plante.Symbole} en ({plante.X + 1}, {plante.Y + 1}) !");
+                Console.WriteLine($"Les PuceronsKoopas ont détruit les récoltes de la plante {plante.Symbole} en {plante.Coordonnees} !");
             }
         );
     }
@@ -145,7 +145,7 @@ public class PlaineChampignon : Monde
             actionCible: (plante, terrain) =>
             {
                 plante.RetarderCroissance();
-                Console.WriteLine($"Le Koopascargot a ralenti la croissance de votre plante {plante.Symbole} en ({plante.X + 1}, {plante.Y + 1}) !");
+                Console.WriteLine($"Le Koopascargot a ralenti la croissance de votre plante {plante.Symbole} en {plante.Coordonnees} !");
             }
         );
     }
@@ -168,8 +168,8 @@ public class PlaineChampignon : Monde
             conditionCible: p => p.Etat != Etat.Morte,
             actionCible: (plante, terrain) =>
             {
-                Console.WriteLine($"\nLe Goombaver dévore votre plante {plante.Symbole} en ({plante.X + 1}, {plante.Y + 1}) !");
-                terrain.Emplacements[plante.X, plante.Y] = null;
+                Console.WriteLine($"\nLe Goombaver dévore votre plante {plante.Symbole} en {plante.Coordonnees} !");
+                terrain.Emplacements[plante.Coordonnees.X, plante.Coordonnees.Y] = null;
                 terrain.Plantes.Remove(plante);
             }
         );
