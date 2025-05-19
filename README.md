@@ -266,14 +266,16 @@ ENSemenC
 │
 ├── Affichage.cs               // Fonctions d’affichage console
 │
-├── mondes                     // Dossier regroupant l'ensemble des classes de mondes
+├── mondes/                    // Dossier regroupant l'ensemble des classes de mondes
 │   ├── Monde.cs               // Classe abstraite des mondes
 │   ├── PlaineChampignon.cs    // Monde 1
 │   └── DesertChomp.cs         // Monde 2
 │
 ├── Terrain.cs                 // Gestion des plantes sur les terrains
 │
-├── plantes                    // Dossier regroupant l'ensemble des classes de plantes
+├── Coordonnees.cs             // Coordonnées d'emplacement d'une plante sur un terrain
+│
+├── plantes/                   // Dossier regroupant l'ensemble des classes de plantes
 │   ├── Plante.cs              // Classe abstraite des plantes
 │   ├── Tomate.cs              // Exemples de plantes
 │   ├── Fraise.cs
@@ -283,7 +285,7 @@ ENSemenC
 │
 ├── Meteo.cs                   // Météo de la semaine
 │
-├── enum                       // Dossier regroupant les énumérations (TypePlante, TypeSol, Maladie...)
+├── enum/                      // Dossier regroupant les énumérations (TypePlante, TypeSol, Maladie...)
 │   ├── TypePlante.cs         
 │   ├── TypeSol.cs   
 │   └── ...           
