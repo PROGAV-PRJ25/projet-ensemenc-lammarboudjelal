@@ -36,7 +36,7 @@ public abstract class Plante(
     protected int nbProductionsMaxPossible = unNbProductionsMaxPossible; // Nombre de production de la plante (fruits, légumes...) maximal possible.
     protected Dictionary<Maladie, int> ProbaMaladies { get; } = []; // Probabilité que la plante attrape une maladie donnée, exprimée en %.
     protected Maladie? maladieActuelle = null; // Maladie dont souffre actuellement la plante.
-    protected int toursMalade = 0; // Compteur de tours de jeu où la plante est malade lorsqu'elle l'est.
+    protected int toursMalade = 0; // Compteur de tours de jeu où la plante est malade. Est réinitialisé à 0 après guérison.
     protected Coordonnees coordonnees = new(uneCoordX, uneCoordY);  // Coordonnées de la plante.
     protected List<Plante> plantesFilles = []; // Liste des plantes filles de la plante.
     protected Plante? planteParente = null; // Plante parente de la plante.
@@ -183,7 +183,7 @@ public abstract class Plante(
 
     /*
         Vérifie si la température actuelle est mortelle pour la plante.
-        La plante meurt si la température supérieur ou inférieur à 50% de ses besoins.
+        La plante meurt si la température est supérieure ou inférieure à 50% de ses besoins.
 
         param meteo : Météo actuelle (température utilisée).
     */
@@ -221,7 +221,7 @@ public abstract class Plante(
 
     /*
         Permet à la plante de prendre une taille de plus, soit un emplacement sur le terrain supplémentaire.
-        Une plante pousse vers la droite en ligne. Par exemple, une plante de taille 3 placée à la semis aux coordonnées (1,1),
+        Une plante pousse vers la droite en ligne. Par exemple, une plante de taille 3 placée à la plantation aux coordonnées (1,1),
         s'étendra sur les emplacements (1,2) et (1,3) lorsqu'elle devra grandir. Si elle n'a pas la place de prendre sa taille maximale
         (coordonnées hors terrain, emplacement déjà occupé), elle meurt automatiquement.
 
@@ -231,7 +231,7 @@ public abstract class Plante(
     */
     private bool Grandir(Terrain terrain)
     {
-        // On vérifie d'abord si la plante à la place de pousser afin de ne pas créer des plantes filles inutilement.
+        // On vérifie d'abord si la plante a la place de pousser afin de ne pas créer des plantes filles inutilement.
         for (int i = 1; i < this.tailleAdulte; i++)
         {
             // Si l'emplacement sur lequel doit s'étendre la plante est hors terrain ou n'est pas libre, la plante meurt.
@@ -335,7 +335,7 @@ public abstract class Plante(
 
         // Tentative de contamination : 
         //  - un nombre aléatoire est tiré entre 1 et 100,
-        //  - si ce nombre est inférieur ou égale à la probabilité de contamination 
+        //  - si ce nombre est inférieur ou égal à la probabilité de contamination 
         //    de la maladie, alors la plante tombe malade.
         foreach (var proba in ProbaMaladies)
         {
@@ -397,7 +397,7 @@ public abstract class Plante(
 
     /*
         Retarde artificiellement la croissance de la plante de deux semaines.
-        Utilisé par certains nuisibles.
+        Utilisée par certains nuisibles.
     */
     public void RetarderCroissance()
     {

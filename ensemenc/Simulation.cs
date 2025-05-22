@@ -10,7 +10,7 @@ public class Simulation
     private readonly Dictionary<TypePlante, int> recoltes = []; // Dictionnaire des récoltes du joueur (type de récolte, quantité).
     private readonly Dictionary<TypePlante,int> graines = []; // Dictionnaire des semis disponibles pour le joueur (type de plante, quantité).
     public const int NBACTIONSAUTORISEES = 8; // Nombre d'actions que le joueur peut réaliser à chaque tour.
-    private int nbActionsRestantes = NBACTIONSAUTORISEES; // Nombre d'actions restants au joueur (réinitialisé chaque semaine).
+    private int nbActionsRestantes = NBACTIONSAUTORISEES; // Nombre d'actions restantes au joueur (réinitialisé chaque semaine).
 
     /*
         Demande au joueur de confirmer une action (O/N).
@@ -252,7 +252,7 @@ public class Simulation
 
      /*
         Permet au joueur de semer une plante sur un terrain.
-        Le joueur choisi le type de plante, un terrain, des coordonnées valides, 
+        Le joueur choisit le type de plante, un terrain, des coordonnées valides, 
         et la graine est plantée si l'emplacement est libre.
     */
     private void Semer()

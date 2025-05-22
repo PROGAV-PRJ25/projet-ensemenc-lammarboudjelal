@@ -112,7 +112,7 @@ public class Affichage()
         Affiche l'en-tête lors d'un tour de jeu contenant l'illustration et le nom du monde, ainsi que le numéro de la semaine.
 
         param monde : Monde joué.
-        param semaine : Numéro de la semaine (correspond au nombre de tour de jeu).
+        param semaine : Numéro de la semaine (correspond au nombre de tours de jeu).
     */
     public static void AfficherMondeEtSemaine(Monde monde, int semaine)
     {
@@ -227,7 +227,7 @@ public class Affichage()
     }
 
     /*
-        Affiche l'inventaire actuel de graines du joueur.
+        Affiche l'inventaire actuel des graines du joueur.
 
         param recoltes : Dictionnaire des récoltes du joueur (type de récolte, quantité).
         param graines : Dictionnaire des semis disponibles pour le joueur (type de plante, quantité).

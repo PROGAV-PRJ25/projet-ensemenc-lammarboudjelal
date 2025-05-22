@@ -44,7 +44,7 @@ public class PlaineChampignon : Monde
         Console.WriteLine($"MONDE 1 — {this.nom}");
         Console.WriteLine("═════════════════════════════════════════════════════════════════════\n");
 
-        Console.WriteLine("Bienvenue dans la douce et verdoyante Plaine Champignon !");
+        Console.WriteLine($"Bienvenue dans la douce et verdoyante {this.nom} !");
         Console.WriteLine("Ici, tout pousse joyeusement... sauf quand un Goombaver passe par là !\n");
 
         Console.WriteLine("Caractéristiques du monde :");
@@ -113,7 +113,7 @@ public class PlaineChampignon : Monde
     {
         GererAttaqueNuisible(
             nomNuisible: "🐞 PuceronKoopa",
-            messageIntro: "Une nuée de PuceronsKoopas envahit sur votre potager !",
+            messageIntro: "Une nuée de PuceronsKoopas envahit votre potager !",
             terrain1: terrain1,
             terrain2: terrain2,
             conditionCible: p => p.NbProductionsActuel > 0,
@@ -129,7 +129,7 @@ public class PlaineChampignon : Monde
         Le Koopascargot ralentit la croissance de la plante ciblée s’il n’est pas repoussé.
         Le Koopascargot ne sort que s’il y a au moins une plante en bonne santé et non adulte (car ralentir la croissance d'une plante adulte 
         serait un avantage puisqu'elle mourrait moins rapidement), puis cible une plante aléatoirement.
-        Le joueur dispose de 3 tentatives pour repousser l'intrus, sinon la plante ciblée aura sa croissance de ralentit de deux semaines.
+        Le joueur dispose de 3 tentatives pour repousser l'intrus, sinon la plante ciblée aura sa croissance de ralentie de deux semaines.
 
         param terrain1 : Premier terrain du joueur.
         param terrain2 : Deuxième terrain du joueur.

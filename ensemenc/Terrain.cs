@@ -35,7 +35,7 @@ public class Terrain(string unNom)
     }
 
     /*
-        Accesseur en lecture uniquement du plantes plantées sur le terrain.
+        Accesseur en lecture uniquement des plantes plantées sur le terrain.
     */
     public List<Plante> Plantes
     {
