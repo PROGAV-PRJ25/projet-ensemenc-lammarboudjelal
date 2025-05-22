@@ -42,7 +42,7 @@ public class DesertChomp : Monde
         Console.WriteLine($"MONDE 2 — {this.nom}");
         Console.WriteLine("═════════════════════════════════════════════════════════════════════\n");
 
-        Console.WriteLine("Bienvenue dans le brûlant Désert Chomp !");
+        Console.WriteLine($"Bienvenue dans le brûlant {this.nom} !");
         Console.WriteLine("Seules les plantes les plus résistantes survivent aux crocs du sable...\n");
 
         Console.WriteLine("Caractéristiques du monde :");
